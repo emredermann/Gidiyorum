@@ -130,8 +130,23 @@ import { UiButtonComponent } from '../../shared/components/ui-button/ui-button.c
           </button>
         </div>
 
+        <!-- Demo Credentials Hint Box -->
+        <div class="p-4 bg-stone-50/80 border border-black/[0.05] rounded-2xl space-y-2 text-center">
+          <p class="text-[11px] text-stone-500 font-medium">
+            💡 <span class="font-bold text-stone-700">Hızlı Giriş İçin Test Bilgileri:</span>
+            <span class="block text-stone-600 font-mono mt-0.5">demo&#64;gidiyorum.app / Gidiyorum2026!</span>
+          </p>
+          <button
+            type="button"
+            (click)="fillDemoCredentials()"
+            class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-black/[0.08] text-xs font-bold text-stone-900 hover:bg-stone-100 transition-colors shadow-subtle cursor-pointer"
+          >
+            ⚡ Demo Bilgilerini Doldur
+          </button>
+        </div>
+
         <!-- Footer Link -->
-        <div class="text-center pt-2">
+        <div class="text-center pt-1">
           <p class="text-xs text-stone-500">
             Hesabınız yok mu?
             <a routerLink="/auth/register" class="font-bold text-obsidian hover:underline ml-1">Kayıt Olun</a>
@@ -161,9 +176,18 @@ export class LoginComponent {
     this.showPassword.update(v => !v);
   }
 
+  fillDemoCredentials() {
+    this.email = 'demo@gidiyorum.app';
+    this.password = 'Gidiyorum2026!';
+    this.errorMessage.set(null);
+  }
+
   async onLogin(event: Event) {
     event.preventDefault();
-    if (!this.email || !this.password) return;
+    if (!this.email || !this.password) {
+      this.errorMessage.set('Geçersiz e-posta veya şifre. Lütfen demo bilgileri ile giriş yapın.');
+      return;
+    }
 
     this.loading.set(true);
     this.errorMessage.set(null);
@@ -171,7 +195,7 @@ export class LoginComponent {
     try {
       await this.authService.signInWithPassword(this.email, this.password);
     } catch (e: any) {
-      this.errorMessage.set(e.message || 'Giriş yapılırken bir hata oluştu.');
+      this.errorMessage.set(e.message || 'Geçersiz e-posta veya şifre. Lütfen demo bilgileri ile giriş yapın.');
     } finally {
       this.loading.set(false);
     }

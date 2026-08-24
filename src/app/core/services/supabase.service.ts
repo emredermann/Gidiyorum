@@ -20,7 +20,7 @@ export class SupabaseService {
 
   constructor() {
     if (environment.useMockData) {
-      this.initMockSession();
+      this.checkStoredMockSession();
     } else {
       try {
         this.supabase = createClient(environment.supabaseUrl, environment.supabaseAnonKey, {
@@ -36,7 +36,8 @@ export class SupabaseService {
             this._session.set(session);
             this._user.set(session.user);
           } else {
-            this.initMockSession();
+            this._session.set(null);
+            this._user.set(null);
           }
         });
 
@@ -44,16 +45,44 @@ export class SupabaseService {
           if (session) {
             this._session.set(session);
             this._user.set(session.user);
+          } else {
+            this._session.set(null);
+            this._user.set(null);
           }
         });
       } catch (e) {
         console.warn('Supabase initialization failed, falling back to Mock Mode:', e);
-        this.initMockSession();
+        this.checkStoredMockSession();
       }
     }
   }
 
-  private initMockSession() {
+  private checkStoredMockSession() {
+    if (typeof localStorage === 'undefined') {
+      this._session.set(null);
+      this._user.set(null);
+      return;
+    }
+    const stored = localStorage.getItem('gidiyorum_mock_session');
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored);
+        this._session.set(parsed);
+        this._user.set(parsed.user);
+        return;
+      } catch (e) {
+        localStorage.removeItem('gidiyorum_mock_session');
+      }
+    }
+    this._session.set(null);
+    this._user.set(null);
+  }
+
+  public setMockSession(
+    email = 'demo@gidiyorum.app',
+    fullName = 'Emre Yılmaz',
+    avatarUrl = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb'
+  ) {
     const mockSession = {
       access_token: 'mock-access-token',
       token_type: 'bearer',
@@ -62,15 +91,26 @@ export class SupabaseService {
       user: {
         id: MOCK_USER.id,
         app_metadata: {},
-        user_metadata: { full_name: MOCK_USER.name, avatar_url: MOCK_USER.avatar_url },
+        user_metadata: { full_name: fullName, avatar_url: avatarUrl },
         aud: 'authenticated',
         created_at: MOCK_USER.created_at,
-        email: MOCK_USER.email,
+        email: email,
       } as SupabaseUser,
     } as Session;
 
     this._session.set(mockSession);
     this._user.set(mockSession.user);
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('gidiyorum_mock_session', JSON.stringify(mockSession));
+    }
+  }
+
+  public clearMockSession() {
+    this._session.set(null);
+    this._user.set(null);
+    if (typeof localStorage !== 'undefined') {
+      localStorage.removeItem('gidiyorum_mock_session');
+    }
   }
 
   get client(): SupabaseClient {

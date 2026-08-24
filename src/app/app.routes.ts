@@ -30,11 +30,13 @@ export const routes: Routes = [
   },
   {
     path: 'planner/preferences',
+    canActivate: [authGuard],
     loadComponent: () =>
       import('./features/planner/preferences.component').then(m => m.PreferencesComponent),
   },
   {
     path: 'planner/summary',
+    canActivate: [authGuard],
     loadComponent: () =>
       import('./features/planner/plan-summary.component').then(m => m.PlanSummaryComponent),
   },

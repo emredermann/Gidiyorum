@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -300,9 +300,12 @@ import { UiCardComponent } from '../../shared/components/ui-card/ui-card.compone
 export class ProfileComponent {
   private authService = inject(AuthService);
 
-  userName = signal('Emre Yılmaz');
-  userEmail = signal('emre@gidiyorum.app');
-  avatarUrl = signal('https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300');
+  private customName = signal<string | null>(null);
+  private customAvatar = signal<string | null>(null);
+
+  userName = computed(() => this.customName() || this.authService.user()?.name || 'Emre Yılmaz');
+  userEmail = computed(() => this.authService.user()?.email || 'demo@gidiyorum.app');
+  avatarUrl = computed(() => this.customAvatar() || this.authService.user()?.avatar_url || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb');
 
   availableTags = ['Tarih', 'Yemek', 'Doğa', 'Sanat', 'Alışveriş', 'Gece Hayatı'];
   userTags = signal<string[]>(['Tarih', 'Yemek', 'Sanat']);
@@ -341,7 +344,7 @@ export class ProfileComponent {
     if (input.files && input.files[0]) {
       const reader = new FileReader();
       reader.onload = (e: any) => {
-        this.avatarUrl.set(e.target.result);
+        this.customAvatar.set(e.target.result);
       };
       reader.readAsDataURL(input.files[0]);
     }
@@ -350,7 +353,7 @@ export class ProfileComponent {
   editProfileName() {
     const newName = prompt('Yeni Ad Soyad girin:', this.userName());
     if (newName && newName.trim()) {
-      this.userName.set(newName.trim());
+      this.customName.set(newName.trim());
     }
   }
 
