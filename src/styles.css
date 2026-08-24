@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&display=swap');
+@import 'leaflet/dist/leaflet.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply antialiased text-stone-900;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-text-size-adjust: 100%;
+    background-color: #F9F8F6;
+  }
+
+  body {
+    @apply bg-[#F9F8F6] text-stone-600 font-sans tracking-tight;
+    overscroll-behavior-y: none;
+  }
+
+  h1, h2, h3, h4 {
+    @apply text-stone-900 font-semibold tracking-tight;
+  }
+
+  * {
+    box-sizing: border-box;
+    border-color: rgba(0, 0, 0, 0.06);
+  }
+}
+
+@layer utilities {
+  .font-serif-luxe {
+    font-family: 'Playfair Display', Georgia, serif;
+  }
+
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .hairline-border {
+    border-width: 1px;
+    border-color: rgba(0, 0, 0, 0.06);
+  }
+
+  .hairline-b {
+    border-bottom-width: 1px;
+    border-bottom-color: rgba(0, 0, 0, 0.06);
+  }
+
+  .hairline-t {
+    border-top-width: 1px;
+    border-top-color: rgba(0, 0, 0, 0.06);
+  }
+}
+
+/* Monocle & Airbnb Luxe Leaflet Overrides */
+.leaflet-container {
+  font-family: 'Inter', -apple-system, sans-serif;
+  z-index: 0;
+  background-color: #F2F0EB !important;
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+.leaflet-popup-content {
+  margin: 12px 16px;
+}
+
+.leaflet-tile-pane {
+  filter: contrast(95%) brightness(102%) saturate(85%);
+}
