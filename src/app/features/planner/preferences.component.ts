@@ -10,31 +10,31 @@ import { HeaderComponent } from '../../shared/components/header/header.component
   standalone: true,
   imports: [CommonModule, LucideAngularModule, HeaderComponent],
   template: `
-    <div class="min-h-screen bg-background pb-16">
+    <div id="planner-preferences-page" class="min-h-screen bg-background pb-16">
       <app-header title="Concierge Planner" [showBack]="true"></app-header>
 
-      <div class="max-w-2xl mx-auto px-4 py-8 space-y-9">
+      <div id="planner-preferences-container" class="max-w-2xl mx-auto px-4 py-8 space-y-9">
 
         <!-- Step Indicator -->
-        <div class="bg-white rounded-3xl p-5 border border-black/[0.05] shadow-subtle">
-          <div class="flex items-center justify-between relative">
-            <div class="flex items-center gap-3.5 z-10">
-              <div class="w-8 h-8 rounded-full bg-obsidian text-white flex items-center justify-center font-semibold text-xs shadow-sm">
+        <div id="planner-step-indicator-card" class="bg-white rounded-3xl p-5 border border-black/[0.05] shadow-subtle">
+          <div id="planner-step-row" class="flex items-center justify-between relative">
+            <div id="planner-step-1-group" class="flex items-center gap-3.5 z-10">
+              <div id="planner-step-1-badge" class="w-8 h-8 rounded-full bg-obsidian text-white flex items-center justify-center font-semibold text-xs shadow-sm">
                 1
               </div>
-              <div>
+              <div id="planner-step-1-text">
                 <span class="text-[10px] font-bold text-stone-400 tracking-wider uppercase block">Adım 1</span>
                 <h3 class="text-xs font-bold text-stone-950">Tercihlerinizi Belirleyin</h3>
               </div>
             </div>
 
-            <div class="flex-1 h-px bg-black/[0.06] mx-4"></div>
+            <div id="planner-step-divider-line" class="flex-1 h-px bg-black/[0.06] mx-4"></div>
 
-            <div class="flex items-center gap-3.5 z-10 opacity-40">
-              <div class="w-8 h-8 rounded-full bg-stone-200 text-stone-500 flex items-center justify-center font-semibold text-xs">
+            <div id="planner-step-2-group" class="flex items-center gap-3.5 z-10 opacity-40">
+              <div id="planner-step-2-badge" class="w-8 h-8 rounded-full bg-stone-200 text-stone-500 flex items-center justify-center font-semibold text-xs">
                 2
               </div>
-              <div class="hidden sm:block">
+              <div id="planner-step-2-text" class="hidden sm:block">
                 <span class="text-[10px] font-semibold text-stone-400 tracking-wider uppercase block">Adım 2</span>
                 <h3 class="text-xs font-semibold text-stone-500">Plan Özeti</h3>
               </div>
@@ -44,8 +44,8 @@ import { HeaderComponent } from '../../shared/components/header/header.component
 
         <!-- Section 1: İlgi Alanları -->
         <section class="space-y-3.5">
-          <div class="flex items-center justify-between">
-            <div>
+          <div id="planner-interests-header-row" class="flex items-center justify-between">
+            <div id="planner-interests-title-box">
               <h2 class="text-base font-bold text-stone-950 tracking-tight">İlgi Alanları</h2>
               <p class="text-xs text-stone-500 mt-0.5">Rotanıza eklenmesini istediğiniz deneyim alanları</p>
             </div>
@@ -54,7 +54,7 @@ import { HeaderComponent } from '../../shared/components/header/header.component
             </span>
           </div>
 
-          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+          <div id="planner-interests-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-3">
             @for (item of planner.availableInterests; track item.id) {
               <button
                 type="button"
@@ -84,12 +84,12 @@ import { HeaderComponent } from '../../shared/components/header/header.component
 
         <!-- Section 2: Seyahat Temposu -->
         <section class="space-y-3">
-          <div>
+          <div id="planner-tempo-title-box">
             <h2 class="text-base font-bold text-stone-950 tracking-tight">Seyahat Temposu</h2>
             <p class="text-xs text-stone-500 mt-0.5">Günlük gezi yoğunluğu tercihi</p>
           </div>
 
-          <div class="grid grid-cols-3 gap-3">
+          <div id="planner-tempo-grid" class="grid grid-cols-3 gap-3">
             @for (opt of planner.travelStyleOptions; track opt.value) {
               <button
                 type="button"
@@ -110,12 +110,12 @@ import { HeaderComponent } from '../../shared/components/header/header.component
 
         <!-- Section 3: Bütçe Seviyesi -->
         <section class="space-y-3">
-          <div>
+          <div id="planner-budget-title-box">
             <h2 class="text-base font-bold text-stone-950 tracking-tight">Bütçe Seviyesi</h2>
             <p class="text-xs text-stone-500 mt-0.5">Gastronomi ve konaklama harcama ölçeği</p>
           </div>
 
-          <div class="grid grid-cols-3 gap-3">
+          <div id="planner-budget-grid" class="grid grid-cols-3 gap-3">
             @for (opt of planner.budgetOptions; track opt.value) {
               <button
                 type="button"
@@ -136,12 +136,12 @@ import { HeaderComponent } from '../../shared/components/header/header.component
 
         <!-- Section 4: Yürüme Mesafesi -->
         <section class="space-y-3">
-          <div>
+          <div id="planner-walking-title-box">
             <h2 class="text-base font-bold text-stone-950 tracking-tight">Yürüme Mesafesi</h2>
             <p class="text-xs text-stone-500 mt-0.5">Şehir içi ulaşım ve yürüyüş dengesi</p>
           </div>
 
-          <div class="grid grid-cols-3 gap-3">
+          <div id="planner-walking-grid" class="grid grid-cols-3 gap-3">
             @for (opt of planner.walkingOptions; track opt.value) {
               <button
                 type="button"
@@ -161,7 +161,7 @@ import { HeaderComponent } from '../../shared/components/header/header.component
         </section>
 
         <!-- Action Button -->
-        <div class="pt-4">
+        <div id="planner-action-button-box" class="pt-4">
           <button
             type="button"
             (click)="goToPlanSummary()"

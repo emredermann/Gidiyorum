@@ -14,11 +14,11 @@ type Step = 'auth' | 'city' | 'preferences' | 'creating';
   standalone: true,
   imports: [CommonModule, FormsModule, LucideAngularModule, UiButtonComponent],
   template: `
-    <div class="min-h-screen bg-background flex flex-col">
+    <div id="onboarding-page-container" class="min-h-screen bg-background flex flex-col">
       <!-- Hero banner -->
-      <div class="bg-gradient-to-br from-primary to-indigo-700 text-white px-6 pt-16 pb-12">
-        <div class="max-w-md mx-auto text-center">
-          <div class="w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center mx-auto mb-4">
+      <div id="onboarding-hero-banner" class="bg-gradient-to-br from-primary to-indigo-700 text-white px-6 pt-16 pb-12">
+        <div id="onboarding-hero-inner" class="max-w-md mx-auto text-center">
+          <div id="onboarding-hero-badge" class="w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center mx-auto mb-4">
             <lucide-icon [img]="SparklesIcon" [size]="28" class="text-white"></lucide-icon>
           </div>
           <h1 class="text-3xl font-bold mb-2">Gidiyorum ✈️</h1>
@@ -27,12 +27,12 @@ type Step = 'auth' | 'city' | 'preferences' | 'creating';
       </div>
 
       <!-- Step content -->
-      <div class="flex-1 px-6 py-8 max-w-md mx-auto w-full">
+      <div id="onboarding-step-content-area" class="flex-1 px-6 py-8 max-w-md mx-auto w-full">
 
         <!-- STEP: Auth -->
         @if (currentStep() === 'auth') {
-          <div class="space-y-6">
-            <div>
+          <div id="onboarding-auth-step-box" class="space-y-6">
+            <div id="onboarding-auth-header-box">
               <h2 class="text-2xl font-bold text-gray-900">Hoş geldiniz! 👋</h2>
               <p class="text-gray-500 mt-1 text-sm">Seyahat planlamanıza başlamak için giriş yapın</p>
             </div>
@@ -49,11 +49,11 @@ type Step = 'auth' | 'city' | 'preferences' | 'creating';
               </svg>
               Google ile devam et
             </button>
-            <div class="relative">
-              <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-gray-200"></div></div>
-              <div class="relative flex justify-center"><span class="bg-background px-3 text-xs text-gray-400">veya</span></div>
+            <div id="onboarding-auth-divider-box" class="relative">
+              <div id="onboarding-auth-divider-line" class="absolute inset-0 flex items-center"><div class="w-full border-t border-gray-200"></div></div>
+              <div id="onboarding-auth-divider-text" class="relative flex justify-center"><span class="bg-background px-3 text-xs text-gray-400">veya</span></div>
             </div>
-            <div class="space-y-3">
+            <div id="onboarding-auth-email-form" class="space-y-3">
               <input [(ngModel)]="email" type="email" placeholder="E-posta adresiniz"
                 class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary bg-white" />
               <app-ui-button label="Sihirli link gönder" [fullWidth]="true" [loading]="loading()" (clicked)="sendMagicLink()"></app-ui-button>
@@ -63,23 +63,23 @@ type Step = 'auth' | 'city' | 'preferences' | 'creating';
 
         <!-- STEP: City -->
         @if (currentStep() === 'city') {
-          <div class="space-y-6">
-            <div>
+          <div id="onboarding-city-step-box" class="space-y-6">
+            <div id="onboarding-city-header-box">
               <h2 class="text-2xl font-bold text-gray-900">Nereye gidiyorsunuz? 🌍</h2>
               <p class="text-gray-500 mt-1 text-sm">Şehir veya destinasyonu girin</p>
             </div>
-            <div class="space-y-3">
-              <div class="relative">
+            <div id="onboarding-city-form-group" class="space-y-3">
+              <div id="onboarding-city-input-wrapper" class="relative">
                 <lucide-icon [img]="MapPinIcon" [size]="18" class="absolute left-3 top-3 text-gray-400"></lucide-icon>
                 <input [(ngModel)]="city" type="text" placeholder="Örn: Roma, İtalya"
                   class="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary bg-white" />
               </div>
-              <div class="grid grid-cols-2 gap-3">
-                <div>
+              <div id="onboarding-date-inputs-grid" class="grid grid-cols-2 gap-3">
+                <div id="onboarding-start-date-group">
                   <label class="text-xs text-gray-500 mb-1 block">Başlangıç</label>
                   <input [(ngModel)]="startDate" type="date" class="w-full px-3 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 bg-white" />
                 </div>
-                <div>
+                <div id="onboarding-end-date-group">
                   <label class="text-xs text-gray-500 mb-1 block">Bitiş</label>
                   <input [(ngModel)]="endDate" type="date" class="w-full px-3 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 bg-white" />
                 </div>
@@ -91,14 +91,14 @@ type Step = 'auth' | 'city' | 'preferences' | 'creating';
 
         <!-- STEP: Creating -->
         @if (currentStep() === 'creating') {
-          <div class="flex flex-col items-center justify-center min-h-[300px] text-center space-y-4">
-            <div class="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center">
+          <div id="onboarding-creating-step-box" class="flex flex-col items-center justify-center min-h-[300px] text-center space-y-4">
+            <div id="onboarding-creating-spinner-box" class="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center">
               <svg class="animate-spin h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24">
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
               </svg>
             </div>
-            <div>
+            <div id="onboarding-creating-text-box">
               <h3 class="font-bold text-gray-900">Rotanız hazırlanıyor...</h3>
               <p class="text-gray-400 text-sm mt-1">AI rehberiniz {{ city }} için en iyi planı oluşturuyor</p>
             </div>
@@ -107,9 +107,9 @@ type Step = 'auth' | 'city' | 'preferences' | 'creating';
       </div>
 
       @if (currentStep() !== 'auth' && currentStep() !== 'creating') {
-        <div class="flex justify-center gap-2 pb-8">
+        <div id="onboarding-steps-dots-bar" class="flex justify-center gap-2 pb-8">
           @for (s of ['city', 'preferences']; track s) {
-            <div class="h-1.5 rounded-full transition-all duration-300"
+            <div [id]="'onboarding-step-dot-' + s" class="h-1.5 rounded-full transition-all duration-300"
               [class.w-8]="currentStep() === s" [class.w-2]="currentStep() !== s"
               [class.bg-primary]="currentStep() === s" [class.bg-gray-200]="currentStep() !== s"></div>
           }

@@ -11,12 +11,12 @@ import { UiButtonComponent } from '../../shared/components/ui-button/ui-button.c
   standalone: true,
   imports: [CommonModule, FormsModule, RouterLink, LucideAngularModule, UiButtonComponent],
   template: `
-    <div class="min-h-screen bg-background flex flex-col justify-center items-center px-4 py-8">
-      <div class="w-full max-w-md space-y-8 bg-white p-8 sm:p-10 rounded-3xl border border-black/[0.06] shadow-luxe">
+    <div id="login-page-container" class="min-h-screen bg-background flex flex-col justify-center items-center px-4 py-8">
+      <div id="login-card-wrapper" class="w-full max-w-md space-y-8 bg-white p-8 sm:p-10 rounded-3xl border border-black/[0.06] shadow-luxe">
 
         <!-- Logo & Header -->
-        <div class="text-center space-y-2">
-          <div class="w-14 h-14 rounded-2xl bg-obsidian text-white flex items-center justify-center mx-auto shadow-sm">
+        <div id="login-header-box" class="text-center space-y-2">
+          <div id="login-logo-badge" class="w-14 h-14 rounded-2xl bg-obsidian text-white flex items-center justify-center mx-auto shadow-sm">
             <lucide-icon [img]="GlobeIcon" [size]="24" strokeWidth="1.5" class="text-white"></lucide-icon>
           </div>
           <h1 class="text-2xl font-serif-luxe font-normal text-stone-950 tracking-tight">Tekrar Hoş Geldiniz</h1>
@@ -25,16 +25,16 @@ import { UiButtonComponent } from '../../shared/components/ui-button/ui-button.c
 
         <!-- Error Message -->
         @if (errorMessage()) {
-          <div class="p-3.5 bg-red-50/80 border border-red-100 text-red-600 rounded-2xl text-xs font-semibold flex items-center gap-2">
+          <div id="login-error-alert" class="p-3.5 bg-red-50/80 border border-red-100 text-red-600 rounded-2xl text-xs font-semibold flex items-center gap-2">
             <span>⚠️ {{ errorMessage() }}</span>
           </div>
         }
 
         <!-- Email & Password Form -->
         <form (submit)="onLogin($event)" class="space-y-4">
-          <div>
+          <div id="login-email-field-group">
             <label class="block text-xs font-bold text-stone-700 mb-1.5 uppercase tracking-wider">E-posta Adresi</label>
-            <div class="relative">
+            <div id="login-email-input-wrapper" class="relative">
               <span class="absolute left-3.5 top-3.5 text-stone-400">
                 <lucide-icon [img]="MailIcon" [size]="18" strokeWidth="1.5"></lucide-icon>
               </span>
@@ -49,8 +49,8 @@ import { UiButtonComponent } from '../../shared/components/ui-button/ui-button.c
             </div>
           </div>
 
-          <div>
-            <div class="flex items-center justify-between mb-1.5">
+          <div id="login-password-field-group">
+            <div id="login-password-header-row" class="flex items-center justify-between mb-1.5">
               <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider">Şifre</label>
               <button
                 type="button"
@@ -60,7 +60,7 @@ import { UiButtonComponent } from '../../shared/components/ui-button/ui-button.c
                 Şifremi Unuttum?
               </button>
             </div>
-            <div class="relative">
+            <div id="login-password-input-wrapper" class="relative">
               <span class="absolute left-3.5 top-3.5 text-stone-400">
                 <lucide-icon [img]="LockIcon" [size]="18" strokeWidth="1.5"></lucide-icon>
               </span>
@@ -83,7 +83,7 @@ import { UiButtonComponent } from '../../shared/components/ui-button/ui-button.c
             </div>
           </div>
 
-          <div class="pt-2">
+          <div id="login-submit-btn-wrapper" class="pt-2">
             <app-ui-button
               type="submit"
               label="Giriş Yap"
@@ -95,13 +95,13 @@ import { UiButtonComponent } from '../../shared/components/ui-button/ui-button.c
         </form>
 
         <!-- Divider -->
-        <div class="relative">
-          <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-black/[0.05]"></div></div>
-          <div class="relative flex justify-center"><span class="bg-white px-3 text-[11px] text-stone-400 font-medium">veya sosyal hesabınızla</span></div>
+        <div id="login-social-divider" class="relative">
+          <div id="login-divider-line-bg" class="absolute inset-0 flex items-center"><div id="login-divider-line" class="w-full border-t border-black/[0.05]"></div></div>
+          <div id="login-divider-text-wrapper" class="relative flex justify-center"><span class="bg-white px-3 text-[11px] text-stone-400 font-medium">veya sosyal hesabınızla</span></div>
         </div>
 
         <!-- Social Logins (Monocle Style Outlined) -->
-        <div class="space-y-2.5">
+        <div id="login-social-buttons-box" class="space-y-2.5">
           <button
             type="button"
             (click)="signInWithGoogle()"
@@ -131,7 +131,7 @@ import { UiButtonComponent } from '../../shared/components/ui-button/ui-button.c
         </div>
 
         <!-- Demo Credentials Hint Box -->
-        <div class="p-4 bg-stone-50/80 border border-black/[0.05] rounded-2xl space-y-2 text-center">
+        <div id="login-demo-hint-box" class="p-4 bg-stone-50/80 border border-black/[0.05] rounded-2xl space-y-2 text-center">
           <p class="text-[11px] text-stone-500 font-medium">
             💡 <span class="font-bold text-stone-700">Hızlı Giriş İçin Test Bilgileri:</span>
             <span class="block text-stone-600 font-mono mt-0.5">demo&#64;gidiyorum.app / Gidiyorum2026!</span>
@@ -146,7 +146,7 @@ import { UiButtonComponent } from '../../shared/components/ui-button/ui-button.c
         </div>
 
         <!-- Footer Link -->
-        <div class="text-center pt-1">
+        <div id="login-footer-link-box" class="text-center pt-1">
           <p class="text-xs text-stone-500">
             Hesabınız yok mu?
             <a routerLink="/auth/register" class="font-bold text-obsidian hover:underline ml-1">Kayıt Olun</a>

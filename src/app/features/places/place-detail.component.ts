@@ -22,19 +22,19 @@ import { ItineraryItem } from '../../core/models';
   standalone: true,
   imports: [CommonModule, RouterLink, LucideAngularModule, HeaderComponent, UiCardComponent],
   template: `
-    <div class="min-h-screen bg-background pb-24">
+    <div id="place-detail-page" class="min-h-screen bg-background pb-24">
 
       <!-- Hero Mekan Fotoğrafı & Üst Butonlar -->
-      <div class="relative h-72 sm:h-80 w-full overflow-hidden bg-stone-900">
+      <div id="place-detail-hero-box" class="relative h-72 sm:h-80 w-full overflow-hidden bg-stone-900">
         <img
           [src]="placeData().imageUrl"
           [alt]="placeData().name"
           class="w-full h-full object-cover opacity-90"
         />
-        <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent"></div>
+        <div id="place-detail-hero-overlay" class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent"></div>
 
         <!-- Header Top Action Buttons -->
-        <div class="absolute top-4 left-4 right-4 flex justify-between items-center z-10">
+        <div id="place-detail-hero-actions-row" class="absolute top-4 left-4 right-4 flex justify-between items-center z-10">
           <button
             type="button"
             (click)="goBack()"
@@ -43,7 +43,7 @@ import { ItineraryItem } from '../../core/models';
             ←
           </button>
 
-          <div class="flex items-center gap-2">
+          <div id="place-detail-hero-right-actions" class="flex items-center gap-2">
             <button
               type="button"
               (click)="toggleFavorite()"
@@ -65,8 +65,8 @@ import { ItineraryItem } from '../../core/models';
         </div>
 
         <!-- Hero Bottom Badge Overlay -->
-        <div class="absolute bottom-6 left-6 right-6 text-white">
-          <div class="flex items-center gap-2 mb-2">
+        <div id="place-detail-hero-info-box" class="absolute bottom-6 left-6 right-6 text-white">
+          <div id="place-detail-hero-badge-row" class="flex items-center gap-2 mb-2">
             <span class="px-2.5 py-0.5 bg-gold text-stone-950 text-[10px] font-bold rounded-full flex items-center gap-1 shadow-sm uppercase tracking-wider">
               <lucide-icon [img]="StarIcon" [size]="11" class="text-stone-950"></lucide-icon>
               {{ placeData().rating }} ★
@@ -83,7 +83,7 @@ import { ItineraryItem } from '../../core/models';
       </div>
 
       <!-- Main Content Container -->
-      <div class="max-w-2xl mx-auto px-4 py-8 space-y-6">
+      <div id="place-detail-content-container" class="max-w-2xl mx-auto px-4 py-8 space-y-6">
 
         <!-- Tag Listesi (Monocle Pill Style) -->
         <section class="flex flex-wrap gap-2">
@@ -96,7 +96,7 @@ import { ItineraryItem } from '../../core/models';
 
         <!-- Açıklama Metni -->
         <app-ui-card>
-          <div class="space-y-2">
+          <div id="place-detail-about-box" class="space-y-2">
             <h2 class="font-bold text-stone-950 text-xs tracking-wider uppercase">Hakkında</h2>
             <p class="text-xs sm:text-sm text-stone-600 leading-relaxed">
               {{ placeData().description }}
@@ -108,47 +108,47 @@ import { ItineraryItem } from '../../core/models';
         <section class="space-y-3">
           <h2 class="font-bold text-stone-950 text-xs tracking-wider uppercase">Mekan Bilgileri</h2>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div id="place-detail-info-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
 
             <!-- 🕒 Çalışma Saatleri -->
-            <div class="bg-white p-3.5 rounded-3xl border border-black/[0.05] shadow-subtle flex items-center gap-3">
-              <div class="w-9 h-9 rounded-2xl bg-stone-100 text-stone-900 flex items-center justify-center flex-shrink-0">
+            <div id="place-detail-info-hours-card" class="bg-white p-3.5 rounded-3xl border border-black/[0.05] shadow-subtle flex items-center gap-3">
+              <div id="place-detail-info-hours-icon" class="w-9 h-9 rounded-2xl bg-stone-100 text-stone-900 flex items-center justify-center flex-shrink-0">
                 <lucide-icon [img]="ClockIcon" [size]="16" strokeWidth="1.5"></lucide-icon>
               </div>
-              <div>
+              <div id="place-detail-info-hours-text">
                 <span class="text-[10px] text-stone-400 font-medium block">Çalışma Saatleri</span>
                 <span class="text-xs font-bold text-stone-950">{{ placeData().openingHours }}</span>
               </div>
             </div>
 
             <!-- 💳 Ortalama Fiyat -->
-            <div class="bg-white p-3.5 rounded-3xl border border-black/[0.05] shadow-subtle flex items-center gap-3">
-              <div class="w-9 h-9 rounded-2xl bg-stone-100 text-stone-900 flex items-center justify-center flex-shrink-0">
+            <div id="place-detail-info-price-card" class="bg-white p-3.5 rounded-3xl border border-black/[0.05] shadow-subtle flex items-center gap-3">
+              <div id="place-detail-info-price-icon" class="w-9 h-9 rounded-2xl bg-stone-100 text-stone-900 flex items-center justify-center flex-shrink-0">
                 <lucide-icon [img]="CreditCardIcon" [size]="16" strokeWidth="1.5"></lucide-icon>
               </div>
-              <div>
+              <div id="place-detail-info-price-text">
                 <span class="text-[10px] text-stone-400 font-medium block">Ortalama Fiyat</span>
                 <span class="text-xs font-bold text-stone-950">{{ placeData().averagePrice }}</span>
               </div>
             </div>
 
             <!-- 📅 Rezervasyon -->
-            <div class="bg-white p-3.5 rounded-3xl border border-black/[0.05] shadow-subtle flex items-center gap-3">
-              <div class="w-9 h-9 rounded-2xl bg-stone-100 text-stone-900 flex items-center justify-center flex-shrink-0">
+            <div id="place-detail-info-res-card" class="bg-white p-3.5 rounded-3xl border border-black/[0.05] shadow-subtle flex items-center gap-3">
+              <div id="place-detail-info-res-icon" class="w-9 h-9 rounded-2xl bg-stone-100 text-stone-900 flex items-center justify-center flex-shrink-0">
                 <lucide-icon [img]="CalendarIcon" [size]="16" strokeWidth="1.5"></lucide-icon>
               </div>
-              <div>
+              <div id="place-detail-info-res-text">
                 <span class="text-[10px] text-stone-400 font-medium block">Rezervasyon</span>
                 <span class="text-xs font-bold text-stone-950">{{ placeData().reservation }}</span>
               </div>
             </div>
 
             <!-- 📍 Mesafe -->
-            <div class="bg-white p-3.5 rounded-3xl border border-black/[0.05] shadow-subtle flex items-center gap-3">
-              <div class="w-9 h-9 rounded-2xl bg-stone-100 text-stone-900 flex items-center justify-center flex-shrink-0">
+            <div id="place-detail-info-dist-card" class="bg-white p-3.5 rounded-3xl border border-black/[0.05] shadow-subtle flex items-center gap-3">
+              <div id="place-detail-info-dist-icon" class="w-9 h-9 rounded-2xl bg-stone-100 text-stone-900 flex items-center justify-center flex-shrink-0">
                 <lucide-icon [img]="MapPinIcon" [size]="16" strokeWidth="1.5"></lucide-icon>
               </div>
-              <div>
+              <div id="place-detail-info-dist-text">
                 <span class="text-[10px] text-stone-400 font-medium block">Mesafe</span>
                 <span class="text-xs font-bold text-stone-950">{{ placeData().distance }}</span>
               </div>
@@ -161,10 +161,11 @@ import { ItineraryItem } from '../../core/models';
 
       <!-- Alt Sabit Butonlar (Quiet Luxury Action Bar) -->
       <div
+        id="place-detail-bottom-bar"
         class="fixed bottom-0 left-0 right-0 z-40 bg-[#F9F8F6]/95 backdrop-blur-md border-t border-black/[0.06] px-4 py-3 shadow-lg"
         style="padding-bottom: max(12px, env(safe-area-inset-bottom))"
       >
-        <div class="max-w-2xl mx-auto grid grid-cols-2 gap-3">
+        <div id="place-detail-bottom-bar-inner" class="max-w-2xl mx-auto grid grid-cols-2 gap-3">
           <!-- Outlined Yol Tarifi Butonu -->
           <button
             type="button"

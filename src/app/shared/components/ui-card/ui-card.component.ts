@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   template: `
     <div
+      id="ui-card-container"
       class="bg-white rounded-3xl border border-black/[0.05] transition-all duration-300"
       [class.shadow-subtle]="elevated"
       [class.shadow-luxe]="hoverable"

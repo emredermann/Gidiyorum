@@ -9,7 +9,7 @@ import { AuthService } from './core/services/auth.service';
   standalone: true,
   imports: [RouterOutlet, BottomNavComponent, SidebarComponent],
   template: `
-    <div class="flex h-screen overflow-hidden bg-background">
+    <div id="app-root-layout" class="flex h-screen overflow-hidden bg-background">
       <!-- Sidebar — visible on md+ screens only when authenticated -->
       @if (authService.isAuthenticated()) {
         <app-sidebar></app-sidebar>
@@ -21,7 +21,7 @@ import { AuthService } from './core/services/auth.service';
 
         <!-- Spacer so content isn't hidden behind bottom-nav on mobile -->
         @if (authService.isAuthenticated()) {
-          <div class="h-16 md:hidden"></div>
+          <div id="app-mobile-nav-spacer" class="h-16 md:hidden"></div>
         }
       </main>
     </div>

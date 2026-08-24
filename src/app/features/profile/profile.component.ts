@@ -16,8 +16,10 @@ import {
   LogOut,
   ChevronRight,
   Sparkles,
+  Moon,
 } from 'lucide-angular';
 import { AuthService } from '../../core/services/auth.service';
+import { ThemeService } from '../../core/services/theme.service';
 import { HeaderComponent } from '../../shared/components/header/header.component';
 import { UiCardComponent } from '../../shared/components/ui-card/ui-card.component';
 
@@ -33,18 +35,18 @@ import { UiCardComponent } from '../../shared/components/ui-card/ui-card.compone
     UiCardComponent,
   ],
   template: `
-    <div class="min-h-screen bg-background pb-24">
+    <div id="profile-page-container" class="min-h-screen bg-background pb-24">
       <app-header title="Profilim" [showNotifications]="true"></app-header>
 
-      <div class="max-w-2xl mx-auto px-4 py-8 space-y-6">
+      <div id="profile-content-wrapper" class="max-w-2xl mx-auto px-4 py-8 space-y-6">
 
         <!-- 1. Profil Başlığı & Bilgi Kartı (Monocle Style) -->
-        <div class="bg-white rounded-3xl p-6 border border-black/[0.06] shadow-luxe relative">
+        <div id="profile-user-card" class="bg-white rounded-3xl p-6 border border-black/[0.06] shadow-luxe relative">
 
-          <div class="flex flex-col sm:flex-row items-center gap-5 text-center sm:text-left">
+          <div id="profile-user-header-row" class="flex flex-col sm:flex-row items-center gap-5 text-center sm:text-left">
             <!-- Avatar & Change Button -->
-            <div class="relative">
-              <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden border-2 border-black/[0.08] shadow-subtle bg-stone-100 flex items-center justify-center">
+            <div id="profile-avatar-box" class="relative">
+              <div id="profile-avatar-img-wrapper" class="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden border-2 border-black/[0.08] shadow-subtle bg-stone-100 flex items-center justify-center">
                 <img
                   [src]="avatarUrl()"
                   alt="Profil Fotoğrafı"
@@ -58,8 +60,8 @@ import { UiCardComponent } from '../../shared/components/ui-card/ui-card.compone
             </div>
 
             <!-- Name, Email, Edit Info -->
-            <div class="flex-1 min-w-0">
-              <div class="flex items-center justify-center sm:justify-start gap-2">
+            <div id="profile-user-info-col" class="flex-1 min-w-0">
+              <div id="profile-user-name-row" class="flex items-center justify-center sm:justify-start gap-2">
                 <h2 class="text-xl font-serif-luxe font-normal text-stone-950 tracking-tight">{{ userName() }}</h2>
                 <button
                   type="button"
@@ -76,7 +78,7 @@ import { UiCardComponent } from '../../shared/components/ui-card/ui-card.compone
                 {{ userEmail() }}
               </p>
 
-              <div class="mt-2.5 inline-flex items-center gap-1.5 px-3 py-1 bg-gold text-stone-950 rounded-full text-[10px] font-bold uppercase tracking-wider shadow-sm">
+              <div id="profile-user-badge-wrapper" class="mt-2.5 inline-flex items-center gap-1.5 px-3 py-1 bg-gold text-stone-950 rounded-full text-[10px] font-bold uppercase tracking-wider shadow-sm">
                 <lucide-icon [img]="SparklesIcon" [size]="11" strokeWidth="1.5"></lucide-icon>
                 <span>Concierge Elite Üye</span>
               </div>
@@ -84,20 +86,20 @@ import { UiCardComponent } from '../../shared/components/ui-card/ui-card.compone
           </div>
 
           <!-- Hızlı İstatistik Rozetleri (Monocle 3'lü Grid) -->
-          <div class="grid grid-cols-3 gap-3 mt-6 pt-5 border-t border-black/[0.05]">
-            <div class="bg-stone-50 p-3 rounded-2xl text-center border border-black/[0.03]">
+          <div id="profile-stats-grid" class="grid grid-cols-3 gap-3 mt-6 pt-5 border-t border-black/[0.05]">
+            <div id="profile-stat-trips-card" class="bg-stone-50 p-3 rounded-2xl text-center border border-black/[0.03]">
               <span class="text-base mb-0.5 block">✈️</span>
               <span class="text-base font-extrabold text-stone-950 block">12</span>
               <span class="text-[10px] text-stone-400 font-medium uppercase tracking-wider">Seyahat</span>
             </div>
 
-            <div class="bg-stone-50 p-3 rounded-2xl text-center border border-black/[0.03]">
+            <div id="profile-stat-places-card" class="bg-stone-50 p-3 rounded-2xl text-center border border-black/[0.03]">
               <span class="text-base mb-0.5 block">📍</span>
               <span class="text-base font-extrabold text-stone-950 block">34</span>
               <span class="text-[10px] text-stone-400 font-medium uppercase tracking-wider">Mekan</span>
             </div>
 
-            <div class="bg-stone-50 p-3 rounded-2xl text-center border border-black/[0.03]">
+            <div id="profile-stat-cities-card" class="bg-stone-50 p-3 rounded-2xl text-center border border-black/[0.03]">
               <span class="text-base mb-0.5 block">🌍</span>
               <span class="text-base font-extrabold text-stone-950 block">8</span>
               <span class="text-[10px] text-stone-400 font-medium uppercase tracking-wider">Şehir</span>
@@ -108,16 +110,16 @@ import { UiCardComponent } from '../../shared/components/ui-card/ui-card.compone
 
         <!-- 2. Tercihler & Özelleştirme Bölümü -->
         <app-ui-card>
-          <div class="space-y-4">
-            <div class="flex items-center justify-between border-b border-black/[0.05] pb-3.5">
+          <div id="profile-preferences-card-inner" class="space-y-4">
+            <div id="profile-preferences-header" class="flex items-center justify-between border-b border-black/[0.05] pb-3.5">
               <h3 class="font-bold text-stone-950 text-xs tracking-wider uppercase">Varsayılan Seyahat Tercihlerim</h3>
               <span class="text-xs text-stone-900 font-bold">Güncelle</span>
             </div>
 
             <!-- Tags Selection (Monocle Pill Style) -->
-            <div>
+            <div id="profile-interests-group">
               <label class="text-[11px] font-semibold text-stone-400 uppercase tracking-wider mb-2 block">Favori İlgi Alanları</label>
-              <div class="flex flex-wrap gap-2">
+              <div id="profile-interests-pill-list" class="flex flex-wrap gap-2">
                 @for (tag of availableTags; track tag) {
                   <button
                     type="button"
@@ -135,8 +137,8 @@ import { UiCardComponent } from '../../shared/components/ui-card/ui-card.compone
             </div>
 
             <!-- Tempo & Bütçe Options -->
-            <div class="grid grid-cols-2 gap-3 pt-2">
-              <div>
+            <div id="profile-tempo-budget-grid" class="grid grid-cols-2 gap-3 pt-2">
+              <div id="profile-pace-field-group">
                 <label class="text-[11px] font-semibold text-stone-400 uppercase tracking-wider mb-1.5 block">Yürüme Hızı</label>
                 <select
                   [(ngModel)]="selectedPace"
@@ -148,7 +150,7 @@ import { UiCardComponent } from '../../shared/components/ui-card/ui-card.compone
                 </select>
               </div>
 
-              <div>
+              <div id="profile-budget-field-group">
                 <label class="text-[11px] font-semibold text-stone-400 uppercase tracking-wider mb-1.5 block">Varsayılan Bütçe</label>
                 <select
                   [(ngModel)]="selectedBudget"
@@ -165,15 +167,32 @@ import { UiCardComponent } from '../../shared/components/ui-card/ui-card.compone
         </app-ui-card>
 
         <!-- 3. Uygulama Ayarları Menüsü (Quiet Luxury List Tile) -->
-        <div class="bg-white rounded-3xl border border-black/[0.06] shadow-subtle overflow-hidden divide-y divide-black/[0.04]">
+        <div id="profile-settings-list-box" class="bg-white rounded-3xl border border-black/[0.06] shadow-subtle overflow-hidden divide-y divide-black/[0.04]">
+
+          <!-- Tile 0: Koyu Tema (Dark Mode) -->
+          <div id="profile-tile-dark-mode" class="flex items-center justify-between p-4 hover:bg-stone-50 transition-colors">
+            <div id="profile-tile-dark-mode-left" class="flex items-center gap-3.5">
+              <div id="profile-tile-dark-mode-icon" class="w-9 h-9 rounded-2xl bg-stone-100 text-stone-900 flex items-center justify-center flex-shrink-0">
+                <lucide-icon [img]="MoonIcon" [size]="16" strokeWidth="1.5"></lucide-icon>
+              </div>
+              <div id="profile-tile-dark-mode-text">
+                <span class="text-xs font-bold text-stone-950 block">Koyu Tema (Dark Mode)</span>
+                <span class="text-[11px] text-stone-400">Obsidian gece renk temasına geçin</span>
+              </div>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" [ngModel]="theme.darkMode()" (ngModelChange)="theme.toggleDarkMode()" class="sr-only peer" />
+              <div class="w-11 h-6 bg-stone-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-stone-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-obsidian"></div>
+            </label>
+          </div>
 
           <!-- Tile 1: Çevrimdışı Haritalar -->
-          <div class="flex items-center justify-between p-4 hover:bg-stone-50 transition-colors">
-            <div class="flex items-center gap-3.5">
-              <div class="w-9 h-9 rounded-2xl bg-stone-100 text-stone-900 flex items-center justify-center flex-shrink-0">
+          <div id="profile-tile-offline" class="flex items-center justify-between p-4 hover:bg-stone-50 transition-colors">
+            <div id="profile-tile-offline-left" class="flex items-center gap-3.5">
+              <div id="profile-tile-offline-icon" class="w-9 h-9 rounded-2xl bg-stone-100 text-stone-900 flex items-center justify-center flex-shrink-0">
                 <lucide-icon [img]="WifiOffIcon" [size]="16" strokeWidth="1.5"></lucide-icon>
               </div>
-              <div>
+              <div id="profile-tile-offline-text">
                 <span class="text-xs font-bold text-stone-950 block">Çevrimdışı Haritalar & Veriler</span>
                 <span class="text-[11px] text-stone-400">İnternet olmadan rotaları görüntüleyin</span>
               </div>
@@ -185,12 +204,12 @@ import { UiCardComponent } from '../../shared/components/ui-card/ui-card.compone
           </div>
 
           <!-- Tile 2: Bildirim Tercihleri -->
-          <div class="flex items-center justify-between p-4 hover:bg-stone-50 transition-colors">
-            <div class="flex items-center gap-3.5">
-              <div class="w-9 h-9 rounded-2xl bg-stone-100 text-stone-900 flex items-center justify-center flex-shrink-0">
+          <div id="profile-tile-notifications" class="flex items-center justify-between p-4 hover:bg-stone-50 transition-colors">
+            <div id="profile-tile-notifications-left" class="flex items-center gap-3.5">
+              <div id="profile-tile-notifications-icon" class="w-9 h-9 rounded-2xl bg-stone-100 text-stone-900 flex items-center justify-center flex-shrink-0">
                 <lucide-icon [img]="BellIcon" [size]="16" strokeWidth="1.5"></lucide-icon>
               </div>
-              <div>
+              <div id="profile-tile-notifications-text">
                 <span class="text-xs font-bold text-stone-950 block">Bildirim Tercihleri</span>
                 <span class="text-[11px] text-stone-400">Concierge rota hatırlatmaları</span>
               </div>
@@ -207,11 +226,11 @@ import { UiCardComponent } from '../../shared/components/ui-card/ui-card.compone
             (click)="openLangCurrency()"
             class="w-full flex items-center justify-between p-4 hover:bg-stone-50 transition-colors text-left"
           >
-            <div class="flex items-center gap-3.5">
-              <div class="w-9 h-9 rounded-2xl bg-stone-100 text-stone-900 flex items-center justify-center flex-shrink-0">
+            <div id="profile-tile-lang-left" class="flex items-center gap-3.5">
+              <div id="profile-tile-lang-icon" class="w-9 h-9 rounded-2xl bg-stone-100 text-stone-900 flex items-center justify-center flex-shrink-0">
                 <lucide-icon [img]="GlobeIcon" [size]="16" strokeWidth="1.5"></lucide-icon>
               </div>
-              <div>
+              <div id="profile-tile-lang-text">
                 <span class="text-xs font-bold text-stone-950 block">Dil ve Para Birimi</span>
                 <span class="text-[11px] text-stone-400">Türkçe / EUR (€)</span>
               </div>
@@ -224,11 +243,11 @@ import { UiCardComponent } from '../../shared/components/ui-card/ui-card.compone
             routerLink="/places/place-roscioli-120"
             class="flex items-center justify-between p-4 hover:bg-stone-50 transition-colors"
           >
-            <div class="flex items-center gap-3.5">
-              <div class="w-9 h-9 rounded-2xl bg-stone-100 text-stone-900 flex items-center justify-center flex-shrink-0">
+            <div id="profile-tile-saved-left" class="flex items-center gap-3.5">
+              <div id="profile-tile-saved-icon" class="w-9 h-9 rounded-2xl bg-stone-100 text-stone-900 flex items-center justify-center flex-shrink-0">
                 <lucide-icon [img]="BookmarkIcon" [size]="16" strokeWidth="1.5"></lucide-icon>
               </div>
-              <div>
+              <div id="profile-tile-saved-text">
                 <span class="text-xs font-bold text-stone-950 block">Kayıtlı Mekanlarım & Favoriler</span>
                 <span class="text-[11px] text-stone-400">18 seçkin mekan kaydedildi</span>
               </div>
@@ -242,11 +261,11 @@ import { UiCardComponent } from '../../shared/components/ui-card/ui-card.compone
             (click)="openPrivacy()"
             class="w-full flex items-center justify-between p-4 hover:bg-stone-50 transition-colors text-left"
           >
-            <div class="flex items-center gap-3.5">
-              <div class="w-9 h-9 rounded-2xl bg-stone-100 text-stone-900 flex items-center justify-center flex-shrink-0">
+            <div id="profile-tile-privacy-left" class="flex items-center gap-3.5">
+              <div id="profile-tile-privacy-icon" class="w-9 h-9 rounded-2xl bg-stone-100 text-stone-900 flex items-center justify-center flex-shrink-0">
                 <lucide-icon [img]="ShieldCheckIcon" [size]="16" strokeWidth="1.5"></lucide-icon>
               </div>
-              <div>
+              <div id="profile-tile-privacy-text">
                 <span class="text-xs font-bold text-stone-950 block">Gizlilik & Güvenlik</span>
                 <span class="text-[11px] text-stone-400">Hesap güvenliği ve veri izinleri</span>
               </div>
@@ -260,11 +279,11 @@ import { UiCardComponent } from '../../shared/components/ui-card/ui-card.compone
             (click)="openHelp()"
             class="w-full flex items-center justify-between p-4 hover:bg-stone-50 transition-colors text-left"
           >
-            <div class="flex items-center gap-3.5">
-              <div class="w-9 h-9 rounded-2xl bg-stone-100 text-stone-900 flex items-center justify-center flex-shrink-0">
+            <div id="profile-tile-help-left" class="flex items-center gap-3.5">
+              <div id="profile-tile-help-icon" class="w-9 h-9 rounded-2xl bg-stone-100 text-stone-900 flex items-center justify-center flex-shrink-0">
                 <lucide-icon [img]="HelpCircleIcon" [size]="16" strokeWidth="1.5"></lucide-icon>
               </div>
-              <div>
+              <div id="profile-tile-help-text">
                 <span class="text-xs font-bold text-stone-950 block">Yardım & Destek</span>
                 <span class="text-[11px] text-stone-400">SSS ve Concierge canlı destek</span>
               </div>
@@ -275,7 +294,7 @@ import { UiCardComponent } from '../../shared/components/ui-card/ui-card.compone
         </div>
 
         <!-- 4. Alt Kısım: Çıkış Yap & Sürüm Bilgisi -->
-        <div class="space-y-4 pt-2">
+        <div id="profile-footer-box" class="space-y-4 pt-2">
           <!-- Çıkış Yap Button -->
           <button
             type="button"
@@ -287,7 +306,7 @@ import { UiCardComponent } from '../../shared/components/ui-card/ui-card.compone
           </button>
 
           <!-- Sürüm Bilgisi -->
-          <div class="text-center space-y-0.5">
+          <div id="profile-version-text-box" class="text-center space-y-0.5">
             <p class="text-[10px] font-bold text-stone-400 tracking-wider uppercase font-serif-luxe">Gidiyorum Concierge</p>
             <p class="text-[10px] text-stone-400">Sürüm v1.0.0 · Monocle Edition 2026</p>
           </div>
@@ -300,6 +319,7 @@ import { UiCardComponent } from '../../shared/components/ui-card/ui-card.compone
 export class ProfileComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
+  theme = inject(ThemeService);
 
   private customName = signal<string | null>(null);
   private customAvatar = signal<string | null>(null);
@@ -329,6 +349,7 @@ export class ProfileComponent {
   protected HelpCircleIcon = HelpCircle;
   protected LogOutIcon = LogOut;
   protected ChevronRightIcon = ChevronRight;
+  protected MoonIcon = Moon;
 
   toggleTag(tag: string) {
     this.userTags.update(tags => {

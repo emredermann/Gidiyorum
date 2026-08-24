@@ -45,13 +45,13 @@ export interface DayOption {
     UiCardComponent,
   ],
   template: `
-    <div class="min-h-screen bg-background pb-20">
+    <div id="daily-route-page" class="min-h-screen bg-background pb-20">
       <!-- 1. Üst Alan & Başlık -->
       <app-header title="Bugünkü Rotam 📍" [showNotifications]="true"></app-header>
 
       <!-- Gün Seçici (Monocle Style Pill Tabs) -->
-      <div class="bg-[#F9F8F6]/90 backdrop-blur-md border-b border-black/[0.05] sticky top-14 z-30">
-        <div class="flex items-center gap-2 px-4 py-3 overflow-x-auto hide-scrollbar max-w-2xl mx-auto">
+      <div id="daily-route-day-picker-sticky" class="bg-[#F9F8F6]/90 backdrop-blur-md border-b border-black/[0.05] sticky top-14 z-30">
+        <div id="daily-route-day-picker-container" class="flex items-center gap-2 px-4 py-3 overflow-x-auto hide-scrollbar max-w-2xl mx-auto">
           @for (day of dayOptions; track day.id) {
             <button
               type="button"
@@ -79,13 +79,13 @@ export interface DayOption {
       </div>
 
       <!-- 2. Harita Bileşeni (Monocle / Airbnb Luxe Style Map) -->
-      <div class="relative w-full h-64 sm:h-80 bg-stone-100 border-b border-black/[0.05] overflow-hidden">
+      <div id="daily-route-map-wrapper" class="relative w-full h-64 sm:h-80 bg-stone-100 border-b border-black/[0.05] overflow-hidden">
         <div id="daily-route-map" class="w-full h-full"></div>
 
         <!-- Harita Yükleniyor Overlay -->
         @if (!mapLoaded()) {
-          <div class="absolute inset-0 bg-[#F2F0EB] flex items-center justify-center pointer-events-none">
-            <div class="text-center">
+          <div id="daily-route-map-loading-overlay" class="absolute inset-0 bg-[#F2F0EB] flex items-center justify-center pointer-events-none">
+            <div id="daily-route-map-loading-box" class="text-center">
               <span class="text-3xl animate-bounce">🗺️</span>
               <p class="text-xs font-semibold text-stone-500 mt-2">Harita Yükleniyor...</p>
             </div>
@@ -93,7 +93,7 @@ export interface DayOption {
         }
 
         <!-- Quiet Luxury Floating City Info Pill -->
-        <div class="absolute top-4 left-4 z-10 bg-white/90 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-black/[0.05] shadow-subtle flex items-center gap-2">
+        <div id="daily-route-city-pill" class="absolute top-4 left-4 z-10 bg-white/90 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-black/[0.05] shadow-subtle flex items-center gap-2">
           <span class="text-xs">🇮🇹</span>
           <span class="text-xs font-bold text-stone-950">Roma Rota Haritası</span>
           <span class="text-[10px] text-stone-900 font-bold px-2 py-0.5 bg-stone-100 rounded-full border border-black/[0.05]">
@@ -103,10 +103,10 @@ export interface DayOption {
       </div>
 
       <!-- 3. Zaman Çizelgesi (Linear / Quiet Luxury Timeline) -->
-      <div class="max-w-2xl mx-auto px-4 py-8">
+      <div id="daily-route-timeline-container" class="max-w-2xl mx-auto px-4 py-8">
 
-        <div class="flex items-center justify-between mb-6">
-          <div>
+        <div id="daily-route-timeline-header" class="flex items-center justify-between mb-6">
+          <div id="daily-route-timeline-title-box">
             <h2 class="text-base font-bold text-stone-950 tracking-tight">Günün Akışı ⏰</h2>
             <p class="text-xs text-stone-500">Saat saat optimize edilmiş rotanız</p>
           </div>
@@ -116,28 +116,28 @@ export interface DayOption {
         </div>
 
         <!-- Timeline Container -->
-        <div class="relative pl-3 space-y-6">
+        <div id="daily-route-timeline-list" class="relative pl-3 space-y-6">
 
           <!-- Hairline Vertical Line -->
-          <div class="absolute left-6 top-3 bottom-6 w-px bg-black/[0.08]"></div>
+          <div id="daily-route-timeline-vertical-line" class="absolute left-6 top-3 bottom-6 w-px bg-black/[0.08]"></div>
 
           @for (item of currentSchedule(); track item.id; let i = $index) {
-            <div class="relative flex items-start gap-4 group">
+            <div [id]="'daily-route-item-row-' + item.id" class="relative flex items-start gap-4 group">
 
               <!-- Monocle Donut Marker Ring Node -->
-              <div class="relative z-10 flex-shrink-0 w-7 h-7 rounded-full bg-obsidian text-white font-bold text-xs flex items-center justify-center shadow-sm border-2 border-white ring-1 ring-black/10">
+              <div [id]="'daily-route-marker-node-' + item.id" class="relative z-10 flex-shrink-0 w-7 h-7 rounded-full bg-obsidian text-white font-bold text-xs flex items-center justify-center shadow-sm border-2 border-white ring-1 ring-black/10">
                 {{ i + 1 }}
               </div>
 
               <!-- Content Card -->
-              <div class="flex-1 bg-white rounded-3xl p-4 border border-black/[0.05] shadow-subtle hover:shadow-luxe transition-all duration-300">
+              <div [id]="'daily-route-item-card-' + item.id" class="flex-1 bg-white rounded-3xl p-4 border border-black/[0.05] shadow-subtle hover:shadow-luxe transition-all duration-300">
 
-                <div class="flex items-start justify-between gap-3">
+                <div [id]="'daily-route-card-content-' + item.id" class="flex items-start justify-between gap-3">
                   <!-- Sol / Orta Alan -->
-                  <div class="flex-1 min-w-0">
+                  <div [id]="'daily-route-card-main-' + item.id" class="flex-1 min-w-0">
 
                     <!-- Saat & Kategori Badges -->
-                    <div class="flex items-center flex-wrap gap-2 mb-1.5">
+                    <div [id]="'daily-route-card-badges-' + item.id" class="flex items-center flex-wrap gap-2 mb-1.5">
                       <span class="inline-flex items-center gap-1 font-bold text-xs px-2.5 py-0.5 bg-stone-100 text-stone-900 rounded-full">
                         <lucide-icon [img]="ClockIcon" [size]="12" strokeWidth="1.5"></lucide-icon>
                         {{ item.time }}
@@ -161,7 +161,7 @@ export interface DayOption {
                     </p>
 
                     <!-- Süre & Yürüyüş Detayları -->
-                    <div class="flex items-center gap-3 mt-3 pt-2.5 border-t border-black/[0.04] text-[11px] text-stone-400 font-medium">
+                    <div [id]="'daily-route-card-duration-' + item.id" class="flex items-center gap-3 mt-3 pt-2.5 border-t border-black/[0.04] text-[11px] text-stone-400 font-medium">
                       <span class="flex items-center gap-1">⏱️ {{ item.duration }}</span>
                       <span>•</span>
                       <span class="flex items-center gap-1">{{ item.walkingInfo }}</span>
@@ -169,7 +169,7 @@ export interface DayOption {
                   </div>
 
                   <!-- Sağ Alan: Yuvarlak Küçük Önizleme Görseli -->
-                  <div class="relative flex-shrink-0">
+                  <div [id]="'daily-route-card-thumb-' + item.id" class="relative flex-shrink-0">
                     <a [routerLink]="['/places', item.id]">
                       <img
                         [src]="item.imageUrl"
@@ -181,7 +181,7 @@ export interface DayOption {
                 </div>
 
                 <!-- Yol Tarifi Al Butonu -->
-                <div class="mt-3 text-right">
+                <div [id]="'daily-route-card-action-' + item.id" class="mt-3 text-right">
                   <button
                     type="button"
                     (click)="openGoogleMaps(item)"

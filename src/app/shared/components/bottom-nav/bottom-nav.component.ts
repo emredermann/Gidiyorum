@@ -8,7 +8,7 @@ import { LucideAngularModule, MapPin, Sparkles, Plus, Compass, User } from 'luci
   imports: [RouterLink, RouterLinkActive, LucideAngularModule],
   template: `
     <nav class="fixed bottom-0 left-0 right-0 z-50 bg-[#F9F8F6]/90 backdrop-blur-md border-t border-black/[0.06] md:hidden">
-      <div class="flex items-center justify-around h-16 px-2 max-w-md mx-auto">
+      <div id="bottom-nav-container" class="flex items-center justify-around h-16 px-2 max-w-md mx-auto">
         <!-- Keşfet / Seyahatler -->
         <a [routerLink]="'/trips'" routerLinkActive="text-obsidian font-bold" #r1="routerLinkActive"
            class="relative flex flex-col items-center gap-1 px-3 py-2 text-stone-400 transition-colors duration-200 hover:text-obsidian">
@@ -32,7 +32,7 @@ import { LucideAngularModule, MapPin, Sparkles, Plus, Compass, User } from 'luci
         <!-- Yeni Plan -->
         <a [routerLink]="'/planner/preferences'" routerLinkActive="text-obsidian font-bold" #r3="routerLinkActive"
            class="relative flex flex-col items-center gap-1 px-3 py-2 text-stone-400 transition-colors duration-200 hover:text-obsidian">
-          <div class="w-8 h-8 rounded-full bg-obsidian text-white flex items-center justify-center shadow-sm">
+          <div id="bottom-nav-plus-icon-wrapper" class="w-8 h-8 rounded-full bg-obsidian text-white flex items-center justify-center shadow-sm">
             <lucide-icon [img]="PlusIcon" [size]="16" strokeWidth="1.75"></lucide-icon>
           </div>
         </a>

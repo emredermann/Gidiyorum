@@ -24,8 +24,8 @@ import { CommonModule } from '@angular/common';
       [class.w-16]="collapsed()"
     >
       <!-- Monocle Style Logo Header -->
-      <div class="flex items-center gap-3 px-5 py-6 border-b border-black/[0.05] overflow-hidden">
-        <div class="w-8 h-8 rounded-xl bg-obsidian text-white flex items-center justify-center flex-shrink-0 shadow-sm">
+      <div id="sidebar-logo-header" class="flex items-center gap-3 px-5 py-6 border-b border-black/[0.05] overflow-hidden">
+        <div id="sidebar-globe-badge" class="w-8 h-8 rounded-xl bg-obsidian text-white flex items-center justify-center flex-shrink-0 shadow-sm">
           <lucide-icon [img]="GlobeIcon" [size]="16" strokeWidth="1.5"></lucide-icon>
         </div>
         @if (!collapsed()) {
