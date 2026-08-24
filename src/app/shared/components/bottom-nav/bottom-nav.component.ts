@@ -1,31 +1,40 @@
-import { Component } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { LucideAngularModule, MapPin, Sparkles, Plus, Compass, User } from 'lucide-angular';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-bottom-nav',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, LucideAngularModule],
+  imports: [RouterLink, RouterLinkActive, LucideAngularModule, CommonModule],
   template: `
     <nav class="fixed bottom-0 left-0 right-0 z-50 bg-[#F9F8F6]/90 backdrop-blur-md border-t border-black/[0.06] md:hidden">
       <div id="bottom-nav-container" class="flex items-center justify-around h-16 px-2 max-w-md mx-auto">
         <!-- Keşfet / Seyahatler -->
-        <a [routerLink]="'/trips'" routerLinkActive="text-obsidian font-bold" #r1="routerLinkActive"
-           class="relative flex flex-col items-center gap-1 px-3 py-2 text-stone-400 transition-colors duration-200 hover:text-obsidian">
+        <a [routerLink]="'/trips'"
+           [ngClass]="{
+             'text-obsidian font-bold dark:text-gold': isTripsActive(),
+             'text-stone-400': !isTripsActive()
+           }"
+           class="relative flex flex-col items-center gap-1 px-3 py-2 transition-colors duration-200 hover:text-obsidian">
           <lucide-icon [img]="CompassIcon" [size]="20" strokeWidth="1.5"></lucide-icon>
           <span class="text-[10px] tracking-tight">Keşfet</span>
-          @if (r1.isActive) {
-            <span class="absolute bottom-1 w-1 h-1 bg-obsidian rounded-full"></span>
+          @if (isTripsActive()) {
+            <span class="absolute bottom-1 w-1 h-1 bg-obsidian dark:bg-gold rounded-full"></span>
           }
         </a>
 
         <!-- Rotam -->
-        <a [routerLink]="'/itinerary'" routerLinkActive="text-obsidian font-bold" #r2="routerLinkActive"
-           class="relative flex flex-col items-center gap-1 px-3 py-2 text-stone-400 transition-colors duration-200 hover:text-obsidian">
+        <a [routerLink]="'/itinerary'"
+           [ngClass]="{
+             'text-obsidian font-bold dark:text-gold': isItineraryActive(),
+             'text-stone-400': !isItineraryActive()
+           }"
+           class="relative flex flex-col items-center gap-1 px-3 py-2 transition-colors duration-200 hover:text-obsidian">
           <lucide-icon [img]="MapPinIcon" [size]="20" strokeWidth="1.5"></lucide-icon>
           <span class="text-[10px] tracking-tight">Rotam</span>
-          @if (r2.isActive) {
-            <span class="absolute bottom-1 w-1 h-1 bg-obsidian rounded-full"></span>
+          @if (isItineraryActive()) {
+            <span class="absolute bottom-1 w-1 h-1 bg-obsidian dark:bg-gold rounded-full"></span>
           }
         </a>
 
@@ -61,9 +70,21 @@ import { LucideAngularModule, MapPin, Sparkles, Plus, Compass, User } from 'luci
   `,
 })
 export class BottomNavComponent {
+  private router = inject(Router);
+
   protected CompassIcon = Compass;
   protected MapPinIcon = MapPin;
   protected PlusIcon = Plus;
   protected SparklesIcon = Sparkles;
   protected UserIcon = User;
+
+  isTripsActive(): boolean {
+    const url = this.router.url;
+    return url === '/trips' || url === '/';
+  }
+
+  isItineraryActive(): boolean {
+    const url = this.router.url;
+    return url.includes('itinerary') || url.includes('daily-route');
+  }
 }

@@ -54,10 +54,10 @@ import { UiCardComponent } from '../../shared/components/ui-card/ui-card.compone
           <div id="plan-summary-banner-overlay" class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent"></div>
 
           <!-- Weather Badge -->
-          <div id="plan-summary-weather-badge" class="absolute top-4 right-4 bg-white/90 backdrop-blur-md px-3.5 py-1.5 rounded-full flex items-center gap-2 shadow-sm border border-black/[0.04]">
+          <div id="plan-summary-weather-badge" class="absolute top-4 right-4 bg-white/90 dark:bg-stone-900/90 backdrop-blur-md px-3.5 py-1.5 rounded-full flex items-center gap-2 shadow-sm border border-black/[0.04] dark:border-white/10">
             <span class="text-sm">🌤️</span>
-            <span class="text-xs font-bold text-stone-950">{{ summary().temperature }}</span>
-            <span class="text-[10px] text-stone-500 font-medium">Güneşli</span>
+            <span class="text-xs font-bold text-stone-950 dark:text-white">{{ summary().temperature }}</span>
+            <span class="text-[10px] text-stone-500 dark:text-stone-300 font-medium">Güneşli</span>
           </div>
 
           <!-- Main Title & Location Badge -->

@@ -60,8 +60,8 @@ import { HeaderComponent } from '../../shared/components/header/header.component
                 type="button"
                 (click)="planner.toggleInterest(item.label)"
                 [ngClass]="{
-                  'bg-obsidian text-white border-obsidian shadow-luxe': planner.selectedInterests().includes(item.label),
-                  'bg-white text-stone-900 border-black/[0.06] hover:border-stone-300': !planner.selectedInterests().includes(item.label)
+                  'bg-obsidian text-white border-obsidian dark:bg-[#2A241B] dark:text-white dark:border-gold dark:shadow-[0_4px_20px_rgba(197,168,128,0.25)]': planner.selectedInterests().includes(item.label),
+                  'bg-white text-stone-900 border-black/[0.06] dark:bg-[#181A1F] dark:text-stone-300 dark:border-white/10 hover:border-stone-300': !planner.selectedInterests().includes(item.label)
                 }"
                 class="relative flex flex-col items-start p-4 rounded-3xl border text-left transition-all duration-200"
               >
@@ -95,8 +95,8 @@ import { HeaderComponent } from '../../shared/components/header/header.component
                 type="button"
                 (click)="planner.setTravelStyle(opt.value)"
                 [ngClass]="{
-                  'bg-obsidian text-white border-obsidian': planner.travelStyle() === opt.value,
-                  'bg-white text-stone-900 border-black/[0.06]': planner.travelStyle() !== opt.value
+                  'bg-obsidian text-white border-obsidian dark:bg-[#2A241B] dark:text-white dark:border-gold dark:shadow-[0_4px_20px_rgba(197,168,128,0.25)]': planner.travelStyle() === opt.value,
+                  'bg-white text-stone-900 border-black/[0.06] dark:bg-[#181A1F] dark:text-stone-300 dark:border-white/10': planner.travelStyle() !== opt.value
                 }"
                 class="flex flex-col items-center justify-center p-4 rounded-3xl border text-center transition-all"
               >
@@ -121,8 +121,8 @@ import { HeaderComponent } from '../../shared/components/header/header.component
                 type="button"
                 (click)="planner.setDailyBudget(opt.value)"
                 [ngClass]="{
-                  'bg-obsidian text-white border-obsidian': planner.dailyBudget() === opt.value,
-                  'bg-white text-stone-900 border-black/[0.06]': planner.dailyBudget() !== opt.value
+                  'bg-obsidian text-white border-obsidian dark:bg-[#2A241B] dark:text-white dark:border-gold dark:shadow-[0_4px_20px_rgba(197,168,128,0.25)]': planner.dailyBudget() === opt.value,
+                  'bg-white text-stone-900 border-black/[0.06] dark:bg-[#181A1F] dark:text-stone-300 dark:border-white/10': planner.dailyBudget() !== opt.value
                 }"
                 class="flex flex-col items-center justify-center p-4 rounded-3xl border text-center transition-all"
               >
@@ -147,8 +147,8 @@ import { HeaderComponent } from '../../shared/components/header/header.component
                 type="button"
                 (click)="planner.setWalkingPreference(opt.value)"
                 [ngClass]="{
-                  'bg-obsidian text-white border-obsidian': planner.walkingPreference() === opt.value,
-                  'bg-white text-stone-900 border-black/[0.06]': planner.walkingPreference() !== opt.value
+                  'bg-obsidian text-white border-obsidian dark:bg-[#2A241B] dark:text-white dark:border-gold dark:shadow-[0_4px_20px_rgba(197,168,128,0.25)]': planner.walkingPreference() === opt.value,
+                  'bg-white text-stone-900 border-black/[0.06] dark:bg-[#181A1F] dark:text-stone-300 dark:border-white/10': planner.walkingPreference() !== opt.value
                 }"
                 class="flex flex-col items-center justify-center p-4 rounded-3xl border text-center transition-all"
               >
@@ -165,10 +165,10 @@ import { HeaderComponent } from '../../shared/components/header/header.component
           <button
             type="button"
             (click)="goToPlanSummary()"
-            class="w-full py-4 px-6 rounded-2xl bg-obsidian text-white font-bold text-sm hover:bg-stone-900 transition-all duration-200 shadow-luxe flex items-center justify-center gap-2"
+            class="w-full py-4 px-6 rounded-2xl bg-obsidian text-white font-bold text-sm hover:bg-stone-900 transition-all duration-200 shadow-luxe flex items-center justify-center gap-2 dark:bg-gold dark:text-stone-950 dark:hover:bg-gold-light"
           >
             <span>Planımı Oluştur</span>
-            <span class="text-gold">✦</span>
+            <span class="text-gold dark:text-stone-950">✦</span>
           </button>
         </div>
 

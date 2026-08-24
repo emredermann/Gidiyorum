@@ -93,7 +93,7 @@ export class TripPlannerService {
     };
   });
 
-  // Active created trips signal
+  // Active created trips signal (Diversified dummy data)
   readonly createdTrips = signal<any[]>([
     {
       id: 'trip-rome-01',
@@ -108,7 +108,7 @@ export class TripPlannerService {
     },
     {
       id: 'trip-barcelona-02',
-      title: 'Barselona Mimarisi ve Plaj Rotası',
+      title: 'Barselona Gaudi & Akdeniz Esintisi',
       city: 'Barselona',
       country: 'İspanya',
       dateRangeStr: '15 - 20 Temmuz 2026',
@@ -118,15 +118,70 @@ export class TripPlannerService {
       tags: ['Sanat', 'Plaj', 'Yemek'],
     },
     {
-      id: 'trip-paris-03',
-      title: 'Paris Sanat ve Gurme Turu',
+      id: 'trip-kyoto-03',
+      title: 'Kyoto & Tokyo Tapınaklar ve Gurme Turu',
+      city: 'Kyoto',
+      country: 'Japonya',
+      dateRangeStr: '12 - 20 Ekim 2026',
+      daysRemainingStr: '48 gün kaldı',
+      isUpcoming: true,
+      coverImage: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=800',
+      tags: ['Doğa', 'Kültür', 'Gastronomi'],
+    },
+    {
+      id: 'trip-amalfi-04',
+      title: 'Amalfi Kıyıları & Capri Tekne Rotaları',
+      city: 'Amalfi',
+      country: 'İtalya',
+      dateRangeStr: '05 - 10 Kasım 2026',
+      daysRemainingStr: '72 gün kaldı',
+      isUpcoming: true,
+      coverImage: 'https://images.unsplash.com/photo-1533105079780-92b9be482077?w=800',
+      tags: ['Manzara', 'Lüks', 'Deniz'],
+    },
+    {
+      id: 'trip-paris-05',
+      title: 'Paris Sanat, Moda & Gurme Turu',
       city: 'Paris',
       country: 'Fransa',
       dateRangeStr: '10 - 15 Mayıs 2026',
       daysRemainingStr: 'Tamamlandı',
       isUpcoming: false,
       coverImage: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800',
-      tags: ['Müze', 'Lüks'],
+      tags: ['Müze', 'Moda', 'Gurme'],
+    },
+    {
+      id: 'trip-copenhagen-06',
+      title: 'Kopenhag & İskandinav Tasarım Gezisi',
+      city: 'Kopenhag',
+      country: 'Danimarka',
+      dateRangeStr: '01 - 06 Nisan 2026',
+      daysRemainingStr: 'Tamamlandı',
+      isUpcoming: false,
+      coverImage: 'https://images.unsplash.com/photo-1513622470522-26c3c8a854bc?w=800',
+      tags: ['Tasarım', 'Kahve', 'Bisiklet'],
+    },
+    {
+      id: 'trip-cappadocia-07',
+      title: 'Kapadokya Balon & Peri Bacaları Turu',
+      city: 'Nevşehir',
+      country: 'Türkiye',
+      dateRangeStr: '18 - 22 Şubat 2026',
+      daysRemainingStr: 'Tamamlandı',
+      isUpcoming: false,
+      coverImage: 'https://images.unsplash.com/photo-1641128324972-af3212f0f6bd?w=800',
+      tags: ['Macera', 'Doğa', 'Fotoğraf'],
+    },
+    {
+      id: 'trip-london-08',
+      title: 'Londra Tiyatrolar & Müze Rotaları',
+      city: 'Londra',
+      country: 'İngiltere',
+      dateRangeStr: '05 - 10 Aralık 2025',
+      daysRemainingStr: 'Tamamlandı',
+      isUpcoming: false,
+      coverImage: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=800',
+      tags: ['Tiyatro', 'Müze', 'Alışveriş'],
     },
   ]);
 

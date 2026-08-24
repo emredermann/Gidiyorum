@@ -7,13 +7,15 @@ import {
   MapPin,
   Calendar,
   ChevronRight,
+  Sun,
+  Moon,
 } from 'lucide-angular';
 import { SupabaseService } from '../../core/services/supabase.service';
 import { HeaderComponent } from '../../shared/components/header/header.component';
 import { UiCardComponent } from '../../shared/components/ui-card/ui-card.component';
 import { UiButtonComponent } from '../../shared/components/ui-button/ui-button.component';
-
 import { TripPlannerService } from '../../core/services/trip-planner.service';
+import { ThemeService } from '../../core/services/theme.service';
 
 export interface TripCardData {
   id: string;
@@ -41,19 +43,32 @@ export interface TripCardData {
   template: `
     <div id="trips-page-container" class="min-h-screen bg-background pb-20">
 
-      <!-- Üst Header (Sağ Üstte + İkonu) -->
+      <!-- Üst Header (Tema Değiştirme & Yeni Seyahat Ekle) -->
       <header class="sticky top-0 z-40 bg-[#F9F8F6]/90 backdrop-blur-md border-b border-black/[0.05]">
         <div id="trips-header-inner" class="flex items-center justify-between px-4 h-14 max-w-2xl mx-auto">
           <h1 class="font-bold text-stone-950 text-base tracking-tight font-serif-luxe">Seyahatlerim</h1>
 
-          <a
-            routerLink="/planner/preferences"
-            class="w-8 h-8 bg-obsidian text-white rounded-full flex items-center justify-center shadow-sm hover:bg-stone-900 transition-all"
-            aria-label="Yeni Seyahat Ekle"
-            title="Yeni Seyahat Ekle"
-          >
-            <lucide-icon [img]="PlusIcon" [size]="16" strokeWidth="1.5"></lucide-icon>
-          </a>
+          <div id="trips-header-actions" class="flex items-center gap-2">
+            <!-- Tema Değiştirme Butonu -->
+            <button
+              type="button"
+              (click)="theme.toggleDarkMode()"
+              class="w-8 h-8 rounded-full bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 flex items-center justify-center shadow-sm hover:bg-stone-200 dark:hover:bg-stone-700 transition-all"
+              [title]="theme.darkMode() ? 'Aydınlık Temaya Geç' : 'Koyu Temaya Geç'"
+            >
+              <lucide-icon [img]="theme.darkMode() ? SunIcon : MoonIcon" [size]="16" strokeWidth="1.5"></lucide-icon>
+            </button>
+
+            <!-- Yeni Seyahat Ekle -->
+            <a
+              routerLink="/planner/preferences"
+              class="w-8 h-8 bg-obsidian text-white rounded-full flex items-center justify-center shadow-sm hover:bg-stone-900 transition-all"
+              aria-label="Yeni Seyahat Ekle"
+              title="Yeni Seyahat Ekle"
+            >
+              <lucide-icon [img]="PlusIcon" [size]="16" strokeWidth="1.5"></lucide-icon>
+            </a>
+          </div>
         </div>
       </header>
 
@@ -106,11 +121,11 @@ export interface TripCardData {
                 <!-- Kalan Gün Rozeti (Top Right) -->
                 <div [id]="'trips-card-badge-box-' + trip.id" class="absolute top-4 right-4 z-10">
                   @if (trip.isUpcoming) {
-                    <span class="px-3 py-1 rounded-full text-[11px] font-extrabold shadow-sm backdrop-blur-md bg-white/90 text-stone-950 inline-flex items-center gap-1 border border-black/[0.04]">
+                    <span class="px-3 py-1 rounded-full text-[11px] font-extrabold shadow-sm backdrop-blur-md bg-white/90 dark:bg-stone-900/90 text-stone-950 dark:text-white inline-flex items-center gap-1 border border-black/[0.04] dark:border-white/10">
                       ⏳ {{ trip.daysRemainingStr }}
                     </span>
                   } @else {
-                    <span class="px-3 py-1 rounded-full text-[11px] font-bold shadow-sm backdrop-blur-md bg-stone-100/90 text-stone-700 inline-flex items-center gap-1 border border-black/[0.04]">
+                    <span class="px-3 py-1 rounded-full text-[11px] font-bold shadow-sm backdrop-blur-md bg-stone-100/90 dark:bg-stone-800/90 text-stone-700 dark:text-stone-200 inline-flex items-center gap-1 border border-black/[0.04] dark:border-white/10">
                       ✓ {{ trip.daysRemainingStr }}
                     </span>
                   }
@@ -118,9 +133,21 @@ export interface TripCardData {
 
                 <!-- Card Bottom Text Info -->
                 <div [id]="'trips-card-info-box-' + trip.id" class="absolute bottom-5 left-5 right-5 z-10 text-white">
-                  <div [id]="'trips-card-location-row-' + trip.id" class="flex items-center gap-1.5 text-xs text-white/80 font-medium mb-1">
-                    <lucide-icon [img]="MapPinIcon" [size]="12" strokeWidth="1.5" class="text-gold"></lucide-icon>
-                    <span>{{ trip.city }}, {{ trip.country }}</span>
+                  <div [id]="'trips-card-location-row-' + trip.id" class="flex items-center justify-between text-xs text-white/80 font-medium mb-1">
+                    <div class="flex items-center gap-1.5">
+                      <lucide-icon [img]="MapPinIcon" [size]="12" strokeWidth="1.5" class="text-gold"></lucide-icon>
+                      <span>{{ trip.city }}, {{ trip.country }}</span>
+                    </div>
+
+                    @if (trip.tags && trip.tags.length > 0) {
+                      <div class="hidden sm:flex items-center gap-1">
+                        @for (tag of trip.tags; track tag) {
+                          <span class="text-[9px] font-bold px-2 py-0.5 rounded-full bg-white/15 text-white/90 backdrop-blur-xs">
+                            #{{ tag }}
+                          </span>
+                        }
+                      </div>
+                    }
                   </div>
 
                   <h3 class="text-xl sm:text-2xl font-serif-luxe font-normal tracking-tight text-white group-hover:text-gold transition-colors">
@@ -170,6 +197,7 @@ export interface TripCardData {
 })
 export class TripsComponent implements OnInit {
   private planner = inject(TripPlannerService);
+  theme = inject(ThemeService);
 
   activeTab = signal<'upcoming' | 'past'>('upcoming');
   loading = signal(true);
@@ -178,6 +206,8 @@ export class TripsComponent implements OnInit {
   protected MapPinIcon = MapPin;
   protected CalendarIcon = Calendar;
   protected ChevronRightIcon = ChevronRight;
+  protected SunIcon = Sun;
+  protected MoonIcon = Moon;
 
   allTrips = this.planner.createdTrips;
 

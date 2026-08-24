@@ -119,26 +119,30 @@ html.dark div.bg-\[\#F9F8F6\]\/95 {
   border-color: rgba(255, 255, 255, 0.08) !important;
 }
 
-html.dark .bg-white {
-  background-color: #181A1F !important;
+html.dark .bg-white,
+html.dark [class*="bg-white/"] {
+  background-color: rgba(24, 26, 31, 0.92) !important;
   color: #F3F4F6 !important;
   border-color: rgba(255, 255, 255, 0.08) !important;
 }
 
 html.dark .bg-stone-50,
-html.dark .bg-stone-50\/80 {
+html.dark .bg-stone-50\/80,
+html.dark [class*="bg-stone-50/"] {
   background-color: #20232A !important;
   color: #E5E7EB !important;
   border-color: rgba(255, 255, 255, 0.08) !important;
 }
 
-html.dark .bg-stone-100 {
+html.dark .bg-stone-100,
+html.dark [class*="bg-stone-100/"] {
   background-color: #272B33 !important;
   color: #F3F4F6 !important;
 }
 
 html.dark .bg-stone-200,
-html.dark .bg-stone-200\/60 {
+html.dark .bg-stone-200\/60,
+html.dark [class*="bg-stone-200/"] {
   background-color: #313642 !important;
   color: #F3F4F6 !important;
 }
@@ -187,4 +191,14 @@ html.dark .leaflet-popup-content-wrapper {
   background: rgba(24, 26, 31, 0.95) !important;
   color: #FFFFFF !important;
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Koyu modda seçili kartlar ve butonlar için özel altın-obsidyen vurgu */
+html.dark button.bg-obsidian,
+html.dark div.bg-obsidian,
+html.dark .bg-obsidian {
+  background-color: #2A241B !important;
+  color: #FFFFFF !important;
+  border-color: #C5A880 !important;
+  box-shadow: 0 4px 20px rgba(197, 168, 128, 0.2) !important;
 }

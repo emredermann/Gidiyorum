@@ -38,7 +38,7 @@ import { ItineraryItem } from '../../core/models';
           <button
             type="button"
             (click)="goBack()"
-            class="w-9 h-9 bg-white/90 backdrop-blur-md rounded-2xl flex items-center justify-center shadow-sm font-bold text-stone-900 hover:bg-white transition-all text-xs"
+            class="w-9 h-9 bg-white/90 dark:bg-stone-900/90 backdrop-blur-md rounded-2xl flex items-center justify-center shadow-sm font-bold text-stone-900 dark:text-white hover:bg-white transition-all text-xs"
           >
             ←
           </button>
@@ -47,7 +47,7 @@ import { ItineraryItem } from '../../core/models';
             <button
               type="button"
               (click)="toggleFavorite()"
-              class="w-9 h-9 bg-white/90 backdrop-blur-md rounded-2xl flex items-center justify-center shadow-sm transition-colors"
+              class="w-9 h-9 bg-white/90 dark:bg-stone-900/90 backdrop-blur-md rounded-2xl flex items-center justify-center shadow-sm transition-colors"
               [class.text-red-500]="isFavorited()"
               [class.text-stone-700]="!isFavorited()"
             >
@@ -57,7 +57,7 @@ import { ItineraryItem } from '../../core/models';
             <button
               type="button"
               (click)="sharePlace()"
-              class="w-9 h-9 bg-white/90 backdrop-blur-md rounded-2xl flex items-center justify-center shadow-sm text-stone-700 hover:bg-white transition-all"
+              class="w-9 h-9 bg-white/90 dark:bg-stone-900/90 backdrop-blur-md rounded-2xl flex items-center justify-center shadow-sm text-stone-700 dark:text-stone-200 hover:bg-white transition-all"
             >
               <lucide-icon [img]="Share2Icon" [size]="16" strokeWidth="1.5"></lucide-icon>
             </button>

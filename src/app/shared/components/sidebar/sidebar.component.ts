@@ -1,5 +1,5 @@
-import { Component, signal } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Component, signal, inject } from '@angular/core';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import {
   LucideAngularModule,
   MapPin,
@@ -35,14 +35,22 @@ import { CommonModule } from '@angular/common';
 
       <!-- Quiet Luxury Navigation Links -->
       <nav class="flex-1 py-6 space-y-1.5 px-3">
-        <a [routerLink]="'/trips'" routerLinkActive="bg-white text-obsidian font-bold shadow-subtle border border-black/[0.04]"
-           class="flex items-center gap-3 px-3 py-2.5 rounded-2xl text-stone-500 hover:bg-stone-100 hover:text-stone-900 transition-all">
+        <a [routerLink]="'/trips'"
+           [ngClass]="{
+             'bg-white text-obsidian font-bold shadow-subtle border border-black/[0.04] dark:bg-stone-800 dark:text-white': isTripsActive(),
+             'text-stone-500 hover:bg-stone-100 hover:text-stone-900 dark:hover:bg-stone-800': !isTripsActive()
+           }"
+           class="flex items-center gap-3 px-3 py-2.5 rounded-2xl transition-all">
           <lucide-icon [img]="CompassIcon" [size]="18" strokeWidth="1.5" class="flex-shrink-0"></lucide-icon>
           @if (!collapsed()) { <span class="text-xs font-semibold whitespace-nowrap">Seyahatlerim</span> }
         </a>
 
-        <a [routerLink]="'/itinerary'" routerLinkActive="bg-white text-obsidian font-bold shadow-subtle border border-black/[0.04]"
-           class="flex items-center gap-3 px-3 py-2.5 rounded-2xl text-stone-500 hover:bg-stone-100 hover:text-stone-900 transition-all">
+        <a [routerLink]="'/itinerary'"
+           [ngClass]="{
+             'bg-white text-obsidian font-bold shadow-subtle border border-black/[0.04] dark:bg-stone-800 dark:text-white': isItineraryActive(),
+             'text-stone-500 hover:bg-stone-100 hover:text-stone-900 dark:hover:bg-stone-800': !isItineraryActive()
+           }"
+           class="flex items-center gap-3 px-3 py-2.5 rounded-2xl transition-all">
           <lucide-icon [img]="MapPinIcon" [size]="18" strokeWidth="1.5" class="flex-shrink-0"></lucide-icon>
           @if (!collapsed()) { <span class="text-xs font-semibold whitespace-nowrap">Bugünkü Rotam</span> }
         </a>
@@ -77,6 +85,7 @@ import { CommonModule } from '@angular/common';
   `,
 })
 export class SidebarComponent {
+  private router = inject(Router);
   collapsed = signal(false);
 
   protected GlobeIcon = Globe;
@@ -87,6 +96,16 @@ export class SidebarComponent {
   protected UserIcon = User;
   protected ChevronLeftIcon = ChevronLeft;
   protected ChevronRightIcon = ChevronRight;
+
+  isTripsActive(): boolean {
+    const url = this.router.url;
+    return url === '/trips' || url === '/';
+  }
+
+  isItineraryActive(): boolean {
+    const url = this.router.url;
+    return url.includes('itinerary') || url.includes('daily-route');
+  }
 
   toggleCollapse() {
     this.collapsed.update(v => !v);
