@@ -13,6 +13,8 @@ import { HeaderComponent } from '../../shared/components/header/header.component
 import { UiCardComponent } from '../../shared/components/ui-card/ui-card.component';
 import { UiButtonComponent } from '../../shared/components/ui-button/ui-button.component';
 
+import { TripPlannerService } from '../../core/services/trip-planner.service';
+
 export interface TripCardData {
   id: string;
   title: string;
@@ -167,7 +169,7 @@ export interface TripCardData {
   `,
 })
 export class TripsComponent implements OnInit {
-  private supabase = inject(SupabaseService);
+  private planner = inject(TripPlannerService);
 
   activeTab = signal<'upcoming' | 'past'>('upcoming');
   loading = signal(true);
@@ -177,41 +179,7 @@ export class TripsComponent implements OnInit {
   protected CalendarIcon = Calendar;
   protected ChevronRightIcon = ChevronRight;
 
-  allTrips = signal<TripCardData[]>([
-    {
-      id: 'trip-rome-01',
-      title: 'Roma Antik Çağ & Lezzet Keşfi',
-      city: 'Roma',
-      country: 'İtalya',
-      dateRangeStr: '20 - 24 Haziran 2026',
-      daysRemainingStr: '5 gün kaldı',
-      isUpcoming: true,
-      coverImage: 'https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=800',
-      tags: ['Tarih', 'Yemek', 'Mimari'],
-    },
-    {
-      id: 'trip-barcelona-02',
-      title: 'Barselona Mimarisi ve Plaj Rotası',
-      city: 'Barselona',
-      country: 'İspanya',
-      dateRangeStr: '15 - 20 Temmuz 2026',
-      daysRemainingStr: '26 gün kaldı',
-      isUpcoming: true,
-      coverImage: 'https://images.unsplash.com/photo-1583422409516-2895a77efded?w=800',
-      tags: ['Sanat', 'Plaj', 'Yemek'],
-    },
-    {
-      id: 'trip-paris-03',
-      title: 'Paris Sanat ve Gurme Turu',
-      city: 'Paris',
-      country: 'Fransa',
-      dateRangeStr: '10 - 15 Mayıs 2026',
-      daysRemainingStr: 'Tamamlandı',
-      isUpcoming: false,
-      coverImage: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800',
-      tags: ['Müze', 'Lüks'],
-    },
-  ]);
+  allTrips = this.planner.createdTrips;
 
   upcomingTrips = () => this.allTrips().filter(t => t.isUpcoming);
   pastTrips = () => this.allTrips().filter(t => !t.isUpcoming);

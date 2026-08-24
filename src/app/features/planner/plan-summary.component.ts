@@ -158,6 +158,7 @@ export class PlanSummaryComponent {
   }
 
   confirmPlan() {
+    this.planner.confirmCurrentPlan();
     this.router.navigate(['/itinerary']);
   }
 }

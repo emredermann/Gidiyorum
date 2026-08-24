@@ -1,6 +1,6 @@
 import { Component, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import {
   LucideAngularModule,
@@ -299,6 +299,7 @@ import { UiCardComponent } from '../../shared/components/ui-card/ui-card.compone
 })
 export class ProfileComponent {
   private authService = inject(AuthService);
+  private router = inject(Router);
 
   private customName = signal<string | null>(null);
   private customAvatar = signal<string | null>(null);
@@ -358,15 +359,20 @@ export class ProfileComponent {
   }
 
   openLangCurrency() {
-    alert('Mevcut Seçim: Türkçe / EUR (€)');
+    const choice = prompt('Dil ve Para Birimi seçin:\n1: Türkçe / EUR (€)\n2: English / USD ($)', 'Türkçe / EUR (€)');
+    if (choice) {
+      alert(`🌐 Tercihiniz kaydedildi: ${choice}`);
+    }
   }
 
   openPrivacy() {
-    alert('Gizlilik & RLS politikaları aktif. Verileriniz şifrelenmiştir.');
+    alert('🔒 Gizlilik & Güvenlik Politikası:\n• Verileriniz 256-bit şifrelenmektedir.\n• Supabase RLS (Row Level Security) aktif.');
   }
 
   openHelp() {
-    alert('Yardım merkezi ve AI canlı destek aktif.');
+    if (confirm('💬 AI Concierge canlı destek asistanına bağlanmak ister misiniz?')) {
+      this.router.navigate(['/ai-guide']);
+    }
   }
 
   async onSignOut() {

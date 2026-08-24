@@ -93,6 +93,43 @@ export class TripPlannerService {
     };
   });
 
+  // Active created trips signal
+  readonly createdTrips = signal<any[]>([
+    {
+      id: 'trip-rome-01',
+      title: 'Roma Antik Çağ & Lezzet Keşfi',
+      city: 'Roma',
+      country: 'İtalya',
+      dateRangeStr: '20 - 24 Haziran 2026',
+      daysRemainingStr: '5 gün kaldı',
+      isUpcoming: true,
+      coverImage: 'https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=800',
+      tags: ['Tarih', 'Yemek', 'Mimari'],
+    },
+    {
+      id: 'trip-barcelona-02',
+      title: 'Barselona Mimarisi ve Plaj Rotası',
+      city: 'Barselona',
+      country: 'İspanya',
+      dateRangeStr: '15 - 20 Temmuz 2026',
+      daysRemainingStr: '26 gün kaldı',
+      isUpcoming: true,
+      coverImage: 'https://images.unsplash.com/photo-1583422409516-2895a77efded?w=800',
+      tags: ['Sanat', 'Plaj', 'Yemek'],
+    },
+    {
+      id: 'trip-paris-03',
+      title: 'Paris Sanat ve Gurme Turu',
+      city: 'Paris',
+      country: 'Fransa',
+      dateRangeStr: '10 - 15 Mayıs 2026',
+      daysRemainingStr: 'Tamamlandı',
+      isUpcoming: false,
+      coverImage: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800',
+      tags: ['Müze', 'Lüks'],
+    },
+  ]);
+
   toggleInterest(label: string): void {
     this.selectedInterests.update(current => {
       if (current.includes(label)) {
@@ -113,5 +150,23 @@ export class TripPlannerService {
 
   setWalkingPreference(pref: 'Az' | 'Orta' | 'Çok'): void {
     this.walkingPreference.set(pref);
+  }
+
+  confirmCurrentPlan() {
+    const summary = this.generatedSummary();
+    const newTrip = {
+      id: `trip-new-${Date.now()}`,
+      title: `${summary.city} ${summary.daysCount} Günlük Özel Concierge Rotası`,
+      city: summary.city,
+      country: summary.country,
+      dateRangeStr: '01 - 05 Eylül 2026',
+      daysRemainingStr: 'Yeni Oluşturuldu ✨',
+      isUpcoming: true,
+      coverImage: summary.cityImageUrl,
+      tags: this.selectedInterests(),
+    };
+
+    this.createdTrips.update(trips => [newTrip, ...trips]);
+    return newTrip;
   }
 }

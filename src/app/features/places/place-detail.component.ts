@@ -256,17 +256,22 @@ export class PlaceDetailComponent implements OnInit {
 
   toggleFavorite() {
     this.isFavorited.update(v => !v);
+    if (this.isFavorited()) {
+      alert(`❤️ ${this.placeData().name} favorilerinize kaydedildi!`);
+    } else {
+      alert(`🤍 ${this.placeData().name} favorilerinizden çıkarıldı.`);
+    }
   }
 
   sharePlace() {
-    if (navigator.share) {
+    if (typeof navigator !== 'undefined' && navigator.share) {
       navigator.share({
         title: this.placeData().name,
         text: `${this.placeData().name} - Gidiyorum Rehberi`,
         url: window.location.href,
       });
     } else {
-      alert('Mekan bağlantısı panoya kopyalandı! 📋');
+      alert('📋 Mekan bağlantısı panoya kopyalandı!');
     }
   }
 
@@ -276,6 +281,6 @@ export class PlaceDetailComponent implements OnInit {
   }
 
   makeReservation() {
-    alert(`${this.placeData().name} için masa rezervasyon talebiniz alındı! 🍷`);
+    alert(`🍷 ${this.placeData().name} için 2 kişilik masa rezervasyon talebiniz alındı! Onay SMS olarak iletilecektir.`);
   }
 }

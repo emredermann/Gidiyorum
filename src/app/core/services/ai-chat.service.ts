@@ -118,14 +118,20 @@ export class AiChatService {
 
   private generateMockAiReply(prompt: string): string {
     const p = prompt.toLowerCase();
+    if (p.includes('restoran') || p.includes('lezzet') || p.includes('yemek')) {
+      return 'Yakınınızda mükemmel bir restoran önerim var:\n\n📍 **Roscioli Salumeria con Cucina** (120m uzaklıkta)\nİtalyan taze makarnaları, şarküteri çeşitleri ve taze peynir seçkisiyle dünyaca ünlü şık bir mekan. Masanızı şimdiden ayırmanızı öneririm! 🍷';
+    }
+    if (p.includes('yürüyüş') || p.includes('rotas')) {
+      return 'Harika bir hava! Sizin için **2 Saatlik Roma Tarihi Meydanlar Yürüyüş Rotası** hazırladım:\n\n1. 09:00 - Piazza Navona\n2. 09:45 - Pantheon Tapınağı\n3. 10:30 - Trevi Aşk Çeşmesi\n\nRotayı harita üzerinde inceleyebilirsiniz! 🚶‍♂️';
+    }
+    if (p.includes('yağmur') || p.includes('kapalı')) {
+      return 'Yağmurlu hava için harika kapalı mekan alternatifleri:\n\n🏛️ **Pantheon Tapınağı**: Kubbesindeki oculus açıklığından yağmur düşüşünü izlemek büyüleyici bir deneyimdir.\n🎨 **Vatikan Müzeleri**: Yağmur dinerken binlerce Rönesans şaheserini inceleyin.\n☕ **Caffè Sant’Eustachio**: Yağmur eşliğinde Roma’nın en iyi espressosunu tadın!';
+    }
+    if (p.includes('bar') || p.includes('kokteyl') || p.includes('akşam')) {
+      return 'Akşam keyfi için seçkin bar önerileri:\n\n🍸 **Jerry Thomas Speakeasy**: Gizli kapılı, 1920’ler konseptli ödüllü kokteyl barı.\n🍷 **Terrazza Borromini**: Piazza Navona manzaralı harika bir rooftop teras barı.\n🍹 **Freni e Frizioni (Trastevere)**: Nehir kenarında canlı genç atmosfer ve açık büfe aperitivo!';
+    }
     if (p.includes('müze') || p.includes('tarih')) {
-      return 'Tarih ve müze severler için önerilerim:\n\n1. **Ayasofya & Topkapı Sarayı**: Şehrin kalbinde eşsiz bir tarih yolculuğu. 🏛️\n2. **İstanbul Modern**: Çağdaş sanat eserleri ve harika Boğaz manzarası.\n3. **Arkeoloji Müzeleri**: İskender Lahdi dahil binlerce antik eser!';
-    }
-    if (p.includes('yemek') || p.includes('lezzet') || p.includes('restoran')) {
-      return 'Yerel gurme tavsiyeleri:\n\n1. **Tarihi Sultanahmet Köftecisi**: Izgara köfte ve özel piyaz. 😋\n2. **Karaköy Güllüoğlu**: Taze fıstıklı baklava & çay.\n3. **Çiya Sofrası (Kadıköy)**: Unutulmaya yüz tutmuş Anadolu lezzetleri.';
-    }
-    if (p.includes('ulaşım') || p.includes('gez')) {
-      return 'Şehir içi ulaşım tavsiyeleri:\n\n- İstanbulkart edinerek metro, tramvay ve vapur hatlarını rahatça kullanabilirsiniz. 🎫\n- Karaköy - Kadıköy vapuru sadece ulaşım değil, martılarla unutulmaz bir Boğaz turudur! 🚢';
+      return 'Tarih ve müze severler için önerilerim:\n\n1. **Kolezyum & Roman Forumu**: Şehrin kalbinde antik Roma imparatorluğu yolculuğu. 🏛️\n2. **Kapitolin Müzeleri**: Dünyanın en eski halka açık müze koleksiyonu.\n3. **Borghese Galerisi**: Bernini heykelleri ve Caravaggio tabloları!';
     }
     return `Harika bir soru! "${prompt}" hakkında rotanıza özel tavsiyelerim:\n\n✨ Günün en keyifli saatlerinde bu mekanı ziyaret edebilir, çevresindeki lokantaları keşfedebilirsiniz. Başka merak ettiğiniz bir yer var mı?`;
   }

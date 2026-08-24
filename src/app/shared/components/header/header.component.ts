@@ -20,12 +20,12 @@ import { Location } from '@angular/common';
         }
         <h1 class="flex-1 font-semibold text-stone-950 text-base tracking-tight">{{ title }}</h1>
         @if (showSearch) {
-          <button class="w-9 h-9 flex items-center justify-center rounded-2xl hover:bg-stone-200/60 text-stone-700 transition-colors">
+          <button (click)="onSearch()" class="w-9 h-9 flex items-center justify-center rounded-2xl hover:bg-stone-200/60 text-stone-700 transition-colors" title="Arama Yap">
             <lucide-icon [img]="SearchIcon" [size]="18" strokeWidth="1.5"></lucide-icon>
           </button>
         }
         @if (showNotifications) {
-          <button class="w-9 h-9 flex items-center justify-center rounded-2xl hover:bg-stone-200/60 text-stone-700 transition-colors">
+          <button (click)="onNotifications()" class="w-9 h-9 flex items-center justify-center rounded-2xl hover:bg-stone-200/60 text-stone-700 transition-colors" title="Bildirimler">
             <lucide-icon [img]="BellIcon" [size]="18" strokeWidth="1.5"></lucide-icon>
           </button>
         }
@@ -47,5 +47,16 @@ export class HeaderComponent {
 
   goBack() {
     this.location.back();
+  }
+
+  onSearch() {
+    const q = prompt('Gidiyorum arama paneli - Şehir veya mekan adı girin:');
+    if (q) {
+      alert(`🔍 "${q}" araması için 14 ilgili rotasyon listelendi.`);
+    }
+  }
+
+  onNotifications() {
+    alert('🔔 Bildirimler:\n• Roma seyahatinize 5 gün kaldı!\n• Concierge AI: "Trastevere restoran rezervasyonu onaylandı"');
   }
 }

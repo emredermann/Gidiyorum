@@ -148,9 +148,12 @@ export interface DayOption {
                     </div>
 
                     <!-- Mekan Adı -->
-                    <h3 class="font-bold text-sm sm:text-base text-stone-950 leading-snug group-hover:text-gold transition-colors">
+                    <a
+                      [routerLink]="['/places', item.id]"
+                      class="font-bold text-sm sm:text-base text-stone-950 leading-snug group-hover:text-gold transition-colors block cursor-pointer"
+                    >
                       {{ item.title }}
-                    </h3>
+                    </a>
 
                     <!-- Açıklama -->
                     <p class="text-xs text-stone-500 mt-1 leading-relaxed line-clamp-2">
@@ -167,11 +170,13 @@ export interface DayOption {
 
                   <!-- Sağ Alan: Yuvarlak Küçük Önizleme Görseli -->
                   <div class="relative flex-shrink-0">
-                    <img
-                      [src]="item.imageUrl"
-                      [alt]="item.title"
-                      class="w-14 h-14 sm:w-16 sm:h-16 rounded-full object-cover border border-black/[0.06] shadow-sm group-hover:scale-105 transition-transform"
-                    />
+                    <a [routerLink]="['/places', item.id]">
+                      <img
+                        [src]="item.imageUrl"
+                        [alt]="item.title"
+                        class="w-14 h-14 sm:w-16 sm:h-16 rounded-full object-cover border border-black/[0.06] shadow-sm group-hover:scale-105 transition-transform cursor-pointer"
+                      />
+                    </a>
                   </div>
                 </div>
 
@@ -221,7 +226,7 @@ export class DailyRouteComponent implements OnInit, AfterViewInit, OnDestroy {
   schedulesByDay: Record<string, DailyScheduleItem[]> = {
     'day-1': [
       {
-        id: 'sch-101',
+        id: 'place-roscioli-120',
         time: '09:00',
         title: 'Giolitti - Geleneksel İtalyan Kahvaltısı',
         category: '☕ Kafe & Tatlı',
@@ -305,6 +310,108 @@ export class DailyRouteComponent implements OnInit, AfterViewInit, OnDestroy {
         imageUrl: 'https://images.unsplash.com/photo-1548625361-1845110f0e04?w=300',
         lat: 41.8925,
         lng: 12.4853,
+      },
+      {
+        id: 'sch-203',
+        time: '15:00',
+        title: 'Campidoglio Tepesi & Kapitolin Müzeleri',
+        category: '🎨 Müze & Sanat',
+        duration: '2 saat',
+        walkingInfo: '🚶 450m (6 dk)',
+        description: 'Michelangelo imzalı meydan ve dünyanın en eski halka açık müze koleksiyonu.',
+        imageUrl: 'https://images.unsplash.com/photo-1527838832700-54595d164a3e?w=300',
+        lat: 41.8933,
+        lng: 12.4828,
+      },
+    ],
+    'day-3': [
+      {
+        id: 'sch-301',
+        time: '09:00',
+        title: 'Vatikan Müzeleri & Sistine Şapeli',
+        category: '🎨 Dünya Mirası',
+        duration: '3 saat',
+        walkingInfo: 'Başlangıç',
+        description: 'Michelangelo’nun Adem’in Yaratılışı tavan freski ve eşsiz Rönesans eserleri.',
+        imageUrl: 'https://images.unsplash.com/photo-1541432901042-2d8bd64b4a9b?w=300',
+        lat: 41.9065,
+        lng: 12.4536,
+      },
+      {
+        id: 'sch-302',
+        time: '12:30',
+        title: 'Aziz Petrus Bazilikası & Meydanı',
+        category: '🏛️ Katedral & İbadethane',
+        duration: '1.5 saat',
+        walkingInfo: '🚶 300m (4 dk)',
+        description: 'Hristiyan dünyasının en görkemli yapısı ve kubbeden 360 derece panoramik Roma manzarası.',
+        imageUrl: 'https://images.unsplash.com/photo-1531572753322-ad063cecc140?w=300',
+        lat: 41.9022,
+        lng: 12.4539,
+      },
+      {
+        id: 'sch-303',
+        time: '15:00',
+        title: 'Castel Sant’Angelo (Kutsal Melek Kalesi)',
+        category: '🏰 Kale & Müze',
+        duration: '1.5 saat',
+        walkingInfo: '🚶 750m (9 dk)',
+        description: 'İmparator Hadrianus’un anıt mezarından kaye dönüştürülmüş tarihi kule ve melekler köprüsü.',
+        imageUrl: 'https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=300',
+        lat: 41.9031,
+        lng: 12.4663,
+      },
+    ],
+    'day-4': [
+      {
+        id: 'sch-401',
+        time: '10:00',
+        title: 'Villa Borghese Bahçeleri',
+        category: '🌿 Park & Doğa',
+        duration: '2 saat',
+        walkingInfo: 'Başlangıç',
+        description: 'Roma’nın en geniş yeşil park alanı, gölet, bisiklet rotaları ve manzara terasları.',
+        imageUrl: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=300',
+        lat: 41.9142,
+        lng: 12.4921,
+      },
+      {
+        id: 'sch-402',
+        time: '13:00',
+        title: 'Piazza di Spagna & İspanyol Merdivenleri',
+        category: '🏛️ İkonik Meydan',
+        duration: '1 saat',
+        walkingInfo: '🚶 850m (10 dk)',
+        description: 'Çiçeklerle süslü 135 basamaklı tarihi merdivenler ve modanın kalbi Via Condotti.',
+        imageUrl: 'https://images.unsplash.com/photo-1548625361-1845110f0e04?w=300',
+        lat: 41.9059,
+        lng: 12.4827,
+      },
+    ],
+    'day-5': [
+      {
+        id: 'sch-501',
+        time: '10:30',
+        title: 'Circus Maximus & Ağız Deliği (Bocca della Verità)',
+        category: '🏛️ Antik Eser',
+        duration: '1.5 saat',
+        walkingInfo: 'Başlangıç',
+        description: 'Antik Roma at araba yarışları stadyumu ve dürüstlük testi heykeli.',
+        imageUrl: 'https://images.unsplash.com/photo-1527838832700-54595d164a3e?w=300',
+        lat: 41.8862,
+        lng: 12.4851,
+      },
+      {
+        id: 'sch-502',
+        time: '13:00',
+        title: 'Aventino Tepesi & Anahtar Deliği Manzarası',
+        category: '🌅 Manzara Tepesi',
+        duration: '1 saat',
+        walkingInfo: '🚶 600m (7 dk)',
+        description: 'Malta Şövalyeleri Sarayı anahtar deliğinden Aziz Petrus kubbesi kadrajı.',
+        imageUrl: 'https://images.unsplash.com/photo-1531572753322-ad063cecc140?w=300',
+        lat: 41.8826,
+        lng: 12.4786,
       },
     ],
   };
