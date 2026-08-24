@@ -164,6 +164,7 @@ export class ItineraryComponent implements OnInit {
         }
       });
       if (bounds.length > 0) map.fitBounds(bounds, { padding: [40, 40] });
+      setTimeout(() => { try { map.invalidateSize(); } catch {} }, 250);
     } catch (e) { console.error('Leaflet init failed:', e); }
   }
 }
