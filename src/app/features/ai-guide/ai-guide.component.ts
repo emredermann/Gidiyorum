@@ -44,92 +44,72 @@ import { HeaderComponent } from '../../shared/components/header/header.component
 
         <!-- 1. Karşılama Ekranı -->
         @if (messages().length === 0) {
-          <div id="ai-guide-welcome-screen" class="max-w-xl mx-auto py-8 space-y-7">
+          <div id="ai-guide-welcome-screen" class="max-w-md mx-auto py-6 space-y-6">
 
             <div id="ai-guide-welcome-header-box" class="text-center space-y-2">
-              <div id="ai-guide-welcome-sparkles-badge" class="w-16 h-16 rounded-3xl bg-stone-100 border border-black/[0.05] flex items-center justify-center mx-auto mb-4 shadow-subtle">
-                <lucide-icon [img]="SparklesIcon" [size]="28" class="text-gold animate-pulse" strokeWidth="1.5"></lucide-icon>
+              <div id="ai-guide-welcome-sparkles-badge" class="w-16 h-16 rounded-3xl bg-purple-50 dark:bg-primary/20 flex items-center justify-center mx-auto mb-3 shadow-xs">
+                <lucide-icon [img]="SparklesIcon" [size]="28" class="text-primary animate-pulse" strokeWidth="1.8"></lucide-icon>
               </div>
-              <h2 class="text-2xl sm:text-3xl font-serif-luxe font-normal text-stone-950 tracking-tight">
-                Merhaba Emre 👋
+              <h2 class="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                Merhaba Emre! 👋
               </h2>
-              <p class="text-xs sm:text-sm text-stone-500 max-w-sm mx-auto leading-relaxed">
-                Kişisel seyahat concierge asistanınız hizmetinizde. Özel tavsiye ve rotalarınızı belirlemek için sorabilirsiniz.
+              <p class="text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-300">
+                Bugün sana nasıl yardımcı olabilirim?
               </p>
             </div>
 
-            <div id="ai-guide-quick-actions-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+            <div id="ai-guide-quick-actions-grid" class="grid grid-cols-2 gap-3 pt-2">
 
               <button
                 type="button"
                 (click)="sendQuickAction('Yakınımda iyi bir restoran bul')"
-                class="flex items-start gap-3.5 p-4 rounded-3xl bg-white border border-black/[0.06] hover:border-obsidian hover:shadow-luxe transition-all duration-300 text-left group"
+                class="flex flex-col items-start p-4 rounded-2xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 hover:border-primary hover:shadow-purple transition-all duration-200 text-left group cursor-pointer"
               >
-                <div id="ai-guide-quick-action-icon-1" class="w-9 h-9 rounded-2xl bg-stone-100 text-stone-900 flex items-center justify-center text-lg flex-shrink-0 group-hover:scale-105 transition-transform">
+                <div class="w-10 h-10 rounded-2xl bg-purple-50 dark:bg-slate-700 text-primary flex items-center justify-center text-xl mb-3 group-hover:scale-110 transition-transform">
                   🍽️
                 </div>
-                <div id="ai-guide-quick-action-text-1" class="flex-1 min-w-0">
-                  <h3 class="font-bold text-xs text-stone-950 group-hover:text-gold transition-colors">
-                    Yakınımda restoran bul
-                  </h3>
-                  <p class="text-[11px] text-stone-400 mt-0.5">
-                    120m mesafedeki İtalyan lezzetleri
-                  </p>
-                </div>
+                <h3 class="font-bold text-xs text-slate-900 dark:text-white group-hover:text-primary transition-colors">
+                  Yakınımda iyi bir restoran bul
+                </h3>
               </button>
 
               <button
                 type="button"
                 (click)="sendQuickAction('2 saatlik yürüyüş rotası oluştur')"
-                class="flex items-start gap-3.5 p-4 rounded-3xl bg-white border border-black/[0.06] hover:border-obsidian hover:shadow-luxe transition-all duration-300 text-left group"
+                class="flex flex-col items-start p-4 rounded-2xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 hover:border-primary hover:shadow-purple transition-all duration-200 text-left group cursor-pointer"
               >
-                <div id="ai-guide-quick-action-icon-2" class="w-9 h-9 rounded-2xl bg-stone-100 text-stone-900 flex items-center justify-center text-lg flex-shrink-0 group-hover:scale-105 transition-transform">
+                <div class="w-10 h-10 rounded-2xl bg-purple-50 dark:bg-slate-700 text-primary flex items-center justify-center text-xl mb-3 group-hover:scale-110 transition-transform">
                   🚶
                 </div>
-                <div id="ai-guide-quick-action-text-2" class="flex-1 min-w-0">
-                  <h3 class="font-bold text-xs text-stone-950 group-hover:text-gold transition-colors">
-                    2 saatlik yürüyüş rotası
-                  </h3>
-                  <p class="text-[11px] text-stone-400 mt-0.5">
-                    Tarihi sokaklar ve meydanlar
-                  </p>
-                </div>
+                <h3 class="font-bold text-xs text-slate-900 dark:text-white group-hover:text-primary transition-colors">
+                  2 saatlik yürüyüş rotası oluştur
+                </h3>
               </button>
 
               <button
                 type="button"
                 (click)="sendQuickAction('Yağmur başladı, ne yapabilirim?')"
-                class="flex items-start gap-3.5 p-4 rounded-3xl bg-white border border-black/[0.06] hover:border-obsidian hover:shadow-luxe transition-all duration-300 text-left group"
+                class="flex flex-col items-start p-4 rounded-2xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 hover:border-primary hover:shadow-purple transition-all duration-200 text-left group cursor-pointer"
               >
-                <div id="ai-guide-quick-action-icon-3" class="w-9 h-9 rounded-2xl bg-stone-100 text-stone-900 flex items-center justify-center text-lg flex-shrink-0 group-hover:scale-105 transition-transform">
+                <div class="w-10 h-10 rounded-2xl bg-purple-50 dark:bg-slate-700 text-primary flex items-center justify-center text-xl mb-3 group-hover:scale-110 transition-transform">
                   🌧️
                 </div>
-                <div id="ai-guide-quick-action-text-3" class="flex-1 min-w-0">
-                  <h3 class="font-bold text-xs text-stone-950 group-hover:text-gold transition-colors">
-                    Yağmur başladı!
-                  </h3>
-                  <p class="text-[11px] text-stone-400 mt-0.5">
-                    Kapalı mekan & müze önerileri
-                  </p>
-                </div>
+                <h3 class="font-bold text-xs text-slate-900 dark:text-white group-hover:text-primary transition-colors">
+                  Yağmur başladı, ne yapabilirim?
+                </h3>
               </button>
 
               <button
                 type="button"
                 (click)="sendQuickAction('Akşam için bar önerisi ver')"
-                class="flex items-start gap-3.5 p-4 rounded-3xl bg-white border border-black/[0.06] hover:border-obsidian hover:shadow-luxe transition-all duration-300 text-left group"
+                class="flex flex-col items-start p-4 rounded-2xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 hover:border-primary hover:shadow-purple transition-all duration-200 text-left group cursor-pointer"
               >
-                <div id="ai-guide-quick-action-icon-4" class="w-9 h-9 rounded-2xl bg-stone-100 text-stone-900 flex items-center justify-center text-lg flex-shrink-0 group-hover:scale-105 transition-transform">
+                <div class="w-10 h-10 rounded-2xl bg-purple-50 dark:bg-slate-700 text-primary flex items-center justify-center text-xl mb-3 group-hover:scale-110 transition-transform">
                   🍸
                 </div>
-                <div id="ai-guide-quick-action-text-4" class="flex-1 min-w-0">
-                  <h3 class="font-bold text-xs text-stone-950 group-hover:text-gold transition-colors">
-                    Akşam için bar önerisi
-                  </h3>
-                  <p class="text-[11px] text-stone-400 mt-0.5">
-                    Manzaralı kokteyl mekanları
-                  </p>
-                </div>
+                <h3 class="font-bold text-xs text-slate-900 dark:text-white group-hover:text-primary transition-colors">
+                  Akşam için bar önerisi ver
+                </h3>
               </button>
 
             </div>
@@ -138,13 +118,13 @@ import { HeaderComponent } from '../../shared/components/header/header.component
         }
 
         <!-- 2. Sohbet Akışı -->
-        <div id="ai-guide-chat-flow-container" class="max-w-xl mx-auto space-y-4">
+        <div id="ai-guide-chat-flow-container" class="max-w-md mx-auto space-y-4">
           @for (msg of messages(); track msg.id) {
             <div [id]="'ai-guide-msg-row-' + msg.id" class="flex items-start gap-2.5" [ngClass]="{ 'flex-row-reverse': msg.role === 'user' }">
 
               @if (msg.role === 'assistant') {
-                <div [id]="'ai-guide-msg-bot-avatar-' + msg.id" class="w-7 h-7 rounded-full bg-stone-100 border border-black/[0.06] flex items-center justify-center flex-shrink-0 mt-1 shadow-sm">
-                  <lucide-icon [img]="BotIcon" [size]="14" class="text-gold" strokeWidth="1.5"></lucide-icon>
+                <div [id]="'ai-guide-msg-bot-avatar-' + msg.id" class="w-7 h-7 rounded-full bg-purple-100 text-primary flex items-center justify-center flex-shrink-0 mt-1 shadow-xs">
+                  <lucide-icon [img]="BotIcon" [size]="14" class="text-primary" strokeWidth="1.8"></lucide-icon>
                 </div>
               }
 
@@ -154,47 +134,44 @@ import { HeaderComponent } from '../../shared/components/header/header.component
                 <div
                   [id]="'ai-guide-msg-bubble-' + msg.id"
                   [ngClass]="{
-                    'bg-obsidian text-white rounded-br-xs': msg.role === 'user',
-                    'bg-white text-stone-900 border border-black/[0.06] rounded-bl-xs': msg.role === 'assistant'
+                    'bg-primary text-white rounded-2xl rounded-tr-xs shadow-purple font-medium': msg.role === 'user',
+                    'bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 border border-slate-100 dark:border-slate-700 rounded-2xl rounded-tl-xs shadow-xs': msg.role === 'assistant'
                   }"
-                  class="px-4 py-3 rounded-2xl text-xs sm:text-sm leading-relaxed shadow-subtle"
+                  class="px-4 py-3 text-xs sm:text-sm leading-relaxed"
                 >
                   {{ msg.content }}
                 </div>
 
                 <!-- Rich Card 1: Restoran / Mekan Kartı -->
                 @if (msg.role === 'assistant' && shouldShowRestaurantCard(msg.content)) {
-                  <div [id]="'ai-guide-restaurant-card-' + msg.id" class="bg-white rounded-3xl border border-black/[0.06] shadow-luxe overflow-hidden transition-all">
+                  <div [id]="'ai-guide-restaurant-card-' + msg.id" class="bg-white dark:bg-slate-800 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-luxe overflow-hidden transition-all">
                     <div [id]="'ai-guide-restaurant-thumb-box-' + msg.id" class="relative h-36">
                       <img
                         src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600"
-                        alt="Roscioli Salumeria con Cucina"
+                        alt="Roscioli"
                         class="w-full h-full object-cover"
                       />
-                      <div [id]="'ai-guide-restaurant-dist-badge-' + msg.id" class="absolute top-3 left-3 bg-obsidian/90 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1">
+                      <div [id]="'ai-guide-restaurant-dist-badge-' + msg.id" class="absolute top-3 left-3 bg-slate-900/80 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1">
                         <lucide-icon [img]="MapPinIcon" [size]="10" strokeWidth="1.5"></lucide-icon>
-                        120 m uzaklıkta
+                        120 m · İtalyan · €€
                       </div>
-                      <div [id]="'ai-guide-restaurant-rating-badge-' + msg.id" class="absolute top-3 right-3 bg-gold text-stone-950 text-[10px] font-bold px-2 py-0.5 rounded-md shadow-sm">
+                      <div [id]="'ai-guide-restaurant-rating-badge-' + msg.id" class="absolute top-3 right-3 bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-md shadow-sm">
                         4.6 ★
                       </div>
                     </div>
 
                     <div [id]="'ai-guide-restaurant-info-box-' + msg.id" class="p-4 space-y-2">
-                      <div [id]="'ai-guide-restaurant-title-row-' + msg.id" class="flex items-center justify-between">
-                        <h4 class="font-bold text-stone-950 text-sm">Roscioli Salumeria con Cucina</h4>
-                        <span class="text-[11px] font-medium text-stone-400">İtalyan · €€</span>
-                      </div>
-                      <p class="text-xs text-stone-500 leading-relaxed">
-                        Geleneksel Roma makarnaları, şarküteri çeşitleri ve taze peynir seçkisiyle dünyaca ünlü şık restoran.
+                      <h4 class="font-bold text-slate-900 dark:text-white text-sm">Roscioli</h4>
+                      <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                        Trastevere yakınlarında taze makarna ve samimi atmosferiyle otantik İtalyan lezzet durağı.
                       </p>
                       <div [id]="'ai-guide-restaurant-action-row-' + msg.id" class="pt-2 flex justify-end">
                         <a
                           routerLink="/places/place-roscioli-120"
-                          class="inline-flex items-center gap-1 text-xs font-bold text-obsidian hover:text-gold transition-colors"
+                          class="inline-flex items-center gap-1 px-4 py-2 bg-purple-50 text-primary rounded-xl text-xs font-bold hover:bg-primary hover:text-white transition-colors"
                         >
-                          <span>Detayları Gör</span>
-                          <lucide-icon [img]="ChevronRightIcon" [size]="14" strokeWidth="1.5"></lucide-icon>
+                          <span>Deneyimi Gör</span>
+                          <lucide-icon [img]="ChevronRightIcon" [size]="14" strokeWidth="1.8"></lucide-icon>
                         </a>
                       </div>
                     </div>
@@ -203,8 +180,8 @@ import { HeaderComponent } from '../../shared/components/header/header.component
 
                 <!-- Rich Card 2: Rota Önizleme Kartı -->
                 @if (msg.role === 'assistant' && shouldShowRouteCard(msg.content)) {
-                  <div [id]="'ai-guide-route-card-' + msg.id" class="bg-white rounded-3xl border border-black/[0.06] shadow-luxe overflow-hidden transition-all">
-                    <div [id]="'ai-guide-route-thumb-box-' + msg.id" class="relative h-32 bg-stone-100 overflow-hidden">
+                  <div [id]="'ai-guide-route-card-' + msg.id" class="bg-white dark:bg-slate-800 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-luxe overflow-hidden transition-all">
+                    <div [id]="'ai-guide-route-thumb-box-' + msg.id" class="relative h-32 bg-slate-100 overflow-hidden">
                       <img
                         src="https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=600"
                         alt="Roma Yürüyüş Rotaları"
@@ -212,7 +189,7 @@ import { HeaderComponent } from '../../shared/components/header/header.component
                       />
                       <div [id]="'ai-guide-route-overlay-' + msg.id" class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
                       <div [id]="'ai-guide-route-badge-box-' + msg.id" class="absolute bottom-3 left-3 text-white">
-                        <span class="text-[9px] font-bold uppercase tracking-wider bg-gold text-stone-950 px-2 py-0.5 rounded-md">
+                        <span class="text-[9px] font-bold uppercase tracking-wider bg-primary text-white px-2 py-0.5 rounded-md">
                           2 Saatlik Yürüyüş
                         </span>
                         <h4 class="font-bold text-xs mt-0.5">Roma Tarihi Meydanlar Rotaları</h4>
@@ -220,32 +197,29 @@ import { HeaderComponent } from '../../shared/components/header/header.component
                     </div>
 
                     <div [id]="'ai-guide-route-info-box-' + msg.id" class="p-3.5 space-y-2.5">
-                      <div [id]="'ai-guide-route-stops-list-' + msg.id" class="space-y-1.5 text-xs text-stone-800">
+                      <div [id]="'ai-guide-route-stops-list-' + msg.id" class="space-y-1.5 text-xs text-slate-800 dark:text-slate-200">
                         <div [id]="'ai-guide-route-stop-1-' + msg.id" class="flex items-center gap-2">
-                          <span class="w-4 h-4 rounded-full bg-obsidian text-white text-[9px] font-bold flex items-center justify-center">1</span>
+                          <span class="w-4 h-4 rounded-full bg-primary text-white text-[9px] font-bold flex items-center justify-center">1</span>
                           <span class="font-bold">Piazza Navona</span>
-                          <span class="text-[10px] text-stone-400">· 09:00</span>
                         </div>
                         <div [id]="'ai-guide-route-stop-2-' + msg.id" class="flex items-center gap-2">
-                          <span class="w-4 h-4 rounded-full bg-obsidian text-white text-[9px] font-bold flex items-center justify-center">2</span>
+                          <span class="w-4 h-4 rounded-full bg-primary text-white text-[9px] font-bold flex items-center justify-center">2</span>
                           <span class="font-bold">Pantheon Tapınağı</span>
-                          <span class="text-[10px] text-stone-400">· 09:45</span>
                         </div>
                         <div [id]="'ai-guide-route-stop-3-' + msg.id" class="flex items-center gap-2">
-                          <span class="w-4 h-4 rounded-full bg-obsidian text-white text-[9px] font-bold flex items-center justify-center">3</span>
+                          <span class="w-4 h-4 rounded-full bg-primary text-white text-[9px] font-bold flex items-center justify-center">3</span>
                           <span class="font-bold">Trevi Çeşmesi</span>
-                          <span class="text-[10px] text-stone-400">· 10:30</span>
                         </div>
                       </div>
 
-                      <div [id]="'ai-guide-route-footer-' + msg.id" class="pt-2 border-t border-black/[0.04] flex justify-between items-center">
-                        <span class="text-[10px] text-stone-400">🚶 ~1.8 km yürüyüş</span>
+                      <div [id]="'ai-guide-route-footer-' + msg.id" class="pt-2 border-t border-slate-100 dark:border-slate-700 flex justify-between items-center">
+                        <span class="text-[10px] text-slate-400">🚶 ~1.8 km yürüyüş</span>
                         <a
                           routerLink="/itinerary"
-                          class="inline-flex items-center gap-1 px-3 py-1.5 bg-obsidian text-white text-xs font-bold rounded-xl hover:bg-stone-900 transition-colors shadow-sm"
+                          class="inline-flex items-center gap-1 px-3 py-1.5 bg-primary text-white text-xs font-bold rounded-xl hover:bg-primary-hover transition-colors shadow-purple"
                         >
                           <span>Rotayı Haritada Aç</span>
-                          <lucide-icon [img]="ChevronRightIcon" [size]="12" strokeWidth="1.5"></lucide-icon>
+                          <lucide-icon [img]="ChevronRightIcon" [size]="12" strokeWidth="1.8"></lucide-icon>
                         </a>
                       </div>
                     </div>
@@ -260,14 +234,14 @@ import { HeaderComponent } from '../../shared/components/header/header.component
           <!-- Typing Indicator -->
           @if (isLoading()) {
             <div id="ai-guide-typing-indicator-row" class="flex items-end gap-2">
-              <div id="ai-guide-typing-avatar" class="w-7 h-7 rounded-full bg-stone-100 border border-black/[0.06] flex items-center justify-center flex-shrink-0">
-                <lucide-icon [img]="BotIcon" [size]="14" class="text-gold" strokeWidth="1.5"></lucide-icon>
+              <div id="ai-guide-typing-avatar" class="w-7 h-7 rounded-full bg-purple-100 text-primary flex items-center justify-center flex-shrink-0">
+                <lucide-icon [img]="BotIcon" [size]="14" class="text-primary" strokeWidth="1.8"></lucide-icon>
               </div>
-              <div id="ai-guide-typing-bubble" class="bg-white border border-black/[0.06] px-4 py-3 rounded-2xl rounded-bl-xs shadow-subtle">
+              <div id="ai-guide-typing-bubble" class="bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 px-4 py-3 rounded-2xl rounded-tl-xs shadow-xs">
                 <div id="ai-guide-typing-dots" class="flex gap-1.5">
-                  <span class="w-1.5 h-1.5 bg-stone-400 rounded-full animate-bounce" style="animation-delay:0ms"></span>
-                  <span class="w-1.5 h-1.5 bg-stone-600 rounded-full animate-bounce" style="animation-delay:150ms"></span>
-                  <span class="w-1.5 h-1.5 bg-obsidian rounded-full animate-bounce" style="animation-delay:300ms"></span>
+                  <span class="w-1.5 h-1.5 bg-primary/40 rounded-full animate-bounce" style="animation-delay:0ms"></span>
+                  <span class="w-1.5 h-1.5 bg-primary/70 rounded-full animate-bounce" style="animation-delay:150ms"></span>
+                  <span class="w-1.5 h-1.5 bg-primary rounded-full animate-bounce" style="animation-delay:300ms"></span>
                 </div>
               </div>
             </div>
@@ -318,25 +292,36 @@ import { HeaderComponent } from '../../shared/components/header/header.component
 
             <!-- Text Input -->
             <div id="ai-guide-textarea-wrapper" class="flex-1 relative">
-              <textarea
+              <input
                 [(ngModel)]="inputText"
-                (keydown.enter)="onEnterKey($event)"
-                placeholder="Bir şey sorun..."
-                rows="1"
-                class="w-full px-4 py-2.5 rounded-2xl border border-black/[0.06] text-xs sm:text-sm focus:outline-none focus:ring-1 focus:ring-obsidian/30 focus:border-obsidian bg-white leading-relaxed pr-10 shadow-subtle"
-                style="max-height: 120px"
-              ></textarea>
+                (keydown.enter)="send()"
+                type="text"
+                placeholder="Bir şey sor..."
+                class="w-full pl-4 pr-10 py-3 rounded-2xl border border-slate-200 dark:border-slate-700 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-xs"
+              />
+              <button
+                type="button"
+                (click)="send()"
+                [disabled]="!inputText.trim() || isLoading()"
+                class="absolute right-2 top-2 text-primary hover:text-primary-hover disabled:opacity-30 p-1"
+                aria-label="Gönder"
+              >
+                <lucide-icon [img]="SendIcon" [size]="18" strokeWidth="2"></lucide-icon>
+              </button>
             </div>
 
-            <!-- Gönder Butonu -->
+            <!-- Purple Floating Mic Button -->
             <button
               type="button"
-              (click)="send()"
-              [disabled]="!inputText.trim() || isLoading()"
-              class="w-10 h-10 bg-obsidian rounded-2xl flex items-center justify-center text-white hover:bg-stone-900 transition-all disabled:opacity-30 shadow-subtle flex-shrink-0 mb-0.5"
-              aria-label="Gönder"
+              (click)="toggleSpeechRecognition()"
+              [ngClass]="{
+                'bg-primary text-white ring-4 ring-purple-300 animate-pulse': isListening(),
+                'bg-primary text-white hover:bg-primary-hover shadow-purple': !isListening()
+              }"
+              class="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0 transition-all cursor-pointer"
+              title="Sesli Konuş"
             >
-              <lucide-icon [img]="SendIcon" [size]="16" strokeWidth="1.5" class="text-white"></lucide-icon>
+              <lucide-icon [img]="MicIcon" [size]="20" strokeWidth="2"></lucide-icon>
             </button>
 
           </div>

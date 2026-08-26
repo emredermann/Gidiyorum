@@ -49,18 +49,18 @@ export class UiButtonComponent {
 
   get buttonClasses(): string {
     const base =
-      'inline-flex items-center justify-center gap-2 font-medium tracking-tight rounded-2xl transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed focus:outline-none focus:ring-1 focus:ring-obsidian/20';
+      'inline-flex items-center justify-center gap-2 font-bold tracking-tight rounded-2xl transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-primary/30 cursor-pointer';
     const variants: Record<ButtonVariant, string> = {
-      primary: 'bg-obsidian text-white hover:bg-stone-900 shadow-sm active:scale-[0.99]',
-      secondary: 'bg-stone-100 text-stone-900 border border-stone-200/60 hover:bg-stone-200/70',
-      ghost: 'bg-transparent text-stone-600 hover:bg-stone-100/80 hover:text-stone-900',
+      primary: 'bg-primary text-white hover:bg-primary-hover shadow-purple active:scale-[0.98]',
+      secondary: 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 shadow-subtle',
+      ghost: 'bg-transparent text-slate-600 hover:bg-purple-50 hover:text-primary',
       danger: 'bg-red-50 text-red-600 border border-red-100 hover:bg-red-100/80',
-      gold: 'bg-gold text-stone-950 font-semibold hover:bg-gold-light shadow-sm',
+      gold: 'bg-primary text-white font-bold hover:bg-primary-hover shadow-purple',
     };
     const sizes: Record<ButtonSize, string> = {
       sm: 'px-3.5 py-1.5 text-xs',
-      md: 'px-4 py-2.5 text-xs sm:text-sm',
-      lg: 'px-6 py-3.5 text-sm sm:text-base font-semibold',
+      md: 'px-5 py-2.5 text-xs sm:text-sm',
+      lg: 'px-6 py-3.5 text-sm sm:text-base font-bold',
     };
     return [base, variants[this.variant], sizes[this.size], this.fullWidth ? 'w-full' : ''].join(' ');
   }

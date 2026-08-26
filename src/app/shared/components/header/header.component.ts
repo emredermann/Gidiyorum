@@ -8,36 +8,36 @@ import { ThemeService } from '../../../core/services/theme.service';
   standalone: true,
   imports: [LucideAngularModule],
   template: `
-    <header class="sticky top-0 z-40 bg-[#F9F8F6]/85 backdrop-blur-md border-b border-black/[0.05]">
+    <header class="sticky top-0 z-40 bg-white/90 dark:bg-stone-900/90 backdrop-blur-md border-b border-slate-100 dark:border-white/10">
       <div id="header-content-wrapper" class="flex items-center gap-3 px-4 h-14 max-w-2xl mx-auto">
         @if (showBack) {
           <button
             (click)="goBack()"
-            class="w-9 h-9 flex items-center justify-center rounded-2xl hover:bg-stone-200/60 text-stone-800 transition-colors"
+            class="w-9 h-9 flex items-center justify-center rounded-2xl hover:bg-slate-100 text-slate-800 dark:text-slate-200 transition-colors"
             title="Geri"
           >
-            <lucide-icon [img]="ArrowLeftIcon" [size]="18" strokeWidth="1.5"></lucide-icon>
+            <lucide-icon [img]="ArrowLeftIcon" [size]="18" strokeWidth="1.8"></lucide-icon>
           </button>
         }
-        <h1 class="flex-1 font-semibold text-stone-950 text-base tracking-tight">{{ title }}</h1>
+        <h1 class="flex-1 font-bold text-slate-900 dark:text-white text-base tracking-tight">{{ title }}</h1>
 
         <!-- Theme Toggle Button -->
         <button
           (click)="theme.toggleDarkMode()"
-          class="w-9 h-9 flex items-center justify-center rounded-2xl hover:bg-stone-200/60 text-stone-700 dark:text-stone-300 transition-colors"
+          class="w-9 h-9 flex items-center justify-center rounded-2xl hover:bg-slate-100 text-slate-700 dark:text-slate-300 transition-colors"
           [title]="theme.darkMode() ? 'Aydınlık Temaya Geç' : 'Koyu Temaya Geç'"
         >
-          <lucide-icon [img]="theme.darkMode() ? SunIcon : MoonIcon" [size]="18" strokeWidth="1.5"></lucide-icon>
+          <lucide-icon [img]="theme.darkMode() ? SunIcon : MoonIcon" [size]="18" strokeWidth="1.8"></lucide-icon>
         </button>
 
         @if (showSearch) {
-          <button (click)="onSearch()" class="w-9 h-9 flex items-center justify-center rounded-2xl hover:bg-stone-200/60 text-stone-700 transition-colors" title="Arama Yap">
-            <lucide-icon [img]="SearchIcon" [size]="18" strokeWidth="1.5"></lucide-icon>
+          <button (click)="onSearch()" class="w-9 h-9 flex items-center justify-center rounded-2xl hover:bg-slate-100 text-slate-700 dark:text-slate-300 transition-colors" title="Arama Yap">
+            <lucide-icon [img]="SearchIcon" [size]="18" strokeWidth="1.8"></lucide-icon>
           </button>
         }
         @if (showNotifications) {
-          <button (click)="onNotifications()" class="w-9 h-9 flex items-center justify-center rounded-2xl hover:bg-stone-200/60 text-stone-700 transition-colors" title="Bildirimler">
-            <lucide-icon [img]="BellIcon" [size]="18" strokeWidth="1.5"></lucide-icon>
+          <button (click)="onNotifications()" class="w-9 h-9 flex items-center justify-center rounded-2xl hover:bg-slate-100 text-slate-700 dark:text-slate-300 transition-colors" title="Bildirimler">
+            <lucide-icon [img]="BellIcon" [size]="18" strokeWidth="1.8"></lucide-icon>
           </button>
         }
       </div>

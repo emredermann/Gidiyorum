@@ -43,126 +43,127 @@ export interface TripCardData {
   template: `
     <div id="trips-page-container" class="min-h-screen bg-background pb-20">
 
-      <!-- Üst Header (Tema Değiştirme & Yeni Seyahat Ekle) -->
-      <header class="sticky top-0 z-40 bg-[#F9F8F6]/90 backdrop-blur-md border-b border-black/[0.05]">
-        <div id="trips-header-inner" class="flex items-center justify-between px-4 h-14 max-w-2xl mx-auto">
-          <h1 class="font-bold text-stone-950 text-base tracking-tight font-serif-luxe">Seyahatlerim</h1>
+      <!-- Üst Header -->
+      <header class="sticky top-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-100 dark:border-white/10">
+        <div id="trips-header-inner" class="flex items-center justify-between px-4 h-14 max-w-md mx-auto">
+          <h1 class="font-extrabold text-slate-900 dark:text-white text-base tracking-tight">Seyahatlerim</h1>
 
           <div id="trips-header-actions" class="flex items-center gap-2">
             <!-- Tema Değiştirme Butonu -->
             <button
               type="button"
               (click)="theme.toggleDarkMode()"
-              class="w-8 h-8 rounded-full bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 flex items-center justify-center shadow-sm hover:bg-stone-200 dark:hover:bg-stone-700 transition-all"
+              class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 flex items-center justify-center hover:bg-slate-200 transition-all cursor-pointer"
               [title]="theme.darkMode() ? 'Aydınlık Temaya Geç' : 'Koyu Temaya Geç'"
             >
-              <lucide-icon [img]="theme.darkMode() ? SunIcon : MoonIcon" [size]="16" strokeWidth="1.5"></lucide-icon>
+              <lucide-icon [img]="theme.darkMode() ? SunIcon : MoonIcon" [size]="16" strokeWidth="1.8"></lucide-icon>
             </button>
 
             <!-- Yeni Seyahat Ekle -->
             <a
               routerLink="/planner/preferences"
-              class="w-8 h-8 bg-obsidian text-white rounded-full flex items-center justify-center shadow-sm hover:bg-stone-900 transition-all"
+              class="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center shadow-purple hover:bg-primary-hover transition-all cursor-pointer"
               aria-label="Yeni Seyahat Ekle"
               title="Yeni Seyahat Ekle"
             >
-              <lucide-icon [img]="PlusIcon" [size]="16" strokeWidth="1.5"></lucide-icon>
+              <lucide-icon [img]="PlusIcon" [size]="16" strokeWidth="2"></lucide-icon>
             </a>
           </div>
         </div>
       </header>
 
-      <div id="trips-content-wrapper" class="px-4 py-6 max-w-2xl mx-auto space-y-6">
+      <div id="trips-content-wrapper" class="px-4 py-6 max-w-md mx-auto space-y-6">
 
-        <!-- Segmented Tab Seçici ("Yaklaşan" ve "Geçmiş" - Monocle Pill Style) -->
-        <div id="trips-segmented-tab-selector" class="bg-stone-200/60 p-1 rounded-full flex items-center border border-black/[0.04]">
+        <!-- Segmented Tab Seçici ("Yaklaşan" ve "Geçmiş") -->
+        <div id="trips-segmented-tab-selector" class="bg-slate-100 dark:bg-slate-800 p-1 rounded-2xl flex items-center border border-slate-200/60 dark:border-slate-700">
           <button
             type="button"
             (click)="activeTab.set('upcoming')"
-            class="flex-1 py-2 rounded-full text-xs font-bold transition-all text-center"
-            [class.bg-obsidian]="activeTab() === 'upcoming'"
+            class="flex-1 py-2.5 rounded-xl text-xs font-bold transition-all text-center cursor-pointer"
+            [class.bg-primary]="activeTab() === 'upcoming'"
             [class.text-white]="activeTab() === 'upcoming'"
-            [class.shadow-sm]="activeTab() === 'upcoming'"
-            [class.text-stone-600]="activeTab() !== 'upcoming'"
+            [class.shadow-purple]="activeTab() === 'upcoming'"
+            [class.text-slate-600]="activeTab() !== 'upcoming'"
+            [class.dark:text-slate-400]="activeTab() !== 'upcoming'"
           >
-            Yaklaşanlar ({{ upcomingTrips().length }})
+            Yaklaşan ({{ upcomingTrips().length }})
           </button>
 
           <button
             type="button"
             (click)="activeTab.set('past')"
-            class="flex-1 py-2 rounded-full text-xs font-bold transition-all text-center"
-            [class.bg-obsidian]="activeTab() === 'past'"
+            class="flex-1 py-2.5 rounded-xl text-xs font-bold transition-all text-center cursor-pointer"
+            [class.bg-primary]="activeTab() === 'past'"
             [class.text-white]="activeTab() === 'past'"
-            [class.shadow-sm]="activeTab() === 'past'"
-            [class.text-stone-600]="activeTab() !== 'past'"
+            [class.shadow-purple]="activeTab() === 'past'"
+            [class.text-slate-600]="activeTab() !== 'past'"
+            [class.dark:text-slate-400]="activeTab() !== 'past'"
           >
             Geçmiş ({{ pastTrips().length }})
           </button>
         </div>
 
-        <!-- Seyahat Kart Listesi (Monocle / Airbnb Luxe Cards) -->
-        <div id="trips-cards-list-box" class="space-y-5">
+        <!-- Seyahat Kart Listesi -->
+        <div id="trips-cards-list-box" class="space-y-4">
 
           @for (trip of displayedTrips(); track trip.id) {
             <a [routerLink]="['/trips', trip.id, 'itinerary']" class="block group">
-              <div [id]="'trips-card-box-' + trip.id" class="relative rounded-3xl overflow-hidden shadow-luxe border border-black/[0.05] transition-all duration-300 group-hover:-translate-y-0.5 bg-stone-900">
+              <div [id]="'trips-card-box-' + trip.id" class="relative rounded-3xl overflow-hidden shadow-card border border-slate-100 dark:border-slate-800 transition-all duration-300 group-hover:-translate-y-1 bg-slate-900 min-h-[220px] flex flex-col justify-between p-5">
 
-                <!-- Background Image -->
-                <div [id]="'trips-card-cover-' + trip.id" class="h-48 sm:h-52 w-full overflow-hidden relative">
-                  <img
-                    [src]="trip.coverImage"
-                    [alt]="trip.title"
-                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-85"
-                  />
-                  <div [id]="'trips-card-overlay-' + trip.id" class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent"></div>
-                </div>
+                <!-- Background Image & Gradient Overlay -->
+                <img
+                  [src]="trip.coverImage"
+                  [alt]="trip.title"
+                  class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/50 to-slate-950/30"></div>
 
-                <!-- Kalan Gün Rozeti (Top Right) -->
-                <div [id]="'trips-card-badge-box-' + trip.id" class="absolute top-4 right-4 z-10">
+                <!-- Top Row: Location Badge (Left) & Remaining Days Badge (Right) -->
+                <div class="relative z-10 flex items-center justify-between gap-2">
+                  <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900/80 backdrop-blur-md text-white text-xs font-bold border border-white/10 shadow-xs">
+                    <lucide-icon [img]="MapPinIcon" [size]="12" strokeWidth="1.8" class="text-primary"></lucide-icon>
+                    <span>{{ trip.city }}, {{ trip.country }}</span>
+                  </div>
+
                   @if (trip.isUpcoming) {
-                    <span class="px-3 py-1 rounded-full text-[11px] font-extrabold shadow-sm backdrop-blur-md bg-white/90 dark:bg-stone-900/90 text-stone-950 dark:text-white inline-flex items-center gap-1 border border-black/[0.04] dark:border-white/10">
-                      ⏳ {{ trip.daysRemainingStr }}
+                    <span class="px-3 py-1 rounded-full text-xs font-extrabold shadow-xs bg-white/95 dark:bg-slate-900/95 text-slate-900 dark:text-white backdrop-blur-md border border-white/20">
+                      {{ trip.daysRemainingStr }}
                     </span>
                   } @else {
-                    <span class="px-3 py-1 rounded-full text-[11px] font-bold shadow-sm backdrop-blur-md bg-stone-100/90 dark:bg-stone-800/90 text-stone-700 dark:text-stone-200 inline-flex items-center gap-1 border border-black/[0.04] dark:border-white/10">
-                      ✓ {{ trip.daysRemainingStr }}
+                    <span class="px-3 py-1 rounded-full text-xs font-bold shadow-xs bg-slate-800/80 text-slate-300 backdrop-blur-md border border-white/10">
+                      ✓ Tamamlandı
                     </span>
                   }
                 </div>
 
-                <!-- Card Bottom Text Info -->
-                <div [id]="'trips-card-info-box-' + trip.id" class="absolute bottom-5 left-5 right-5 z-10 text-white">
-                  <div [id]="'trips-card-location-row-' + trip.id" class="flex items-center justify-between text-xs text-white/80 font-medium mb-1">
-                    <div class="flex items-center gap-1.5">
-                      <lucide-icon [img]="MapPinIcon" [size]="12" strokeWidth="1.5" class="text-gold"></lucide-icon>
-                      <span>{{ trip.city }}, {{ trip.country }}</span>
+                <!-- Bottom Area: Tags, Title, Date & Action Button -->
+                <div class="relative z-10 space-y-2 mt-6">
+                  <!-- Tags Row -->
+                  @if (trip.tags && trip.tags.length > 0) {
+                    <div class="flex flex-wrap items-center gap-1.5">
+                      @for (tag of trip.tags; track tag) {
+                        <span class="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-primary/90 text-white backdrop-blur-md shadow-xs">
+                          #{{ tag }}
+                        </span>
+                      }
                     </div>
+                  }
 
-                    @if (trip.tags && trip.tags.length > 0) {
-                      <div class="hidden sm:flex items-center gap-1">
-                        @for (tag of trip.tags; track tag) {
-                          <span class="text-[9px] font-bold px-2 py-0.5 rounded-full bg-white/15 text-white/90 backdrop-blur-xs">
-                            #{{ tag }}
-                          </span>
-                        }
-                      </div>
-                    }
-                  </div>
-
-                  <h3 class="text-xl sm:text-2xl font-serif-luxe font-normal tracking-tight text-white group-hover:text-gold transition-colors">
+                  <!-- Title -->
+                  <h3 class="text-lg sm:text-xl font-extrabold text-white leading-snug group-hover:text-purple-300 transition-colors">
                     {{ trip.title }}
                   </h3>
 
-                  <div [id]="'trips-card-footer-row-' + trip.id" class="flex items-center justify-between mt-3 pt-2.5 border-t border-white/15 text-xs text-white/90 font-medium">
-                    <div [id]="'trips-card-date-col-' + trip.id" class="flex items-center gap-1.5">
-                      <lucide-icon [img]="CalendarIcon" [size]="13" strokeWidth="1.5"></lucide-icon>
+                  <!-- Footer: Date & Rotayı İncele -->
+                  <div class="flex items-center justify-between pt-3 border-t border-white/15 text-xs text-white/90 font-medium">
+                    <div class="flex items-center gap-1.5">
+                      <lucide-icon [img]="CalendarIcon" [size]="14" strokeWidth="1.8"></lucide-icon>
                       <span>{{ trip.dateRangeStr }}</span>
                     </div>
 
-                    <div [id]="'trips-card-action-col-' + trip.id" class="flex items-center gap-1 font-bold text-white group-hover:translate-x-1 transition-transform">
+                    <div class="flex items-center gap-1 font-bold text-white group-hover:translate-x-1 transition-transform">
                       <span>Rotayı İncele</span>
-                      <lucide-icon [img]="ChevronRightIcon" [size]="14" strokeWidth="1.5"></lucide-icon>
+                      <lucide-icon [img]="ChevronRightIcon" [size]="14" strokeWidth="2"></lucide-icon>
                     </div>
                   </div>
                 </div>

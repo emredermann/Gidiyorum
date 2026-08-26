@@ -748,16 +748,16 @@ const TRIP_DATA_MAP: Record<string, TripMasterConfig> = {
                 type="button"
                 (click)="selectDay(day)"
                 [ngClass]="{
-                  'bg-obsidian text-white border-obsidian shadow-sm dark:bg-gold dark:text-stone-950 dark:border-gold': selectedDay().id === day.id,
-                  'bg-white text-stone-600 border-black/[0.06] dark:bg-stone-800 dark:text-stone-300 dark:border-white/10': selectedDay().id !== day.id
+                  'bg-primary text-white border-primary shadow-purple': selectedDay().id === day.id,
+                  'bg-white text-slate-600 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-white/10': selectedDay().id !== day.id
                 }"
                 class="flex-shrink-0 px-4 py-2 rounded-full border text-xs font-bold transition-all duration-200 flex items-center gap-1.5 whitespace-nowrap cursor-pointer"
               >
                 @if (day.isToday) {
                   <span
                     [ngClass]="{
-                      'bg-gold': selectedDay().id === day.id,
-                      'bg-obsidian dark:bg-gold': selectedDay().id !== day.id
+                      'bg-white': selectedDay().id === day.id,
+                      'bg-primary': selectedDay().id !== day.id
                     }"
                     class="w-1.5 h-1.5 rounded-full"
                   ></span>
@@ -808,18 +808,6 @@ const TRIP_DATA_MAP: Record<string, TripMasterConfig> = {
       <!-- 3. Zaman Çizelgesi (Linear / Quiet Luxury Timeline) -->
       <div id="daily-route-timeline-container" class="max-w-2xl mx-auto px-4 py-8">
 
-        <!-- Mükerrer Gün Uyarısı Banner -->
-        @if (hasDuplicateDays()) {
-          <div id="daily-route-duplicate-warning-banner" class="mb-6 p-4 bg-amber-500/10 border border-amber-500/30 rounded-2xl flex items-start gap-3 text-amber-900 dark:text-amber-300 shadow-sm">
-            <span class="text-lg leading-none">⚠️</span>
-            <div class="text-xs">
-              <h4 class="font-bold">Mükerrer Plan Tespit Edildi</h4>
-              <p class="mt-0.5 opacity-90 leading-relaxed">
-                Bu seyahat rotasında aynı içeriğe sahip tekrarlayan günler tespit edildi. Mükerrer günler elenerek yalnızca ilk gün gösterilmektedir.
-              </p>
-            </div>
-          </div>
-        }
 
         <div id="daily-route-timeline-header" class="flex items-center justify-between mb-6">
           <div id="daily-route-timeline-title-box">
@@ -866,6 +854,7 @@ const TRIP_DATA_MAP: Record<string, TripMasterConfig> = {
                     <!-- Mekan Adı -->
                     <a
                       [routerLink]="['/places', item.id]"
+                      (click)="onPlaceClick(item)"
                       class="font-bold text-sm sm:text-base text-stone-950 leading-snug group-hover:text-gold transition-colors block cursor-pointer"
                     >
                       {{ item.title }}
@@ -886,7 +875,7 @@ const TRIP_DATA_MAP: Record<string, TripMasterConfig> = {
 
                   <!-- Sağ Alan: Yuvarlak Küçük Önizleme Görseli -->
                   <div [id]="'daily-route-card-thumb-' + item.id" class="relative flex-shrink-0">
-                    <a [routerLink]="['/places', item.id]">
+                    <a [routerLink]="['/places', item.id]" (click)="onPlaceClick(item)">
                       <img
                         [src]="item.imageUrl"
                         [alt]="item.title"
@@ -946,10 +935,21 @@ export class DailyRouteComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+  onPlaceClick(item: any) {
+    const config = this.activeTripConfig();
+    this.planner.selectPlaceItem({
+      ...item,
+      cityName: config?.cityName || 'Destinasyon',
+      flag: config?.flag || '📍',
+    });
+  }
+
   activeTripId = signal<string>('trip-rome-01');
 
   activeTripConfig = computed(() => {
     const id = this.activeTripId();
+    const serviceConfig = this.planner.getTripConfig(id);
+    if (serviceConfig) return serviceConfig;
     return TRIP_DATA_MAP[id] || TRIP_DATA_MAP['trip-rome-01'];
   });
 
@@ -992,17 +992,15 @@ export class DailyRouteComponent implements OnInit, AfterViewInit, OnDestroy {
     this.route.paramMap.subscribe(params => {
       const paramId = params.get('id');
       const queryId = this.route.snapshot.queryParamMap.get('tripId');
-      const targetId = paramId || queryId || 'trip-rome-01';
+      const latestTrip = this.planner.latestTripConfig();
+      const defaultId = latestTrip ? latestTrip.id : 'trip-rome-01';
+      const targetId = paramId || queryId || defaultId;
       this.loadTrip(targetId);
     });
   }
 
   private loadTrip(targetId: string) {
-    if (TRIP_DATA_MAP[targetId]) {
-      this.activeTripId.set(targetId);
-    } else {
-      this.activeTripId.set('trip-rome-01');
-    }
+    this.activeTripId.set(targetId);
 
     const config = this.activeTripConfig();
     const validDays = this.activeDayOptions();
@@ -1065,14 +1063,17 @@ export class DailyRouteComponent implements OnInit, AfterViewInit, OnDestroy {
         (container as any)._leaflet_id = null;
       }
 
-      const L = await import('leaflet');
+      const leaf = await import('leaflet');
+      const L: any = leaf.default || leaf;
 
-      (L.Icon.Default.prototype as any)._getIconUrl = undefined;
-      L.Icon.Default.mergeOptions({
-        iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
-        iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-        shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-      });
+      if (L && L.Icon && L.Icon.Default) {
+        (L.Icon.Default.prototype as any)._getIconUrl = undefined;
+        L.Icon.Default.mergeOptions({
+          iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+          iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+          shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+        });
+      }
 
       const schedule = this.currentSchedule();
       const config = this.activeTripConfig();
@@ -1100,7 +1101,7 @@ export class DailyRouteComponent implements OnInit, AfterViewInit, OnDestroy {
           latLngs.push(coords);
 
           const customMarkerHtml = `
-            <div style="background-color:#0F1012;color:white;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:11px;border:2px solid white;box-shadow:0 4px 12px rgba(0,0,0,0.2)">
+            <div style="background-color:#5B46F6;color:white;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:12px;border:2px solid white;box-shadow:0 4px 14px rgba(91,70,246,0.4)">
               ${index + 1}
             </div>
           `;
@@ -1108,14 +1109,14 @@ export class DailyRouteComponent implements OnInit, AfterViewInit, OnDestroy {
           const customIcon = L.divIcon({
             html: customMarkerHtml,
             className: 'custom-leaflet-marker',
-            iconSize: [26, 26],
-            iconAnchor: [13, 13],
+            iconSize: [28, 28],
+            iconAnchor: [14, 14],
           });
 
           L.marker(coords, { icon: customIcon })
             .bindPopup(
               `<div style="font-family:sans-serif;padding:2px">
-                <span style="font-size:10px;color:#C5A880;font-weight:bold">${item.time}</span>
+                <span style="font-size:10px;color:#5B46F6;font-weight:bold">${item.time}</span>
                 <br><b>${item.title}</b>
                 <br><small style="color:#666">${item.category}</small>
               </div>`
@@ -1126,9 +1127,9 @@ export class DailyRouteComponent implements OnInit, AfterViewInit, OnDestroy {
 
       if (latLngs.length > 1) {
         L.polyline(latLngs, {
-          color: '#0F1012',
-          weight: 2.5,
-          opacity: 0.7,
+          color: '#5B46F6',
+          weight: 3,
+          opacity: 0.85,
           dashArray: '6, 6',
         }).addTo(map);
       }

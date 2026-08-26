@@ -8,61 +8,66 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [RouterLink, RouterLinkActive, LucideAngularModule, CommonModule],
   template: `
-    <nav class="fixed bottom-0 left-0 right-0 z-50 bg-[#F9F8F6]/90 backdrop-blur-md border-t border-black/[0.06] md:hidden">
-      <div id="bottom-nav-container" class="flex items-center justify-around h-16 px-2 max-w-md mx-auto">
-        <!-- Keşfet / Seyahatler -->
+    <nav class="fixed bottom-0 left-0 right-0 z-50 bg-white/95 dark:bg-stone-900/95 backdrop-blur-lg border-t border-slate-100 dark:border-white/10 md:hidden shadow-lg">
+      <div id="bottom-nav-container" class="flex items-center justify-around h-16 px-1 max-w-md mx-auto">
+        <!-- 1. Keşfet -->
         <a [routerLink]="'/trips'"
            [ngClass]="{
-             'text-obsidian font-bold dark:text-gold': isTripsActive(),
-             'text-stone-400': !isTripsActive()
+             'text-primary font-bold': isTripsActive(),
+             'text-slate-400': !isTripsActive()
            }"
-           class="relative flex flex-col items-center gap-1 px-3 py-2 transition-colors duration-200 hover:text-obsidian">
-          <lucide-icon [img]="CompassIcon" [size]="20" strokeWidth="1.5"></lucide-icon>
-          <span class="text-[10px] tracking-tight">Keşfet</span>
+           class="relative flex flex-col items-center gap-1 px-3 py-1.5 transition-colors duration-200 hover:text-primary">
+          <lucide-icon [img]="CompassIcon" [size]="20" strokeWidth="1.8"></lucide-icon>
+          <span class="text-[10px] font-medium tracking-tight">Keşfet</span>
           @if (isTripsActive()) {
-            <span class="absolute bottom-1 w-1 h-1 bg-obsidian dark:bg-gold rounded-full"></span>
+            <span class="absolute bottom-0.5 w-1 h-1 bg-primary rounded-full"></span>
           }
         </a>
 
-        <!-- Rotam -->
+        <!-- 2. Planla -->
+        <a [routerLink]="'/planner/preferences'"
+           routerLinkActive="text-primary font-bold" #rPlan="routerLinkActive"
+           class="relative flex flex-col items-center gap-1 px-3 py-1.5 text-slate-400 transition-colors duration-200 hover:text-primary">
+          <lucide-icon [img]="PlusIcon" [size]="20" strokeWidth="1.8"></lucide-icon>
+          <span class="text-[10px] font-medium tracking-tight">Planla</span>
+          @if (rPlan.isActive) {
+            <span class="absolute bottom-0.5 w-1 h-1 bg-primary rounded-full"></span>
+          }
+        </a>
+
+        <!-- 3. Rotam -->
         <a [routerLink]="'/itinerary'"
            [ngClass]="{
-             'text-obsidian font-bold dark:text-gold': isItineraryActive(),
-             'text-stone-400': !isItineraryActive()
+             'text-primary font-bold': isItineraryActive(),
+             'text-slate-400': !isItineraryActive()
            }"
-           class="relative flex flex-col items-center gap-1 px-3 py-2 transition-colors duration-200 hover:text-obsidian">
-          <lucide-icon [img]="MapPinIcon" [size]="20" strokeWidth="1.5"></lucide-icon>
-          <span class="text-[10px] tracking-tight">Rotam</span>
+           class="relative flex flex-col items-center gap-1 px-3 py-1.5 transition-colors duration-200 hover:text-primary">
+          <lucide-icon [img]="MapPinIcon" [size]="20" strokeWidth="1.8"></lucide-icon>
+          <span class="text-[10px] font-medium tracking-tight">Rotam</span>
           @if (isItineraryActive()) {
-            <span class="absolute bottom-1 w-1 h-1 bg-obsidian dark:bg-gold rounded-full"></span>
+            <span class="absolute bottom-0.5 w-1 h-1 bg-primary rounded-full"></span>
           }
         </a>
 
-        <!-- Yeni Plan -->
-        <a [routerLink]="'/planner/preferences'" routerLinkActive="text-obsidian font-bold" #r3="routerLinkActive"
-           class="relative flex flex-col items-center gap-1 px-3 py-2 text-stone-400 transition-colors duration-200 hover:text-obsidian">
-          <div id="bottom-nav-plus-icon-wrapper" class="w-8 h-8 rounded-full bg-obsidian text-white flex items-center justify-center shadow-sm">
-            <lucide-icon [img]="PlusIcon" [size]="16" strokeWidth="1.75"></lucide-icon>
-          </div>
-        </a>
-
-        <!-- AI Rehber -->
-        <a [routerLink]="'/ai-guide'" routerLinkActive="text-obsidian font-bold" #r4="routerLinkActive"
-           class="relative flex flex-col items-center gap-1 px-3 py-2 text-stone-400 transition-colors duration-200 hover:text-obsidian">
-          <lucide-icon [img]="SparklesIcon" [size]="20" strokeWidth="1.5"></lucide-icon>
-          <span class="text-[10px] tracking-tight">AI Rehber</span>
-          @if (r4.isActive) {
-            <span class="absolute bottom-1 w-1 h-1 bg-gold rounded-full"></span>
+        <!-- 4. Rehber (AI Rehber) -->
+        <a [routerLink]="'/ai-guide'"
+           routerLinkActive="text-primary font-bold" #rAi="routerLinkActive"
+           class="relative flex flex-col items-center gap-1 px-3 py-1.5 text-slate-400 transition-colors duration-200 hover:text-primary">
+          <lucide-icon [img]="SparklesIcon" [size]="20" strokeWidth="1.8"></lucide-icon>
+          <span class="text-[10px] font-medium tracking-tight">Rehber</span>
+          @if (rAi.isActive) {
+            <span class="absolute bottom-0.5 w-1 h-1 bg-primary rounded-full"></span>
           }
         </a>
 
-        <!-- Profil -->
-        <a [routerLink]="'/profile'" routerLinkActive="text-obsidian font-bold" #r5="routerLinkActive"
-           class="relative flex flex-col items-center gap-1 px-3 py-2 text-stone-400 transition-colors duration-200 hover:text-obsidian">
-          <lucide-icon [img]="UserIcon" [size]="20" strokeWidth="1.5"></lucide-icon>
-          <span class="text-[10px] tracking-tight">Profil</span>
-          @if (r5.isActive) {
-            <span class="absolute bottom-1 w-1 h-1 bg-obsidian rounded-full"></span>
+        <!-- 5. Profil -->
+        <a [routerLink]="'/profile'"
+           routerLinkActive="text-primary font-bold" #rProf="routerLinkActive"
+           class="relative flex flex-col items-center gap-1 px-3 py-1.5 text-slate-400 transition-colors duration-200 hover:text-primary">
+          <lucide-icon [img]="UserIcon" [size]="20" strokeWidth="1.8"></lucide-icon>
+          <span class="text-[10px] font-medium tracking-tight">Profil</span>
+          @if (rProf.isActive) {
+            <span class="absolute bottom-0.5 w-1 h-1 bg-primary rounded-full"></span>
           }
         </a>
       </div>

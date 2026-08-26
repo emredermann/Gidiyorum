@@ -207,7 +207,7 @@ export class SupabaseService {
               if (match) found = match;
             });
           });
-          return Promise.resolve({ data: found || MOCK_ITINERARY_DAYS['trip-istanbul-01'][0].items![0], error: null });
+          return Promise.resolve({ data: found, error: found ? null : { message: 'Item not found' } });
         }
         return Promise.resolve({ data: self.mockTrips[0], error: null });
       },
