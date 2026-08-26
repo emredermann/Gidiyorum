@@ -1,0 +1,27 @@
+name: Security & Vulnerability Audit
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  schedule:
+    # Run weekly security scan every Monday at 08:00 AM UTC
+    - cron: '0 8 * * 1'
+
+jobs:
+  security-scan:
+    name: NPM Audit & Dependency Vulnerability Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🔍 Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 🟢 Setup Node.js (v20)
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: 🛡️ Audit Dependencies for High/Critical Vulnerabilities
+        run: npm audit --audit-level=high --omit=dev || true
