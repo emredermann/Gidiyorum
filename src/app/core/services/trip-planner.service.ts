@@ -424,20 +424,64 @@ export class TripPlannerService {
   readonly latestTripConfig = signal<any | null>(null);
   readonly selectedPlaceItem = signal<any | null>(null);
 
+  private stringHash(str: string): number {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+      hash = (hash << 5) - hash + str.charCodeAt(i);
+      hash |= 0;
+    }
+    return Math.abs(hash);
+  }
+
+  private getTopicMatchedImage(title: string, category: string = ''): string {
+    const text = (title + ' ' + category).toLowerCase();
+    if (text.includes('kahve') || text.includes('kafe') || text.includes('kahvaltı') || text.includes('dondurma') || text.includes('kruvasan') || text.includes('bagel')) {
+      return 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1000';
+    }
+    if (text.includes('müze') || text.includes('sanat') || text.includes('galeri') || text.includes('tablo') || text.includes('sergi')) {
+      return 'https://images.unsplash.com/photo-1565008447742-97f6f38c985c?w=1000';
+    }
+    if (text.includes('makarna') || text.includes('restoran') || text.includes('yemek') || text.includes('osteria') || text.includes('trattoria') || text.includes('paella') || text.includes('ziyafet')) {
+      return 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1000';
+    }
+    if (text.includes('katedral') || text.includes('tapınak') || text.includes('anıt') || text.includes('kolezyum') || text.includes('saat kulesi') || text.includes('meydan') || text.includes('saray') || text.includes('kale')) {
+      return 'https://images.unsplash.com/photo-1548625361-1845110f0e04?w=1000';
+    }
+    if (text.includes('park') || text.includes('teras') || text.includes('manzara') || text.includes('bambu') || text.includes('bahçe') || text.includes('orman')) {
+      return 'https://images.unsplash.com/photo-1519331379826-f10be5486c6f?w=1000';
+    }
+    if (text.includes('balık') || text.includes('deniz') || text.includes('liman') || text.includes('sahil') || text.includes('tekne') || text.includes('ada') || text.includes('koy')) {
+      return 'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=1000';
+    }
+    if (text.includes('çarşı') || text.includes('pazar') || text.includes('butik') || text.includes('alışveriş') || text.includes('sokak')) {
+      return 'https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=1000';
+    }
+    return 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1000';
+  }
+
   selectPlaceItem(item: any) {
+    const title = item.title || item.name || 'Mekan Detayı';
+    const hash = this.stringHash(title + (item.id || ''));
+
+    const dynamicRating = item.rating || (4.6 + (hash % 4) * 0.1).toFixed(1);
+    const reviewCountNum = 850 + (hash % 35) * 110;
+    const dynamicReviews = item.reviewCount || `${reviewCountNum.toLocaleString('tr-TR')}`;
+
+    const defaultImg = this.getTopicMatchedImage(title, item.category);
+
     const placeData = {
       id: item.id,
-      name: item.title || item.name || 'Mekan Detayı',
-      subtitle: `${item.category || 'Mekan'} • ${item.cityName || 'Destinasyon'}, ${item.flag || '📍'} • €€`,
-      rating: item.rating || '4.8',
-      reviewCount: item.reviewCount || '1,240',
+      name: title,
+      subtitle: item.subtitle || `${item.category || 'Mekan'} • ${item.cityName || 'Destinasyon'}, ${item.flag || '📍'} • €€`,
+      rating: dynamicRating,
+      reviewCount: dynamicReviews,
       tags: item.tags || [item.category ? item.category.replace(/^[^\w\s]+/, '').trim() : 'Mekan', item.cityName || 'Destinasyon', 'Kültür', 'Özel Deneyim'],
-      description: item.description || `${item.title} - Şehrin öne çıkan özel ziyaret ve lezzet durağı.`,
-      openingHours: item.openingHours || '09:00 - 22:00',
-      averagePrice: item.averagePrice || '€€ (15 - 35 €)',
-      reservation: item.reservation || 'Önerilir',
+      description: item.description || `${title} - Şehrin öne çıkan özel ziyaret ve lezzet durağı.`,
+      openingHours: item.openingHours || (hash % 2 === 0 ? '09:00 - 22:00' : '08:30 - 23:00'),
+      averagePrice: item.averagePrice || (hash % 3 === 0 ? '€ (10 - 20 €)' : hash % 3 === 1 ? '€€ (20 - 35 €)' : '€€€ (40 - 75 €)'),
+      reservation: item.reservation || (hash % 2 === 0 ? 'Önerilir (Sıra beklememek için)' : 'Gerekli Değil'),
       distance: item.walkingInfo || item.distance || 'Şehir Merkezinde',
-      imageUrl: item.imageUrl || 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1000',
+      imageUrl: item.imageUrl || defaultImg,
       lat: item.lat || 41.9028,
       lng: item.lng || 12.4964,
     };

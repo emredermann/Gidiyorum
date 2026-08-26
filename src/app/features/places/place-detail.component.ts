@@ -66,17 +66,17 @@ import { ItineraryItem } from '../../core/models';
         </div>
 
         <!-- Hero Bottom Badge Overlay -->
-        <div id="place-detail-hero-info-box" class="absolute bottom-6 left-6 right-6 text-white">
+        <div id="place-detail-hero-info-box" class="absolute bottom-6 left-6 right-6 text-white z-10">
           <div id="place-detail-hero-badge-row" class="flex items-center gap-2 mb-1.5">
-            <span class="px-2.5 py-0.5 bg-emerald-500 text-white text-[11px] font-bold rounded-full flex items-center gap-1 shadow-xs">
+            <span class="px-2.5 py-0.5 bg-emerald-500 text-white text-[11px] font-extrabold rounded-full flex items-center gap-1 shadow-md">
               ★ {{ placeData().rating }}
             </span>
-            <span class="text-xs text-white/80 font-medium">({{ placeData().reviewCount }} Değerlendirme)</span>
+            <span class="text-xs text-slate-100 font-bold drop-shadow-sm">({{ placeData().reviewCount }} Değerlendirme)</span>
           </div>
-          <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight">
+          <h1 class="text-2xl sm:text-3xl font-black text-white tracking-tight drop-shadow-md">
             {{ placeData().name }}
           </h1>
-          <p class="text-xs sm:text-sm text-white/90 mt-1 font-medium">
+          <p class="text-xs sm:text-sm text-slate-200 mt-1 font-bold drop-shadow-sm">
             {{ placeData().subtitle }}
           </p>
         </div>
@@ -88,16 +88,19 @@ import { ItineraryItem } from '../../core/models';
         <!-- Tag Listesi -->
         <section class="flex flex-wrap gap-2">
           @for (tag of placeData().tags; track tag) {
-            <span class="px-3 py-1 bg-purple-50 dark:bg-slate-800 text-primary dark:text-purple-300 text-xs font-semibold rounded-full border border-purple-100 dark:border-slate-700">
+            <span class="px-3 py-1 bg-purple-100 dark:bg-slate-800 text-purple-900 dark:text-purple-200 text-xs font-bold rounded-full border border-purple-200 dark:border-slate-700 shadow-2xs">
               {{ tag }}
             </span>
           }
         </section>
 
         <!-- Açıklama Metni -->
-        <div class="bg-white dark:bg-slate-800 p-4 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-xs space-y-2">
-          <h2 class="font-bold text-slate-900 dark:text-white text-xs tracking-wider uppercase">Hakkında</h2>
-          <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+        <div class="bg-white dark:bg-slate-800 p-4 rounded-3xl border border-slate-200/80 dark:border-slate-700 shadow-xs space-y-2">
+          <h2 class="font-extrabold text-slate-900 dark:text-slate-100 text-xs tracking-wider uppercase flex items-center gap-2">
+            <span class="w-1.5 h-4 bg-primary rounded-full"></span>
+            <span>Hakkında</span>
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-800 dark:text-slate-100 font-medium leading-relaxed">
             {{ placeData().description }}
           </p>
         </div>
@@ -105,11 +108,11 @@ import { ItineraryItem } from '../../core/models';
         <!-- Bilgi Listesi / Mekan Bilgileri Tablosu & Kartları -->
         <section class="space-y-3.5">
           <div class="flex items-center justify-between">
-            <h2 class="font-extrabold text-slate-900 dark:text-white text-xs tracking-wider uppercase flex items-center gap-2">
+            <h2 class="font-extrabold text-slate-900 dark:text-slate-100 text-xs tracking-wider uppercase flex items-center gap-2">
               <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
               <span>Mekan Bilgileri & Özellikler</span>
             </h2>
-            <span class="text-[11px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/15 px-2.5 py-0.5 rounded-full border border-emerald-500/20">
+            <span class="text-[11px] font-extrabold text-emerald-700 dark:text-emerald-300 bg-emerald-100 dark:bg-emerald-500/20 px-2.5 py-0.5 rounded-full border border-emerald-500/30">
               🟢 Açık • 09:00 - 22:00
             </span>
           </div>
@@ -118,83 +121,83 @@ import { ItineraryItem } from '../../core/models';
           <div id="place-detail-info-grid" class="grid grid-cols-2 gap-3">
 
             <!-- 🕒 Çalışma Saatleri -->
-            <div class="bg-white dark:bg-slate-800 p-3.5 rounded-2xl border border-slate-100 dark:border-slate-700/80 shadow-xs space-y-2 hover:border-primary/40 transition-all">
+            <div class="bg-white dark:bg-slate-800 p-3.5 rounded-2xl border border-slate-200/80 dark:border-slate-700 shadow-xs space-y-2 hover:border-primary/40 transition-all">
               <div class="flex items-center justify-between">
-                <div class="w-8 h-8 rounded-xl bg-amber-50 dark:bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center flex-shrink-0">
-                  <lucide-icon [img]="ClockIcon" [size]="16" strokeWidth="2"></lucide-icon>
+                <div class="w-8 h-8 rounded-xl bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-300 flex items-center justify-center flex-shrink-0 font-bold">
+                  <lucide-icon [img]="ClockIcon" [size]="16" strokeWidth="2.2"></lucide-icon>
                 </div>
-                <span class="text-[10px] font-bold text-slate-400">Saatler</span>
+                <span class="text-[10px] font-extrabold text-slate-500 dark:text-slate-400">Saatler</span>
               </div>
               <div>
-                <div class="text-[11px] font-semibold text-slate-500 dark:text-slate-400">Çalışma Saatleri</div>
-                <div class="text-xs font-extrabold text-slate-900 dark:text-white mt-0.5">{{ placeData().openingHours }}</div>
+                <div class="text-[11px] font-bold text-slate-700 dark:text-slate-200">Çalışma Saatleri</div>
+                <div class="text-xs font-black text-slate-950 dark:text-white mt-0.5">{{ placeData().openingHours }}</div>
               </div>
             </div>
 
             <!-- 💳 Ortalama Fiyat -->
-            <div class="bg-white dark:bg-slate-800 p-3.5 rounded-2xl border border-slate-100 dark:border-slate-700/80 shadow-xs space-y-2 hover:border-primary/40 transition-all">
+            <div class="bg-white dark:bg-slate-800 p-3.5 rounded-2xl border border-slate-200/80 dark:border-slate-700 shadow-xs space-y-2 hover:border-primary/40 transition-all">
               <div class="flex items-center justify-between">
-                <div class="w-8 h-8 rounded-xl bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center flex-shrink-0">
-                  <lucide-icon [img]="CreditCardIcon" [size]="16" strokeWidth="2"></lucide-icon>
+                <div class="w-8 h-8 rounded-xl bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 flex items-center justify-center flex-shrink-0 font-bold">
+                  <lucide-icon [img]="CreditCardIcon" [size]="16" strokeWidth="2.2"></lucide-icon>
                 </div>
-                <span class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 px-1.5 py-0.5 rounded">Fiyat</span>
+                <span class="text-[10px] font-extrabold text-emerald-700 dark:text-emerald-300 bg-emerald-100 dark:bg-emerald-500/20 px-1.5 py-0.5 rounded">Fiyat</span>
               </div>
               <div>
-                <div class="text-[11px] font-semibold text-slate-500 dark:text-slate-400">Ortalama Fiyat</div>
-                <div class="text-xs font-extrabold text-slate-900 dark:text-white mt-0.5">{{ placeData().averagePrice }}</div>
+                <div class="text-[11px] font-bold text-slate-700 dark:text-slate-200">Ortalama Fiyat</div>
+                <div class="text-xs font-black text-slate-950 dark:text-white mt-0.5">{{ placeData().averagePrice }}</div>
               </div>
             </div>
 
             <!-- 📅 Rezervasyon -->
-            <div class="bg-white dark:bg-slate-800 p-3.5 rounded-2xl border border-slate-100 dark:border-slate-700/80 shadow-xs space-y-2 hover:border-primary/40 transition-all">
+            <div class="bg-white dark:bg-slate-800 p-3.5 rounded-2xl border border-slate-200/80 dark:border-slate-700 shadow-xs space-y-2 hover:border-primary/40 transition-all">
               <div class="flex items-center justify-between">
-                <div class="w-8 h-8 rounded-xl bg-purple-50 dark:bg-purple-500/10 text-primary dark:text-purple-300 flex items-center justify-center flex-shrink-0">
-                  <lucide-icon [img]="CalendarIcon" [size]="16" strokeWidth="2"></lucide-icon>
+                <div class="w-8 h-8 rounded-xl bg-purple-100 dark:bg-purple-500/20 text-purple-700 dark:text-purple-300 flex items-center justify-center flex-shrink-0 font-bold">
+                  <lucide-icon [img]="CalendarIcon" [size]="16" strokeWidth="2.2"></lucide-icon>
                 </div>
-                <span class="text-[10px] font-bold text-slate-400">Durum</span>
+                <span class="text-[10px] font-extrabold text-slate-500 dark:text-slate-400">Durum</span>
               </div>
               <div>
-                <div class="text-[11px] font-semibold text-slate-500 dark:text-slate-400">Rezervasyon</div>
-                <div class="text-xs font-extrabold text-slate-900 dark:text-white mt-0.5">{{ placeData().reservation }}</div>
+                <div class="text-[11px] font-bold text-slate-700 dark:text-slate-200">Rezervasyon</div>
+                <div class="text-xs font-black text-slate-950 dark:text-white mt-0.5">{{ placeData().reservation }}</div>
               </div>
             </div>
 
             <!-- 📍 Mesafe & Konum -->
-            <div class="bg-white dark:bg-slate-800 p-3.5 rounded-2xl border border-slate-100 dark:border-slate-700/80 shadow-xs space-y-2 hover:border-primary/40 transition-all">
+            <div class="bg-white dark:bg-slate-800 p-3.5 rounded-2xl border border-slate-200/80 dark:border-slate-700 shadow-xs space-y-2 hover:border-primary/40 transition-all">
               <div class="flex items-center justify-between">
-                <div class="w-8 h-8 rounded-xl bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center flex-shrink-0">
-                  <lucide-icon [img]="MapPinIcon" [size]="16" strokeWidth="2"></lucide-icon>
+                <div class="w-8 h-8 rounded-xl bg-blue-100 dark:bg-blue-500/20 text-blue-700 dark:text-blue-300 flex items-center justify-center flex-shrink-0 font-bold">
+                  <lucide-icon [img]="MapPinIcon" [size]="16" strokeWidth="2.2"></lucide-icon>
                 </div>
-                <span class="text-[10px] font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-500/10 px-1.5 py-0.5 rounded">Mesafe</span>
+                <span class="text-[10px] font-extrabold text-blue-700 dark:text-blue-300 bg-blue-100 dark:bg-blue-500/20 px-1.5 py-0.5 rounded">Mesafe</span>
               </div>
               <div>
-                <div class="text-[11px] font-semibold text-slate-500 dark:text-slate-400">Konum / Ulaşım</div>
-                <div class="text-xs font-extrabold text-slate-900 dark:text-white mt-0.5 line-clamp-1">{{ placeData().distance }}</div>
+                <div class="text-[11px] font-bold text-slate-700 dark:text-slate-200">Konum / Ulaşım</div>
+                <div class="text-xs font-black text-slate-950 dark:text-white mt-0.5 line-clamp-1">{{ placeData().distance }}</div>
               </div>
             </div>
 
           </div>
 
           <!-- Detaylı Mekan Özellikleri Tablosu -->
-          <div class="bg-white dark:bg-slate-800 rounded-3xl p-4 border border-slate-100 dark:border-slate-700/80 shadow-xs space-y-3">
-            <h3 class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Detaylı Özellik Tablosu</h3>
+          <div class="bg-white dark:bg-slate-800 rounded-3xl p-4 border border-slate-200/80 dark:border-slate-700 shadow-xs space-y-3">
+            <h3 class="text-xs font-extrabold text-purple-700 dark:text-purple-300 uppercase tracking-wider">Detaylı Özellik Tablosu</h3>
 
-            <div class="divide-y divide-slate-100 dark:divide-slate-700/50 text-xs">
+            <div class="divide-y divide-slate-200/60 dark:divide-slate-700/60 text-xs">
               <div class="py-2.5 flex items-center justify-between">
-                <span class="font-medium text-slate-500 dark:text-slate-400">⭐ Genel Puanı</span>
-                <span class="font-extrabold text-slate-900 dark:text-white">{{ placeData().rating }} / 5.0 ({{ placeData().reviewCount }} Oy)</span>
+                <span class="font-bold text-slate-700 dark:text-slate-200">⭐ Genel Puanı</span>
+                <span class="font-black text-slate-950 dark:text-white">{{ placeData().rating }} / 5.0 ({{ placeData().reviewCount }} Oy)</span>
               </div>
               <div class="py-2.5 flex items-center justify-between">
-                <span class="font-medium text-slate-500 dark:text-slate-400">🏆 Mekan Türü</span>
-                <span class="font-extrabold text-slate-900 dark:text-white">{{ placeData().subtitle || 'Özel Destinasyon Noktası' }}</span>
+                <span class="font-bold text-slate-700 dark:text-slate-200">🏆 Mekan Türü</span>
+                <span class="font-black text-slate-950 dark:text-white">{{ placeData().subtitle || 'Özel Destinasyon Noktası' }}</span>
               </div>
               <div class="py-2.5 flex items-center justify-between">
-                <span class="font-medium text-slate-500 dark:text-slate-400">⏳ İdeal Ziyaret Süresi</span>
-                <span class="font-extrabold text-slate-900 dark:text-white">1.5 - 2 Saat</span>
+                <span class="font-bold text-slate-700 dark:text-slate-200">⏳ İdeal Ziyaret Süresi</span>
+                <span class="font-black text-slate-950 dark:text-white">1.5 - 2 Saat</span>
               </div>
               <div class="py-2.5 flex items-center justify-between">
-                <span class="font-medium text-slate-500 dark:text-slate-400">🌐 Temassız Ödeme</span>
-                <span class="font-bold text-emerald-600 dark:text-emerald-400">✓ Destekleniyor</span>
+                <span class="font-bold text-slate-700 dark:text-slate-200">🌐 Temassız Ödeme</span>
+                <span class="font-black text-emerald-600 dark:text-emerald-400">✓ Destekleniyor</span>
               </div>
             </div>
           </div>
@@ -219,14 +222,25 @@ import { ItineraryItem } from '../../core/models';
             <span>Yol Tarifi</span>
           </button>
 
-          <!-- Primary Rezervasyon Yap Butonu -->
-          <button
-            type="button"
-            (click)="makeReservation()"
-            class="py-3.5 px-4 rounded-2xl bg-primary hover:bg-primary-hover text-white font-bold text-xs transition-all shadow-purple flex items-center justify-center gap-1.5 cursor-pointer active:scale-[0.98]"
-          >
-            <span>Rezervasyon Yap</span>
-          </button>
+          <!-- Primary Rezervasyon Yap Butonu (Devre Dışı & Tooltip'li) -->
+          <div class="relative group">
+            <button
+              type="button"
+              disabled
+              class="w-full py-3.5 px-4 rounded-2xl bg-slate-200 dark:bg-slate-800 text-slate-400 dark:text-slate-500 font-bold text-xs cursor-not-allowed opacity-80 flex items-center justify-center gap-1.5 shadow-none border border-slate-200/60 dark:border-slate-700/60 transition-all"
+            >
+              <span>Rezervasyon Yap</span>
+            </button>
+
+            <!-- Hover Tooltip -->
+            <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2.5 hidden group-hover:flex flex-col items-center z-50 pointer-events-none w-max transition-all">
+              <div class="bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 text-[11px] font-extrabold py-2 px-3.5 rounded-xl shadow-2xl border border-white/10 dark:border-slate-900/10 whitespace-nowrap flex items-center gap-1.5">
+                <span>🔮</span>
+                <span>Garsonu çağırdık, masanı hazırlıyor! Tek tıkla rezervasyon çok yakında 🍷✨</span>
+              </div>
+              <div class="w-2.5 h-2.5 bg-slate-900 dark:bg-slate-100 rotate-45 -mt-1.5 shadow-sm"></div>
+            </div>
+          </div>
         </div>
       </div>
 
