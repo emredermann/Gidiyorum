@@ -164,21 +164,22 @@ def create_pull_request(branch_name: str = "fix/issue-patch", pr_title: str = "f
                 f"Kaynak Branch: {branch_name} -> Hedef: {base_branch}\n"
                 f"Durum: GitHub üzerinden Kullanıcı Onayı ve Merge bekleniyor."
             )
-        except Exception:
-            # Token veya yetki durumunda tek tıkla PR açma / compare linkini üret
+        except Exception as e:
+            # API 403/yetki durumunda doğrudan resmi GitHub PR açma sayfasını döndür
             encoded_title = urllib.parse.quote(pr_title)
             encoded_body = urllib.parse.quote(pr_body)
-            compare_url = f"https://github.com/{repo_name}/compare/{base_branch}...{branch_name}?expand=1&title={encoded_title}&body={encoded_body}"
+            new_pr_url = f"https://github.com/{repo_name}/pull/new/{branch_name}?title={encoded_title}&body={encoded_body}"
             return (
-                f"✅ YENİ BRANCH '{branch_name}' GITHUB'A PUSHLANDI!\n"
-                f"PR Linki: {compare_url}\n"
+                f"[BAŞARILI] YENİ BRANCH '{branch_name}' GITHUB'A PUSHLANDI!\n"
+                f"PR Linki: {new_pr_url}\n"
                 f"Depo: {repo_name}\n"
                 f"Kaynak Branch: {branch_name} -> Hedef: {base_branch}\n"
-                f"Durum: Yukarıdaki linke tıklayarak GitHub üzerinde yeni branch'iniz ile tek tıkla PR'ı onaylayabilirsiniz."
+                f"Durum: GitHub üzerinde PR açmak ve merge etmek için linke tıklayın."
             )
     except Exception as e:
-        compare_url = f"https://github.com/{repo_name}/compare/{base_branch}...{branch_name}?expand=1"
-        return f"PR Hazırlandı. GitHub Linki: {compare_url} (Detay: {str(e)})"
+        new_pr_url = f"https://github.com/{repo_name}/pull/new/{branch_name}"
+        return f"PR Linki: {new_pr_url} (Detay: {str(e)})"
+
 
 
 @tool("review_pull_request")
