@@ -1,0 +1,7 @@
+crewai
+langchain-community
+PyGithub
+python-dotenv
+fastapi
+uvicorn[standard]
+websockets

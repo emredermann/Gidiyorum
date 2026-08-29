@@ -1,0 +1,151 @@
+/* 8-Bit Retro Arcade Theme (Crystal Clear Sharp Styling) */
+.crt-container {
+  background-color: #0b0f19;
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.08) 0%, transparent 60%),
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 100% 100%, 20px 20px, 20px 20px;
+  font-family: 'Consolas', 'JetBrains Mono', 'Courier New', monospace;
+  color: #e2e8f0;
+}
+
+/* Pixel Box Containers */
+.pixel-box {
+  background-color: #111827;
+  border: 2px solid #374151;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.pixel-box-amber { border-color: rgba(245, 158, 11, 0.4); }
+.pixel-box-cyan { border-color: rgba(6, 182, 212, 0.4); }
+.pixel-box-green { border-color: rgba(16, 185, 129, 0.4); }
+.pixel-box-magenta { border-color: rgba(236, 72, 153, 0.4); }
+.pixel-box-purple { border-color: rgba(139, 92, 246, 0.4); }
+.pixel-box-orange { border-color: rgba(249, 115, 22, 0.4); }
+
+/* Pixel Speech Bubbles */
+.pixel-bubble {
+  background-color: #030712;
+  border: 1.5px solid #4b5563;
+  border-radius: 6px;
+  padding: 6px 8px;
+  font-size: 11px;
+  line-height: 1.4;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+/* Retro Buttons */
+.pixel-btn {
+  background-color: #1e293b;
+  color: #cbd5e1;
+  border: 1px solid #475569;
+  padding: 6px 12px;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.pixel-btn:hover {
+  background-color: #334155;
+  color: #ffffff;
+  border-color: #94a3b8;
+}
+
+.pixel-btn-action-main {
+  background: linear-gradient(135deg, #047857 0%, #065f46 100%);
+  color: #ffffff;
+  border: 2px solid #10b981;
+  padding: 12px 24px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+  transition: all 0.2s ease;
+}
+
+.pixel-btn-action-main:hover:not(:disabled) {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  box-shadow: 0 0 25px rgba(16, 185, 129, 0.6);
+  transform: translateY(-1px);
+}
+
+.pixel-btn-start {
+  background-color: #065f46;
+  color: #34d399;
+  border-color: #10b981;
+}
+
+.pixel-btn-danger {
+  background-color: #7f1d1d;
+  color: #fca5a5;
+  border-color: #ef4444;
+}
+
+/* Avatar Animation */
+.avatar-bouncing {
+  animation: bounce 0.6s infinite alternate cubic-bezier(0.28, 0.84, 0.42, 1);
+}
+
+@keyframes bounce {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-8px); }
+}
+
+/* Blinking Cursor */
+.pixel-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 14px;
+  background-color: #00ff66;
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Terminal Scrollbar */
+.terminal-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+.terminal-scroll::-webkit-scrollbar-track {
+  background: #0b0f19;
+}
+.terminal-scroll::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 3px;
+}
+.terminal-scroll::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+/* Modal Overlay */
+.pixel-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 16px;
+}
+
+.pixel-modal-box {
+  background-color: #0f172a;
+  border: 2px solid #f59e0b;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 750px;
+  box-shadow: 0 0 40px rgba(245, 158, 11, 0.3);
+}

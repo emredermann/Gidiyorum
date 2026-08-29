@@ -1,0 +1,422 @@
+<div class="crt-container min-h-screen p-4 md:p-6 flex flex-col text-slate-200">
+
+  <!-- Top Retro Terminal Header -->
+  <header class="pixel-box mb-4 p-4 flex flex-wrap items-center justify-between gap-4">
+    <div class="flex items-center gap-3">
+      <div class="w-3.5 h-3.5 rounded-full" [ngClass]="isConnected() ? 'bg-[#10b981] shadow-[0_0_10px_#10b981]' : 'bg-[#ef4444] shadow-[0_0_10px_#ef4444]'"></div>
+      <div>
+        <h1 class="text-xs md:text-sm text-[#00ff66] tracking-wider uppercase font-bold">
+          GIDİYORUM // 6-AJANLI HASSAS PR ORKESTRATÖRÜ & CANLI DURUM TAKİBİ
+        </h1>
+        <div class="text-[11px] text-slate-400 font-mono mt-1 flex gap-4">
+          <span>WS: <strong [ngClass]="isConnected() ? 'text-[#10b981]' : 'text-[#ef4444]'">{{ isConnected() ? 'ONLINE' : 'OFFLINE' }}</strong></span>
+          <span>AŞAMA: <strong class="text-amber-300">{{ currentPhase() }}</strong></span>
+          <span>MODEL: <strong class="text-cyan-400">OLLAMA / LLAMA3</strong></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <button (click)="clearLogs()" class="pixel-btn">
+        LOGLARI TEMİZLE
+      </button>
+      <button (click)="reconnect()" class="pixel-btn">
+        YENİDEN BAĞLAN
+      </button>
+    </div>
+  </header>
+
+  <!-- Visual Pipeline Stepper (6 Aşamalı Canlı İlerleme Çubuğu) -->
+  <div class="pixel-box mb-5 p-3.5 bg-[#0e111a] border border-slate-700">
+    <div class="flex items-center justify-between mb-2">
+      <span class="text-[10px] uppercase font-bold text-slate-400 font-mono">
+        İŞLEM SÜRECİ & AŞAMA TAKİBİ (PIPELINE STEPPER)
+      </span>
+      <span class="text-[11px] font-mono font-bold text-[#00ff66]">
+        AŞAMA {{ currentStep() }} / 6
+      </span>
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 text-xs font-mono">
+      <div class="p-2 rounded border text-center transition-all"
+           [ngClass]="currentStep() === 1 ? 'bg-amber-500/20 border-amber-500 text-amber-300 animate-pulse font-bold' : (currentStep() > 1 ? 'bg-emerald-500/15 border-emerald-500 text-emerald-300' : 'bg-slate-900/50 border-slate-800 text-slate-500')">
+        <div class="text-[10px]">{{ currentStep() > 1 ? '✅ 1. Tamam' : (currentStep() === 1 ? '⚡ 1. Sürüyor' : '⏳ 1. Bekliyor') }}</div>
+        <div class="text-[11px] font-semibold truncate">Issue Analizi</div>
+      </div>
+
+      <div class="p-2 rounded border text-center transition-all"
+           [ngClass]="currentStep() === 2 ? 'bg-purple-500/20 border-purple-500 text-purple-300 animate-pulse font-bold' : (currentStep() > 2 ? 'bg-emerald-500/15 border-emerald-500 text-emerald-300' : 'bg-slate-900/50 border-slate-800 text-slate-500')">
+        <div class="text-[10px]">{{ currentStep() > 2 ? '✅ 2. Tamam' : (currentStep() === 2 ? '⚡ 2. Sürüyor' : '⏳ 2. Bekliyor') }}</div>
+        <div class="text-[11px] font-semibold truncate">Yeni Branch Açılışı</div>
+      </div>
+
+      <div class="p-2 rounded border text-center transition-all"
+           [ngClass]="currentStep() === 3 ? 'bg-cyan-500/20 border-cyan-500 text-cyan-300 animate-pulse font-bold' : (currentStep() > 3 ? 'bg-emerald-500/15 border-emerald-500 text-emerald-300' : 'bg-slate-900/50 border-slate-800 text-slate-500')">
+        <div class="text-[10px]">{{ currentStep() > 3 ? '✅ 3. Tamam' : (currentStep() === 3 ? '⚡ 3. Sürüyor' : '⏳ 3. Bekliyor') }}</div>
+        <div class="text-[11px] font-semibold truncate">Kodlama (Yeni Branch)</div>
+      </div>
+
+      <div class="p-2 rounded border text-center transition-all"
+           [ngClass]="currentStep() === 4 ? 'bg-pink-500/20 border-pink-500 text-pink-300 animate-pulse font-bold' : (currentStep() > 4 ? 'bg-emerald-500/15 border-emerald-500 text-emerald-300' : 'bg-slate-900/50 border-slate-800 text-slate-500')">
+        <div class="text-[10px]">{{ currentStep() > 4 ? '✅ 4. Tamam' : (currentStep() === 4 ? '⚡ 4. Sürüyor' : '⏳ 4. Bekliyor') }}</div>
+        <div class="text-[11px] font-semibold truncate">QA & Derleme Testi</div>
+      </div>
+
+      <div class="p-2 rounded border text-center transition-all"
+           [ngClass]="currentStep() === 5 ? 'bg-purple-500/20 border-purple-500 text-purple-300 animate-pulse font-bold' : (currentStep() > 5 ? 'bg-emerald-500/15 border-emerald-500 text-emerald-300' : 'bg-slate-900/50 border-slate-800 text-slate-500')">
+        <div class="text-[10px]">{{ currentStep() > 5 ? '✅ 5. Tamam' : (currentStep() === 5 ? '⚡ 5. Sürüyor' : '⏳ 5. Bekliyor') }}</div>
+        <div class="text-[11px] font-semibold truncate">GitHub PR Açılışı</div>
+      </div>
+
+      <div class="p-2 rounded border text-center transition-all"
+           [ngClass]="currentStep() === 6 ? 'bg-emerald-500/20 border-emerald-500 text-emerald-300 animate-pulse font-bold' : (currentStep() > 6 ? 'bg-emerald-500/15 border-emerald-500 text-emerald-300' : 'bg-slate-900/50 border-slate-800 text-slate-500')">
+        <div class="text-[10px]">{{ currentStep() === 6 ? '👑 6. Onayınızda' : '⏳ 6. Bekliyor' }}</div>
+        <div class="text-[11px] font-semibold truncate">GitHub Merge Onayı</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Action Buttons Row -->
+  <div class="mb-5 flex flex-col md:flex-row justify-center items-center gap-3">
+    <button 
+      (click)="triggerOrchestrationHttp()" 
+      [disabled]="!isConnected() || isRunning()"
+      class="pixel-btn-action-main w-full md:w-auto flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed">
+      <span class="text-amber-300 text-lg">⚡</span>
+      <span>
+        @if (isStarting()) {
+          BAĞLANTI KURULUYOR...
+        } @else if (isRunning()) {
+          AJANLAR ÇALIŞIYOR (ORCHESTRATION IN PROGRESS)...
+        } @else {
+          GITHUB ISSUE ÇÖZÜMÜ & PR DÖNGÜSÜNÜ BAŞLAT
+        }
+      </span>
+      <span class="text-amber-300 text-lg">⚡</span>
+    </button>
+
+    @if (prUrl()) {
+      <a 
+        [href]="prUrl()" 
+        target="_blank" 
+        class="w-full md:w-auto flex items-center justify-center gap-2 py-3.5 px-6 rounded-lg bg-[#581c87] hover:bg-[#6b21a8] border-2 border-[#a855f7] text-white font-mono font-bold text-xs transition-all shadow-[0_0_20px_rgba(168,85,247,0.5)] animate-pulse">
+        <span>🔗</span>
+        <span>GITHUB'DA PR'I İNCELE VE ONAYLA (MERGE)</span>
+        <span>↗</span>
+      </a>
+    }
+  </div>
+
+  <!-- 6 Pixel-Art Agent Stage with LIVE STATE & CURRENT TASK -->
+  <section class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 mb-6">
+    
+    <!-- 1. TEAM LEAD -->
+    <div class="pixel-box pixel-box-amber p-3.5 flex flex-col items-center text-center relative transition-all duration-200"
+         [ngClass]="{'bg-[#1a1708] border-[#f59e0b]': isAgentActive('team_lead')}">
+      <div class="w-full flex items-center justify-between mb-1">
+        <span class="text-[9px] bg-[#f59e0b] text-black px-1.5 py-0.5 font-bold rounded">LEAD</span>
+        <span class="text-[9px] px-1.5 py-0.5 font-mono font-bold rounded" [ngClass]="getAgentStateBadge('team_lead').class">
+          {{ getAgentStateBadge('team_lead').label }}
+        </span>
+      </div>
+      
+      <div class="my-2 transition-transform duration-300" [ngClass]="{'avatar-bouncing': isAgentActive('team_lead')}">
+        <svg class="w-14 h-14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="2" width="8" height="2" fill="#FBBF24" />
+          <rect x="3" y="4" width="10" height="1" fill="#D97706" />
+          <rect x="4" y="5" width="8" height="6" fill="#FDE68A" />
+          <rect x="5" y="6" width="6" height="2" fill="#0284C7" />
+          <rect x="6" y="9" width="4" height="1" fill="#78350F" />
+          <rect x="3" y="11" width="10" height="4" fill="#1E293B" />
+          <rect x="6" y="11" width="4" height="4" fill="#F59E0B" />
+        </svg>
+      </div>
+
+      <div class="text-[10px] text-[#f59e0b] font-bold mb-1 uppercase">Team Lead</div>
+
+      <div class="pixel-bubble w-full mt-auto text-left text-amber-200 border-[#f59e0b]">
+        <div class="text-[9px] text-amber-400 font-bold uppercase mb-0.5">Aktif Görev:</div>
+        <div class="text-[11px] break-words font-mono">
+          {{ agentsMap()['team_lead'].task }}
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. PR CREATOR (DEVOPS) -->
+    <div class="pixel-box pixel-box-purple p-3.5 flex flex-col items-center text-center relative transition-all duration-200"
+         [ngClass]="{'bg-[#150d24] border-[#8b5cf6]': isAgentActive('pr_creator')}">
+      <div class="w-full flex items-center justify-between mb-1">
+        <span class="text-[9px] bg-[#8b5cf6] text-white px-1.5 py-0.5 font-bold rounded">PR CREATOR</span>
+        <span class="text-[9px] px-1.5 py-0.5 font-mono font-bold rounded" [ngClass]="getAgentStateBadge('pr_creator').class">
+          {{ getAgentStateBadge('pr_creator').label }}
+        </span>
+      </div>
+      
+      <div class="my-2 transition-transform duration-300" [ngClass]="{'avatar-bouncing': isAgentActive('pr_creator')}">
+        <svg class="w-14 h-14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="6" y="1" width="4" height="2" fill="#A78BFA" />
+          <rect x="5" y="3" width="6" height="3" fill="#8B5CF6" />
+          <rect x="4" y="6" width="8" height="5" fill="#DDD6FE" />
+          <rect x="5" y="7" width="2" height="2" fill="#C084FC" />
+          <rect x="9" y="7" width="2" height="2" fill="#C084FC" />
+          <rect x="3" y="11" width="10" height="4" fill="#5B21B6" />
+          <rect x="7" y="11" width="2" height="4" fill="#38BDF8" />
+        </svg>
+      </div>
+
+      <div class="text-[10px] text-[#8b5cf6] font-bold mb-1 uppercase">GitHub PR Creator</div>
+
+      <div class="pixel-bubble w-full mt-auto text-left text-purple-200 border-[#8b5cf6]">
+        <div class="text-[9px] text-purple-400 font-bold uppercase mb-0.5">Aktif Görev:</div>
+        <div class="text-[11px] break-words font-mono">
+          {{ agentsMap()['pr_creator'].task }}
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. FRONTEND DEV -->
+    <div class="pixel-box pixel-box-cyan p-3.5 flex flex-col items-center text-center relative transition-all duration-200"
+         [ngClass]="{'bg-[#08171a] border-[#06b6d4]': isAgentActive('frontend')}">
+      <div class="w-full flex items-center justify-between mb-1">
+        <span class="text-[9px] bg-[#06b6d4] text-black px-1.5 py-0.5 font-bold rounded">FRONTEND</span>
+        <span class="text-[9px] px-1.5 py-0.5 font-mono font-bold rounded" [ngClass]="getAgentStateBadge('frontend').class">
+          {{ getAgentStateBadge('frontend').label }}
+        </span>
+      </div>
+      
+      <div class="my-2 transition-transform duration-300" [ngClass]="{'avatar-bouncing': isAgentActive('frontend')}">
+        <svg class="w-14 h-14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="2" width="8" height="2" fill="#EF4444" />
+          <rect x="2" y="4" width="12" height="1" fill="#DC2626" />
+          <rect x="4" y="5" width="8" height="6" fill="#FBCFE8" />
+          <rect x="4" y="6" width="3" height="2" fill="#00E5FF" />
+          <rect x="9" y="6" width="3" height="2" fill="#00E5FF" />
+          <rect x="6" y="9" width="4" height="1" fill="#9D174D" />
+          <rect x="3" y="11" width="10" height="4" fill="#06B6D4" />
+        </svg>
+      </div>
+
+      <div class="text-[10px] text-[#06b6d4] font-bold mb-1 uppercase">Angular & Signals</div>
+
+      <div class="pixel-bubble w-full mt-auto text-left text-cyan-200 border-[#06b6d4]">
+        <div class="text-[9px] text-cyan-400 font-bold uppercase mb-0.5">Aktif Görev:</div>
+        <div class="text-[11px] break-words font-mono">
+          {{ agentsMap()['frontend'].task }}
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. BACKEND DEV -->
+    <div class="pixel-box pixel-box-green p-3.5 flex flex-col items-center text-center relative transition-all duration-200"
+         [ngClass]="{'bg-[#081a0e] border-[#10b981]': isAgentActive('backend')}">
+      <div class="w-full flex items-center justify-between mb-1">
+        <span class="text-[9px] bg-[#10b981] text-black px-1.5 py-0.5 font-bold rounded">BACKEND</span>
+        <span class="text-[9px] px-1.5 py-0.5 font-mono font-bold rounded" [ngClass]="getAgentStateBadge('backend').class">
+          {{ getAgentStateBadge('backend').label }}
+        </span>
+      </div>
+      
+      <div class="my-2 transition-transform duration-300" [ngClass]="{'avatar-bouncing': isAgentActive('backend')}">
+        <svg class="w-14 h-14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="6" y="1" width="4" height="2" fill="#10B981" />
+          <rect x="5" y="3" width="6" height="2" fill="#059669" />
+          <rect x="4" y="6" width="8" height="5" fill="#E2E8F0" />
+          <rect x="5" y="7" width="2" height="2" fill="#34D399" />
+          <rect x="9" y="7" width="2" height="2" fill="#34D399" />
+          <rect x="3" y="11" width="10" height="4" fill="#0F172A" />
+        </svg>
+      </div>
+
+      <div class="text-[10px] text-[#10b981] font-bold mb-1 uppercase">Supabase & SQL</div>
+
+      <div class="pixel-bubble w-full mt-auto text-left text-emerald-200 border-[#10b981]">
+        <div class="text-[9px] text-emerald-400 font-bold uppercase mb-0.5">Aktif Görev:</div>
+        <div class="text-[11px] break-words font-mono">
+          {{ agentsMap()['backend'].task }}
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. QA ENFORCER -->
+    <div class="pixel-box pixel-box-magenta p-3.5 flex flex-col items-center text-center relative transition-all duration-200"
+         [ngClass]="{'bg-[#1a0812] border-[#ec4899]': isAgentActive('qa')}">
+      <div class="w-full flex items-center justify-between mb-1">
+        <span class="text-[9px] bg-[#ec4899] text-white px-1.5 py-0.5 font-bold rounded">QA TEST</span>
+        <span class="text-[9px] px-1.5 py-0.5 font-mono font-bold rounded" [ngClass]="getAgentStateBadge('qa').class">
+          {{ getAgentStateBadge('qa').label }}
+        </span>
+      </div>
+      
+      <div class="my-2 transition-transform duration-300" [ngClass]="{'avatar-bouncing': isAgentActive('qa')}">
+        <svg class="w-14 h-14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="7" y="1" width="2" height="2" fill="#E2E8F0" />
+          <rect x="3" y="3" width="10" height="7" fill="#334155" />
+          <rect x="4" y="5" width="8" height="2" fill="#FF007F" />
+          <rect x="8" y="5" width="2" height="2" fill="#FFFFFF" />
+          <rect x="3" y="11" width="10" height="4" fill="#475569" />
+        </svg>
+      </div>
+
+      <div class="text-[10px] text-[#ec4899] font-bold mb-1 uppercase">Build & Test</div>
+
+      <div class="pixel-bubble w-full mt-auto text-left text-pink-200 border-[#ec4899]">
+        <div class="text-[9px] text-pink-400 font-bold uppercase mb-0.5">Aktif Görev:</div>
+        <div class="text-[11px] break-words font-mono">
+          {{ agentsMap()['qa'].task }}
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. PR REVIEWER (AUDITOR) -->
+    <div class="pixel-box pixel-box-orange p-3.5 flex flex-col items-center text-center relative transition-all duration-200"
+         [ngClass]="{'bg-[#24130a] border-[#f97316]': isAgentActive('pr_reviewer')}">
+      <div class="w-full flex items-center justify-between mb-1">
+        <span class="text-[9px] bg-[#f97316] text-white px-1.5 py-0.5 font-bold rounded">PR REVIEWER</span>
+        <span class="text-[9px] px-1.5 py-0.5 font-mono font-bold rounded" [ngClass]="getAgentStateBadge('pr_reviewer').class">
+          {{ getAgentStateBadge('pr_reviewer').label }}
+        </span>
+      </div>
+      
+      <div class="my-2 transition-transform duration-300" [ngClass]="{'avatar-bouncing': isAgentActive('pr_reviewer')}">
+        <svg class="w-14 h-14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="2" width="8" height="2" fill="#EA580C" />
+          <rect x="3" y="4" width="10" height="1" fill="#C2410C" />
+          <rect x="4" y="5" width="8" height="6" fill="#FED7AA" />
+          <rect x="4" y="6" width="3" height="3" fill="#38BDF8" />
+          <rect x="5" y="7" width="1" height="1" fill="#FFFFFF" />
+          <rect x="9" y="7" width="2" height="1" fill="#9A3412" />
+          <rect x="3" y="11" width="10" height="4" fill="#7C2D12" />
+        </svg>
+      </div>
+
+      <div class="text-[10px] text-[#f97316] font-bold mb-1 uppercase">GitHub PR Reviewer</div>
+
+      <div class="pixel-bubble w-full mt-auto text-left text-orange-200 border-[#f97316]">
+        <div class="text-[9px] text-orange-400 font-bold uppercase mb-0.5">Aktif Görev:</div>
+        <div class="text-[11px] break-words font-mono">
+          {{ agentsMap()['pr_reviewer'].task }}
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Retro Chat & Terminal Log Stream -->
+  <section class="pixel-box flex-1 flex flex-col p-4 min-h-[360px]">
+    <div class="flex items-center justify-between border-b border-slate-700 pb-3 mb-3">
+      <div class="flex items-center gap-3">
+        <svg class="w-7 h-7 flex-shrink-0" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="7" y="1" width="2" height="2" fill="#00FF66" />
+          <rect x="3" y="3" width="10" height="8" fill="#1E293B" />
+          <rect x="5" y="5" width="2" height="2" fill="#00FF66" />
+          <rect x="9" y="5" width="2" height="2" fill="#00FF66" />
+          <rect x="5" y="8" width="6" height="1" fill="#38BDF8" />
+          <rect x="4" y="12" width="8" height="3" fill="#334155" />
+        </svg>
+        <div>
+          <h2 class="text-xs text-[#00ff66] font-bold">ORCHESTRATOR LIVE LOG // 6-AJAN CANLI AKIŞI</h2>
+          <p class="text-[10px] text-slate-400">WebSocket Canlı Yayın Kanalı (/ws/agent-stream)</p>
+        </div>
+      </div>
+
+      <div class="text-[11px] text-slate-400 font-mono hidden sm:block">
+        LOG KAYDI: <strong class="text-white">{{ logs().length }}</strong>
+      </div>
+    </div>
+
+    <!-- Scrollable Message Stream -->
+    <div #scrollContainer class="terminal-scroll flex-1 overflow-y-auto space-y-3 pr-2 max-h-[400px]">
+      @if (logs().length === 0) {
+        <div class="text-center py-10 text-slate-500 font-mono text-sm">
+          <p class="mb-1">&gt; 6 Ajanlı PR Orkestratörü Dinleniyor...</p>
+          <p class="text-xs text-slate-400">Süreci başlatmak için yukarıdaki yeşil butona tıklayın veya aşağıya 'start' yazın.</p>
+        </div>
+      }
+
+      @for (item of logs(); track $index) {
+        <div class="flex items-start gap-2.5 text-xs font-mono">
+          <span class="text-slate-500 text-[11px] select-none pt-1">[{{ item.time }}]</span>
+          
+          <div class="flex-1">
+            <div class="inline-block px-2 py-0.5 text-[10px] font-bold mr-2 uppercase rounded"
+                 [ngClass]="getAgentBadgeClass(item.agent)">
+              {{ item.agent }}
+            </div>
+            
+            <div class="pixel-bubble inline-block max-w-full mt-1 text-slate-100"
+                 [ngClass]="getAgentBubbleClass(item.agent)">
+              {{ item.detail }}
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+
+    <!-- Command Input Bar -->
+    <form (ngSubmit)="sendCommand()" class="mt-4 pt-3 border-t border-slate-700 flex items-center gap-2">
+      <span class="text-[#00ff66] text-sm font-bold select-none">&gt;</span>
+      <input 
+        type="text" 
+        [(ngModel)]="commandInput" 
+        name="commandInput"
+        placeholder="Komut yazın (örn: start, durum, test)..." 
+        class="flex-1 bg-black/60 border border-slate-700 focus:border-[#00ff66] rounded-md outline-none text-[#00ff66] px-3 py-2 text-xs font-mono"
+        [disabled]="!isConnected()"
+      />
+      <span class="pixel-cursor"></span>
+      <button 
+        type="submit" 
+        [disabled]="!isConnected() || !commandInput.trim()"
+        class="pixel-btn pixel-btn-start text-xs disabled:opacity-50">
+        GÖNDER
+      </button>
+    </form>
+  </section>
+
+  <!-- Final Modal -->
+  @if (showFinalModal()) {
+    <div class="pixel-modal-backdrop">
+      <div class="pixel-modal-box p-6 flex flex-col max-h-[85vh]">
+        <div class="flex items-center justify-between border-b-2 border-[#f59e0b] pb-3 mb-4">
+          <div class="flex items-center gap-3">
+            <span class="text-2xl">🏆</span>
+            <div>
+              <h2 class="text-sm md:text-base text-[#f59e0b] font-bold tracking-wide">
+                PULL REQUEST GITHUB'DA AÇILDI & ONAYINIZDA BEKLİYOR
+              </h2>
+              <span class="text-xs text-slate-400">Doğrudan GitHub Web Sitesinden İnceleyip Merge Edebilirsiniz</span>
+            </div>
+          </div>
+          <button (click)="closeFinalModal()" class="pixel-btn pixel-btn-danger text-xs px-3 py-1">
+            ✕
+          </button>
+        </div>
+
+        <div class="terminal-scroll flex-1 overflow-y-auto pr-2 mb-4 bg-black/80 p-4 rounded-lg border border-slate-700">
+          <pre class="text-xs text-amber-200 whitespace-pre-wrap font-mono leading-relaxed select-text">{{ finalReportContent() }}</pre>
+        </div>
+
+        <div class="flex flex-wrap justify-between items-center gap-3 pt-3 border-t border-slate-800">
+          @if (prUrl()) {
+            <a 
+              [href]="prUrl()" 
+              target="_blank" 
+              class="flex items-center gap-2 py-2.5 px-5 rounded bg-emerald-600 hover:bg-emerald-500 text-white font-mono font-bold text-xs transition-all shadow-[0_0_15px_rgba(16,185,129,0.4)]">
+              <span>🚀</span>
+              <span>GITHUB'DA AÇ VE MERGE ET (ONAYLA)</span>
+              <span>↗</span>
+            </a>
+          } @else {
+            <span class="text-xs text-emerald-400 font-mono">
+              🛡️ GitHub Deponuzu Kontrol Edin
+            </span>
+          }
+
+          <button (click)="closeFinalModal()" class="pixel-btn text-xs">
+            [ PANELİ KAPAT ]
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+</div>

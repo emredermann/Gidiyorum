@@ -88,7 +88,13 @@ export const routes: Routes = [
       import('./features/places/place-detail.component').then(m => m.PlaceDetailComponent),
   },
   {
+    path: 'agent-tracker',
+    loadComponent: () =>
+      import('./features/agent-tracker/agent-tracker.component').then(m => m.AgentTrackerComponent),
+  },
+  {
     path: '**',
     redirectTo: '/auth/login',
   },
 ];
+
